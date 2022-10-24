@@ -15,7 +15,7 @@ namespace RobbyTheRobot
         /// <param name="x">A start x position that is updated to his subsequent position</param>
         /// <param name="y">A start y position that is updated to his subsequent position</param>
         /// <returns>The score</returns>
-        public static double ScoreForAllele(PossibleMoves[] moves, ContentsOfGrid[,] grid, Random rng, ref int x, ref int y)
+        public static double ScoreForAllele(int[] moves, ContentsOfGrid[,] grid, Random rng, ref int x, ref int y)
         {
             DirectionOfGridContents direction = RobbyHelper.LookAround(x, y, grid);
             //find the gene
