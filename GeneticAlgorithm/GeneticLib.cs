@@ -1,8 +1,9 @@
-using GeneticAlgorithm;
+using GeneticLibrary;
 
 namespace GeneticLibrary
 {
-    public static class GeneticLib 
+    public static class GeneticLib
+
     {
         public static IGeneticAlgorithm CreateGeneticAlgorithm(int populationSize, int numberOfGenes, int lengthOfGene, double mutationRate, double eliteRate, int numberOfTrials, FitnessEventHandler fitnessCalculation, int? seed = null)
         {
