@@ -7,7 +7,11 @@
             "type": "process",
             "args": [
                 "build",
+<<<<<<< HEAD
                 "${workspaceFolder}/RobbyVisulizer/RobbyVisulizer.csproj",
+=======
+                "${workspaceFolder}/RobbyIterationGenerator/RobbyIterationGenerator.csproj",
+>>>>>>> b106e1f798f761ee7eb4659f988a0505f2e547d7
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

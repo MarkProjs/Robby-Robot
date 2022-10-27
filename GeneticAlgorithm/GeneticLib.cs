@@ -1,3 +1,5 @@
+using GeneticLibrary;
+
 namespace GeneticLibrary
 {
     public static class GeneticLib
