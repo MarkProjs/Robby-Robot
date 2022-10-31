@@ -1,3 +1,6 @@
+using System;
+
+
 namespace GeneticLibrary
 {
     public class Chromosome : IChromosome
@@ -7,6 +10,11 @@ namespace GeneticLibrary
 
         public Chromosome( int GenesNum, int AGeneSize) {
             _genes = new int[AGeneSize];
+            Random rn = new Random();
+            for (int i = 0; i < _genes.Length; i++) {
+                int AGene = rn.Next(1, 7);
+                _genes[i] = AGene;
+            }
         }
 
         public Chromosome(IChromosome chromosome) {
