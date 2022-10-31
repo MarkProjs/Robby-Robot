@@ -14,8 +14,15 @@ namespace GeneticLibrary
             _genes = chromosome.Genes;
         }
 
+        public delegate IChromosome[] PerformRep(IChromosome spouse, double mutationProb);
         public IChromosome[] Reproduce(IChromosome spouse, double mutationProb) {
-            
+            PerformRep delReproduce = (spouse, mutationProb) => {
+                if (mutationProb > 0.50) {
+                    //do the mutation
+                }else {
+                    //not the mutation
+                }
+            };
         }
 
         public double Fitness {
