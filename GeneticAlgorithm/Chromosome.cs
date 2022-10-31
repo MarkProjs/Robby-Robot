@@ -1,81 +1,77 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-//??????????????????????????????????????????????????????????????????--> should finish
 namespace GeneticLibrary
 {
   public class Chromosome : IChromosome
   {
-    private int[] _genes;
-    private double _fitness;
-    private Random rnd;
+    private Random rand;
 
     public Chromosome(int numberOfGenes, int LengthOfGene, int seed){
       Genes = new int[numberOfGenes];
-      rnd = new Random(seed);
+      rand = new Random(seed);
       for (int i = 0; i < numberOfGenes; i++)
       {
-        int rndInt = rnd.Next(LengthOfGene);
-        _genes[i] = rndInt;
+        int rndInt = rand.Next(LengthOfGene);
+        Genes[i] = rndInt;
       }
       Fitness = 0;
     }
 
     //deep copy of the _genes
     public Chromosome(IChromosome choromosome){
-      this._fitness = choromosome.Fitness;
-      this._genes = new int[choromosome.Length];
+      Fitness = choromosome.Fitness;
+      Genes = new int[choromosome.Length];
     }
 
     //implement indxer
     public int this[int index] {
-      get {return _genes[index];}
-      set {_genes[index]=value;}
+      get {return Genes[index];}
+      set {Genes[index]=value;}
     }
 
-    public long Length {
-      get {return Genes.Length;}
-    } 
-
-    public double Fitness { 
-      get {return this._fitness;}
-      set {_fitness = value;}
-      }
-
-    public int[] Genes { get{return _genes;} set{_genes = value;}}
-
-
-    public int CompareTo([AllowNull] IChromosome other)
-    {
-      if ( this._fitness == other.Fitness){
+    
+    public int CompareTo([AllowNull] IChromosome other) {
+      if (Fitness == other.Fitness) {
         return 0;
-      }else if(this._fitness > other.Fitness){
+      }
+      else if (Fitness > other.Fitness) {
         return 1;
-      }else{
+      }
+      else {
         return -1;
       }
     }
 
     public IChromosome[] Reproduce(IChromosome spouse, double mutationProb)
-    {
-     rnd = new Random();
-     int pointA = rnd.Next(Length);
-     int pointB = rnd.Next(pointA, Length);
-     spouse.Genes[pointA];//p1
-     int[] tmp1 = this.Genes.slice[pointA]; //p1
+        {
+            rand = new Random();
+            int pointA = rand.Next((int)Length);
+            int pointB = rand.Next(pointA, (int)Length);
+            int[] p1Tmp = spouse.Genes[pointA..pointB]; //p1
+            int[] p2Tmp = this.Genes[pointA..pointB]; //p2
 
-      // mutation of the children
-      double rndDouble = rnd.NextDouble(1);
-      for (int i = 0; i < Genes.Length; i++) {
-        if(mutationProb >= rndDouble){
-          rnd = new Random();
-          int rndInt = rnd.Next(Length);
+
+            
+            // mutation of the child
+            double rndDouble = rand.NextDouble();
+            for (int i = 0; i < Genes.Length; i++)
+            {
+                if (mutationProb >= rndDouble)
+                {
+                    int rndInt = rand.Next((int)Length);
+                }
+            }
+
         }
-      }
-      return null;
-      
-    }
 
-    
-  }
+
+    public double Fitness { get; set; }
+
+    public int[] Genes { get; }
+
+    // The Length = 243 
+    public long Length { get; }
+
+}
 }
