@@ -3,13 +3,13 @@
 
 | Description |Priority | Status|Done by|
 |--------|--------|--------|--------|
-| IChromosome Implementation | High | Not Started | dsd |
-| IChromosome Test Cases | Medium | Not Started | dsd |
-| IGeneration Implementation | High | Not Started | dsd |
-| IGeneration Test Cases | Medium | Not Started | dsd |
-| IGeneticAlgorithm Implementation | High | Not Started | dsd |
-| IGeneticAlgorithm Cases | Medium | Not Started | dsd |
-|  | High | Not Started | dsd |
+| IChromosome Implementation | High | Not Started | Cuneyt |
+| IChromosome Test Cases | Medium | Not Started | name |
+| IGeneration Implementation | High | Not Started | Cuneyt |
+| IGeneration Test Cases | Medium | Not Started | name |
+| IGeneticAlgorithm Implementation | High | Not Started | Cuneyt |
+| IGeneticAlgorithm Cases | Medium | Not Started | name |
+|  | Not stated | Not Started | name |
 
 
 
