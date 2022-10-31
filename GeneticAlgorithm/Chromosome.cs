@@ -7,10 +7,10 @@ namespace GeneticLibrary
   public class Chromosome : IChromosome
   {
     private int[] _genes;
-    private int _fitness;
+    private double _fitness;
     private Random rnd;
 
-    public Chromosome(int numberOfGenes, int LengthOfGene, int? seed){
+    public Chromosome(int numberOfGenes, int LengthOfGene, int seed){
       Genes = new int[numberOfGenes];
       rnd = new Random(seed);
       for (int i = 0; i < numberOfGenes; i++)
@@ -22,14 +22,15 @@ namespace GeneticLibrary
     }
 
     //deep copy of the _genes
-    public Chromosome(Chromosome choromosome){
-      this._fitness = Chromosome.Fitness;
+    public Chromosome(IChromosome choromosome){
+      this._fitness = choromosome.Fitness;
       this._genes = new int[choromosome.Length];
     }
 
     //implement indxer
     public int this[int index] {
       get {return _genes[index];}
+      set {_genes[index]=value;}
     }
 
     public long Length {
@@ -38,9 +39,10 @@ namespace GeneticLibrary
 
     public double Fitness { 
       get {return this._fitness;}
+      set {_fitness = value;}
       }
 
-    public int[] Genes => { get; }
+    public int[] Genes { get{return _genes;} set{_genes = value;}}
 
 
     public int CompareTo([AllowNull] IChromosome other)
@@ -59,11 +61,10 @@ namespace GeneticLibrary
      rnd = new Random();
      int pointA = rnd.Next(Length);
      int pointB = rnd.Next(pointA, Length);
-     int tmp[] = spouse.Genes.slice[pointA];//p1
-     int tmp1[] = this.Genes.slice[pointA]; //p1
+     spouse.Genes[pointA];//p1
+     int[] tmp1 = this.Genes.slice[pointA]; //p1
 
-    // mutation of the child
-      
+      // mutation of the children
       double rndDouble = rnd.NextDouble(1);
       for (int i = 0; i < Genes.Length; i++) {
         if(mutationProb >= rndDouble){
@@ -71,6 +72,7 @@ namespace GeneticLibrary
           int rndInt = rnd.Next(Length);
         }
       }
+      return null;
       
     }
 
