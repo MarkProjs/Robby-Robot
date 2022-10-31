@@ -3,6 +3,15 @@ using System;
 
 namespace GeneticLibrary
 {
+    public enum move {
+        North = 0,
+        South = 1,
+        East = 2,
+        West = 3,
+        Nothing = 4,
+        PickUp = 5,
+        Random = 6
+    }
     public class Chromosome : IChromosome
     {
         private double _fitness;
@@ -12,7 +21,7 @@ namespace GeneticLibrary
             _genes = new int[AGeneSize];
             Random rn = new Random();
             for (int i = 0; i < _genes.Length; i++) {
-                int AGene = rn.Next(1, 7);
+                int AGene = rn.Next(7);
                 _genes[i] = AGene;
             }
         }
