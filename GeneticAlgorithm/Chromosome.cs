@@ -5,8 +5,8 @@ namespace GeneticLibrary
         private double _fitness;
         private int[] _genes;
 
-        public Chromosome(int GeneSize) {
-            _genes = new int[GeneSize];
+        public Chromosome( int GenesNum, int AGeneSize) {
+            _genes = new int[AGeneSize];
         }
 
         public Chromosome(IChromosome chromosome) {
