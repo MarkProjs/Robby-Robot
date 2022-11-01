@@ -47,24 +47,34 @@ namespace GeneticLibrary
       rand = new Random();
       int pointA = rand.Next((int)Length);
       int pointB = rand.Next(pointA, (int)Length);
-      int[] p1Tmp = spouse.Genes[pointA..pointB]; //p1
-      int[] p2Tmp = this.Genes[pointA..pointB]; //p2
+      // int[] p1Tmp = spouse.Genes[pointA..pointB]; //p1
+      // int[] p2Tmp = this.Genes[pointA..pointB]; //p2
 
-
-            
-      // mutation of the child
-      double rndDouble = rand.NextDouble();
-      for (int i = 0; i < Genes.Length; i++)
-      {
-        if (mutationProb >= rndDouble)
-        {
-          int rndInt = rand.Next((int)Length);
+      for (int i = pointA; i < pointB; i++) {
+          double mutation = rand.NextDouble();
+          if (mutation >= mutationProb) {
+            int action = rand.Next(7);
+            this.Genes[i] = action;
+            spouse.Genes[i] = action;
+        } else {
+          int tmp = this.Genes[i];
+          this.Genes[i] = spouse.Genes[i];
+          spouse.Genes[i] = tmp;
         }
       }
-      return null; //??????????
+      // mutation of the child
+      // double rndDouble = rand.NextDouble();
+      // for (int i = 0; i < Genes.Length; i++)
+      // {
+      //   if (mutationProb >= rndDouble)
+      //   {
+      //     int rndInt = rand.Next((int)Length);
+      //   }
+      // }
+      return new []{this, spouse};
+            
 
       }
-
 
     public double Fitness { get; set; }
 
