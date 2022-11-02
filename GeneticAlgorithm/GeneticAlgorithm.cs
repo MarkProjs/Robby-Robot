@@ -40,7 +40,8 @@ namespace GeneticLibrary
 
         public IGeneration GenerateGeneration()
         {
-            rand
+            rand = new Random();
+            //??????????????? to do this constructor
         }
     }
 }
