@@ -5,7 +5,7 @@ namespace GeneticLibrary
 {
   public class Chromosome : IChromosome
   {
-
+    private double _fitness;
     public Chromosome(int numberOfGenes, int LengthOfGene, int? seed = null){
       Genes = new int[numberOfGenes];
       var rand = new Random(seed.GetValueOrDefault());
@@ -69,7 +69,10 @@ namespace GeneticLibrary
       return new []{this, spouse};
       }
 
-    public double Fitness { get; set; }
+    public double Fitness { 
+      get { return _fitness; }
+      set { _fitness = value; }
+      }
 
     public int[] Genes { get; }
 

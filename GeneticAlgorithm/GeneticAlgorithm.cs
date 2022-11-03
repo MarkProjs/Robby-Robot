@@ -7,7 +7,7 @@ namespace GeneticLibrary
         private Random rand;
 
         public GeneticAlgorithm(int populationSize, int numberOfGenes, int lengthOfGenes, double mutationRate, double eliteRate,
-            int numberOfTrials, FitnessEventHandler fitnessFunc,int? seed = null)
+            int numberOfTrials, FitnessEventHandler fitnessFunc, int? seed = null)
         {
             PopulationSize = populationSize;
             NumberOfGenes = numberOfGenes;
@@ -42,6 +42,7 @@ namespace GeneticLibrary
         {
             rand = new Random();
             //??????????????? to do this constructor
+            return null;
         }
     }
 }
