@@ -4,31 +4,45 @@ namespace GeneticLibrary
 {
     class GeneticAlgorithm : IGeneticAlgorithm
     {
-        public GeneticAlgorithm(){
-            
+        private Random rand;
+
+        public GeneticAlgorithm(int populationSize, int numberOfGenes, int lengthOfGenes, double mutationRate, double eliteRate,
+            int numberOfTrials, FitnessEventHandler fitnessFunc,int? seed = null)
+        {
+            PopulationSize = populationSize;
+            NumberOfGenes = numberOfGenes;
+            LengthOfGene = lengthOfGenes;
+            MutationRate = mutationRate;
+            EliteRate = eliteRate;
+            NumberOfTrials = numberOfTrials;
+            //GenerationCount = ??;
+            FitnessCalculation = fitnessFunc;
+            rand = new Random(seed.GetValueOrDefault());
         }
 
-        public int PopulationSize => throw new NotImplementedException();
+        public int PopulationSize { get; }
 
-        public int NumberOfGenes => throw new NotImplementedException();
+        public int NumberOfGenes { get; }
 
-        public int LengthOfGene => throw new NotImplementedException();
+        public int LengthOfGene { get; }
 
-        public double MutationRate => throw new NotImplementedException();
+        public double MutationRate { get; }
 
-        public double EliteRate => throw new NotImplementedException();
+        public double EliteRate { get; }
 
-        public int NumberOfTrials => throw new NotImplementedException();
+        public int NumberOfTrials { get; }
 
-        public long GenerationCount => throw new NotImplementedException();
+        public long GenerationCount { get; }
 
-        public IGeneration CurrentGeneration => throw new NotImplementedException();
+        public IGeneration CurrentGeneration { get; }
 
-        public FitnessEventHandler FitnessCalculation => throw new NotImplementedException();
+        public FitnessEventHandler FitnessCalculation { get; }
 
         public IGeneration GenerateGeneration()
         {
-            throw new NotImplementedException();
+            rand = new Random();
+            //??????????????? to do this constructor
         }
     }
 }
+
