@@ -8,7 +8,6 @@ namespace GeneticLibrary
 
     public IGeneticAlgorithm GenericAlgorithm {get; }
     public IChromosome[] Chromosomes { get;  set; }
-    //private 
     private FitnessEventHandler _fitnessEventHandler;
 
     public Generation( IGeneticAlgorithm geneticAlgorithm,
@@ -20,9 +19,7 @@ namespace GeneticLibrary
     public Generation(IGeneration generation) : base() {
       Chromosomes = new Chromosome[(int)generation.NumberOfChromosomes];
          for (var i = 0; i < Chromosomes.Length; i++) {
-        // Chromosomes[i] = (Chromosome)generation;
         Chromosomes[i] = generation[i];
-        // generation[i] = Chromosomes[i];
         }
     }
 
@@ -46,20 +43,7 @@ namespace GeneticLibrary
       return Chromosomes[0];
 
 
-      //??????????????? to do this constructor
-      // for (int i = 0; i < Chromosomes.Length; i++)
-      // {
-      //   IChromosome temp = null;
-      //   if (Chromosomes[i].Fitness < Chromosomes[i+1].Fitness){
-      //     temp = Chromosomes[i];
-      //     Chromosomes[i] = Chromosomes [i + 1];
-      //     Chromosomes[i + 1] = temp;
 
-      //   }        
-      // }
-      // return Chromosomes; //for genaration
-      
-    // }
     }
 
     public void EvaluateFitnessOfPopulation() {
