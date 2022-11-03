@@ -1,5 +1,5 @@
 using System;
-using GeneticLibrary;
+using GeneticAlgorithm;
 
 namespace RobbyTheRobot
 {   

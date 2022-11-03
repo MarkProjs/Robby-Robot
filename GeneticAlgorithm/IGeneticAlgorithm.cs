@@ -1,4 +1,4 @@
-namespace GeneticLibrary
+namespace GeneticAlgorithm
 {
     public interface IGeneticAlgorithm
     {
