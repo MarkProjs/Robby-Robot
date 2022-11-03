@@ -34,7 +34,7 @@ namespace GeneticLibrary
     }
 
     
-    public int CompareTo([AllowNull] IChromosome other) {
+    public int CompareTo(IChromosome other) {
       return Fitness.CompareTo(other.Fitness);
       //return other.Fitness.CompareTo(Fitness);
       
@@ -72,7 +72,7 @@ namespace GeneticLibrary
     public double Fitness { 
       get { return _fitness; }
       set { _fitness = value; }
-      }
+    }
 
     public int[] Genes { get; }
 
