@@ -27,7 +27,7 @@ namespace GeneticLibrary
 
   internal class GenerationDetails : Generation {
     public GenerationDetails( IGeneticAlgorithm geneticAlgorithm,
-      FitnessEventHandler fitnessEventHandler, int seed = 0) {
+      FitnessEventHandler fitnessEventHandler, int? seed = null) {
 
         //??????????????? to do this constructor
 
