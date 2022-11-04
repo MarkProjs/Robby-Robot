@@ -36,7 +36,6 @@ namespace GeneticLibrary
     
         public int CompareTo(IChromosome other) {
             return Fitness.CompareTo(other.Fitness);
-
         }
 
         public IChromosome[] Reproduce(IChromosome spouse, double mutationProb){
