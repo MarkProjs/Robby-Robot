@@ -36,12 +36,12 @@ namespace GeneticLibrary {
 
     public double MaxFitness {
       get {
-        double _maxFitness = 0;
-        for (int i = 0; i < Chromosomes.Length; i++) {
-
+        double _maxFitness = Chromosomes[0].Fitness;
+        for (int i = 1; i < Chromosomes.Length; i++) {
+          if (_maxFitness < Chromosomes[i].Fitness) {
+            _maxFitness = Chromosomes[i].Fitness;
+          }
         }
-        _maxFitness = Chromosomes[0].Fitness;
-
         return _maxFitness;
       }
     }
@@ -50,6 +50,26 @@ namespace GeneticLibrary {
       get {
         return Chromosomes.Length;
       }
+    }
+
+    public IChromosome this[int index] {
+      get { return Chromosomes[index]; }
+      set { Chromosomes[index] = value; }
+    }
+
+    public IChromosome SelectParent() {
+      
+    }
+
+    public void EvaluateFitnessOfPopulation() {
+      double evaluationFitness = 0;
+      for (int i = 0; i < Chromosomes.Length; i++)
+      {
+        double fitnessEvent = FitnessEventHandler.Invoke(Chromosomes[i], this);
+        (Chromosomes[i] as Chromosome).Fitness =  fitnessEvent;
+        evaluationFitness += Chromosomes[i].Fitness;
+      }
+      double avarage = evaluationFitness /  GeneticAlgorithm.NumberOfTrials;
     }
   }
 }
