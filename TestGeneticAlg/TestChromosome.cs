@@ -7,31 +7,30 @@ namespace TestGeneticAlg
     [TestClass]
     public class TestChromosome
     {
-        static int[] p1 = new int[] { 2, 5, 1, 0, 4, 5, 3, 6};
+        static int[] p1 = new int[] { 2, 5, 1, 0, 4, 5, 3, 6 };
         private Chromosome spouse = new Chromosome(20, 6, 6);
         private static int numberOfGenes = 10;
         private static int LengthOfGene = 6;
         private static int seed = 0;
         private static Chromosome chromosome;
-        
-        
-        
+
+
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),"Arguments are not valid")]
+        [ExpectedException(typeof(ArgumentNullException), "Arguments are not valid")]
         public void ArgumentNullDeepCopyChromosomeConstructor()
         {
             Chromosome deepClone = new Chromosome(chromosome);
             bool reference = object.ReferenceEquals(deepClone, chromosome);
             Assert.IsFalse(reference, "Deep copy constructor is not functional");
         }
-        
+
         [TestMethod]
         public void TestDefaultArrayLength()
         {
             chromosome = new Chromosome(numberOfGenes, LengthOfGene, seed);
             Assert.AreEqual(10, chromosome.Length);
         }
-        
+
         [TestMethod]
         public void TestRandomGenesRange()
         {
@@ -40,7 +39,7 @@ namespace TestGeneticAlg
                 Assert.IsTrue(i < 7, "The genes range cannot be greater than 6");
             }
         }
-        
+
         [TestMethod]
         public void TestRandomGenesRange2()
         {
@@ -51,14 +50,14 @@ namespace TestGeneticAlg
                 Assert.IsTrue(i < 7, "The genes range cannot be greater than 6");
             }
         }
-   
+
         [TestMethod]
         public void TestChromosomeFitnessField()
         {
             double fitnessResult = 39.4;
             chromosome = new Chromosome(numberOfGenes, LengthOfGene, seed);
             chromosome.Fitness = 39.4;
-            Assert.AreEqual(chromosome.Fitness,fitnessResult);
+            Assert.AreEqual(chromosome.Fitness, fitnessResult);
         }
 
 
@@ -79,7 +78,7 @@ namespace TestGeneticAlg
             Assert.AreEqual(p1[3], 0, "Index element is not the expected value");
         }
 
-        
+
         [TestMethod]
         public void TestDeepCopyConstructor()
         {
@@ -90,18 +89,19 @@ namespace TestGeneticAlg
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException),"A chromosome arguments are  was inappropriately allowed.")]
+        [ExpectedException(typeof(ArgumentOutOfRangeException),
+            "A chromosome arguments are  was inappropriately allowed.")]
         public void ArgumentOutOfRangeChromosomeConstructor()
         {
-            chromosome = new Chromosome(100,-7,null);
+            chromosome = new Chromosome(100, -7, null);
         }
 
-        [TestMethod]    
+        [TestMethod]
         public void TestDeepCopyChromosomeConstructorCompareTo()
         {
             chromosome = new Chromosome(numberOfGenes, LengthOfGene, seed);
             Chromosome deepClone = new Chromosome(chromosome);
-            Assert.AreEqual(chromosome.CompareTo(deepClone),0,"The two instances can not be equal");
+            Assert.AreEqual(chromosome.CompareTo(deepClone), 0, "The two instances can not be equal");
         }
 
         [TestMethod]
@@ -122,6 +122,7 @@ namespace TestGeneticAlg
                 Assert.AreEqual(chromosome[i], nextGenChromosome[i]);
             }
         }
+
         [TestMethod]
         public void TestReproduceMethod0MutationProbSpouse()
         {
@@ -145,6 +146,36 @@ namespace TestGeneticAlg
         //     }
         // }
 
+        [TestClass]
+        public class UnitTest1
+        {
+            Chromosome chr = new Chromosome(5, 7, 1);
 
+            [TestMethod]
+            public void TestFitness()
+            {
+                Assert.AreEqual(chr.Fitness, 0.0);
+            }
+
+            [TestMethod]
+            public void TestLength()
+            {
+                Assert.AreEqual(chr.Length, 5);
+            }
+
+            [TestMethod]
+            public void TestGenes()
+            {
+                Random rnd = new Random(1);
+                int[] tempGenes = new int[5];
+                for (int i = 0; i < 5; i++)
+                {
+                    int rndInt = rnd.Next(7);
+                    tempGenes[i] = rndInt;
+                }
+
+                Assert.AreEqual(chr[0], tempGenes[0]);
+            }
+        }
     }
 }
