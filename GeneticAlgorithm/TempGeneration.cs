@@ -24,7 +24,8 @@ namespace GeneticLibrary {
 
     public FitnessEventHandler FitnessEventHandler {get;}
 
-    public double AverageFitness {
+    public double AverageFitness 
+    {
       get {
         double _fitnessAvg = 0;
         foreach (var chromosome in Chromosomes) {
@@ -34,8 +35,10 @@ namespace GeneticLibrary {
       }
     }
 
-    public double MaxFitness {
-      get {
+    public double MaxFitness 
+    {
+      get 
+      {
         double _maxFitness = (Chromosomes[0] as Chromosome).Fitness;
         for (int i = 1; i < Chromosomes.Length; i++) {
           if (_maxFitness < (Chromosomes[i] as Chromosome).Fitness) {
@@ -58,7 +61,14 @@ namespace GeneticLibrary {
     }
 
     public IChromosome SelectParent() {
-      
+      int TempIndex = 0;
+      for (int i = 1; i < Chromosomes.Length; i++) {
+        if ((Chromosomes[TempIndex] as Chromosome).CompareTo(Chromosomes[i]) == -1) {
+          Chromosomes[TempIndex] = Chromosomes[i]; 
+          TempIndex++;
+        }
+      }
+      return this[0];
     }
 
     public void EvaluateFitnessOfPopulation() {
