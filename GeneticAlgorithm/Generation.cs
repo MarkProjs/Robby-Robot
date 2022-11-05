@@ -38,12 +38,7 @@ namespace GeneticLibrary
     {
       Array.Sort(Chromosomes);
       Array.Reverse(Chromosomes);
-
-
       return Chromosomes[0];
-
-
-
     }
 
     public void EvaluateFitnessOfPopulation() {
