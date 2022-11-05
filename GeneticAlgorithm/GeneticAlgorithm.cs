@@ -15,7 +15,6 @@ namespace GeneticLibrary
             MutationRate = mutationRate;
             EliteRate = eliteRate;
             NumberOfTrials = numberOfTrials;
-            //GenerationCount = ??;
             FitnessCalculation = fitnessFunc;
             rand = new Random(seed.GetValueOrDefault());
         }
@@ -43,6 +42,7 @@ namespace GeneticLibrary
             rand = new Random();
             //??????????????? to do this constructor
             return null;
+            
         }
     }
 }

@@ -38,12 +38,7 @@ namespace GeneticLibrary
     {
       Array.Sort(Chromosomes);
       Array.Reverse(Chromosomes);
-
-
       return Chromosomes[0];
-
-
-
     }
 
     public void EvaluateFitnessOfPopulation() {
@@ -54,7 +49,7 @@ namespace GeneticLibrary
         (Chromosomes[i] as Chromosome).Fitness =  fitnessEvent;
         evaluationFitness += Chromosomes[i].Fitness;
       }
-      double avarage = evaluationFitness /  GenericAlgorithm.NumberOfTrials;
+      double avarage = evaluationFitness / GenericAlgorithm.NumberOfTrials;
     }
   }
  }

@@ -31,6 +31,5 @@ namespace GeneticLibrary
         /// The length of the genes
         /// </summary>
         long Length {get;}
-
     }
 }
