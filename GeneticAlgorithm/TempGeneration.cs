@@ -28,7 +28,7 @@ namespace GeneticLibrary {
       get {
         double _fitnessAvg = 0;
         foreach (var chromosome in Chromosomes) {
-          _fitnessAvg += chromosome.Fitness;
+          _fitnessAvg += (chromosome as Chromosome).Fitness;
         }
         return _fitnessAvg / Chromosomes.Length;
       }
@@ -36,10 +36,10 @@ namespace GeneticLibrary {
 
     public double MaxFitness {
       get {
-        double _maxFitness = Chromosomes[0].Fitness;
+        double _maxFitness = (Chromosomes[0] as Chromosome).Fitness;
         for (int i = 1; i < Chromosomes.Length; i++) {
-          if (_maxFitness < Chromosomes[i].Fitness) {
-            _maxFitness = Chromosomes[i].Fitness;
+          if (_maxFitness < (Chromosomes[i] as Chromosome).Fitness) {
+            _maxFitness = (Chromosomes[i] as Chromosome).Fitness;
           }
         }
         return _maxFitness;
