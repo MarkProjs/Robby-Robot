@@ -1,13 +1,150 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using GeneticLibrary;
+using System;
 
 namespace TestGeneticAlg
 {
     [TestClass]
-    public class UnitTest1
+    public class TestChromosome
     {
+        static int[] p1 = new int[] { 2, 5, 1, 0, 4, 5, 3, 6};
+        private Chromosome spouse = new Chromosome(20, 6, 6);
+        private static int numberOfGenes = 10;
+        private static int LengthOfGene = 6;
+        private static int seed = 0;
+        private static Chromosome chromosome;
+        
+        
+        
         [TestMethod]
-        public void TestMethod1()
+        [ExpectedException(typeof(ArgumentNullException),"Arguments are not valid")]
+        public void ArgumentNullDeepCopyChromosomeConstructor()
         {
+            Chromosome deepClone = new Chromosome(chromosome);
+            bool reference = object.ReferenceEquals(deepClone, chromosome);
+            Assert.IsFalse(reference, "Deep copy constructor is not functional");
         }
+        
+        [TestMethod]
+        public void TestDefaultArrayLength()
+        {
+            chromosome = new Chromosome(numberOfGenes, LengthOfGene, seed);
+            Assert.AreEqual(10, chromosome.Length);
+        }
+        
+        [TestMethod]
+        public void TestRandomGenesRange()
+        {
+            foreach (int i in p1)
+            {
+                Assert.IsTrue(i < 7, "The genes range cannot be greater than 6");
+            }
+        }
+        
+        [TestMethod]
+        public void TestRandomGenesRange2()
+        {
+            chromosome = new Chromosome(numberOfGenes, LengthOfGene, seed);
+            int[] genes = chromosome.Genes;
+            foreach (int i in genes)
+            {
+                Assert.IsTrue(i < 7, "The genes range cannot be greater than 6");
+            }
+        }
+   
+        [TestMethod]
+        public void TestChromosomeFitnessField()
+        {
+            double fitnessResult = 39.4;
+            chromosome = new Chromosome(numberOfGenes, LengthOfGene, seed);
+            chromosome.Fitness = 39.4;
+            Assert.AreEqual(chromosome.Fitness,fitnessResult);
+        }
+
+
+        [TestMethod]
+        public void TestRandomGenesRange3()
+        {
+            chromosome = new Chromosome(100, 7, seed);
+            int[] genes = chromosome.Genes;
+            foreach (int i in genes)
+            {
+                Assert.IsTrue(i < 8, "The genes range cannot be greater than 7");
+            }
+        }
+
+        [TestMethod]
+        public void TestArrayIndex()
+        {
+            Assert.AreEqual(p1[3], 0, "Index element is not the expected value");
+        }
+
+        
+        [TestMethod]
+        public void TestDeepCopyConstructor()
+        {
+            chromosome = new Chromosome(numberOfGenes, LengthOfGene, seed);
+            Chromosome deepClone = new Chromosome(chromosome);
+            bool reference = object.ReferenceEquals(deepClone, chromosome);
+            Assert.IsFalse(reference, "Deep copy constructor is not functional");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException),"A chromosome arguments are  was inappropriately allowed.")]
+        public void ArgumentOutOfRangeChromosomeConstructor()
+        {
+            chromosome = new Chromosome(100,-7,null);
+        }
+
+        [TestMethod]    
+        public void TestDeepCopyChromosomeConstructorCompareTo()
+        {
+            chromosome = new Chromosome(numberOfGenes, LengthOfGene, seed);
+            Chromosome deepClone = new Chromosome(chromosome);
+            Assert.AreEqual(chromosome.CompareTo(deepClone),0,"The two instances can not be equal");
+        }
+
+        [TestMethod]
+        public void TestDeepCopyConstructorLength()
+        {
+            Chromosome deepClone = new Chromosome(chromosome);
+            Assert.AreEqual(chromosome.Length, deepClone.Length, "Deep copy constructor is not functional");
+        }
+
+        [TestMethod]
+        public void TestReproduceMethod0MutationProbParent1()
+        {
+            chromosome = new Chromosome(20, LengthOfGene, seed);
+            IChromosome[] nextGeneration = chromosome.Reproduce(spouse, 0);
+            Chromosome nextGenChromosome = new Chromosome(nextGeneration[0]);
+            for (int i = 0; i < chromosome.Length; i++)
+            {
+                Assert.AreEqual(chromosome[i], nextGenChromosome[i]);
+            }
+        }
+        [TestMethod]
+        public void TestReproduceMethod0MutationProbSpouse()
+        {
+            chromosome = new Chromosome(20, LengthOfGene, seed);
+            IChromosome[] nextGeneration = chromosome.Reproduce(spouse, 0);
+            Chromosome nextGenChromosome = new Chromosome(nextGeneration[1]);
+            for (int i = 0; i < chromosome.Length; i++)
+            {
+                Assert.AreEqual(spouse[i], nextGenChromosome[i]);
+            }
+        }
+        // [TestMethod]
+        // public void TestReproduceMethod100MutationProb()
+        // {
+        //     chromosome = new Chromosome(20, LengthOfGene, seed);
+        //     IChromosome[] nextGeneration = chromosome.Reproduce(spouse, 100);
+        //     Chromosome nextGenChromosome = new Chromosome(nextGeneration[0]);
+        //     for (int i = 0; i < chromosome.Length; i++)
+        //     {
+        //         Assert.AreNotEqual(chromosome[i], nextGenChromosome[i]);
+        //     }
+        // }
+
+
     }
 }
