@@ -8,14 +8,20 @@ namespace GeneticLibrary {
     private event FitnessEventHandler _fitnessEvt; 
     private Random rnd;
 
-    public TempGeneration(IGeneticAlgorithm _geneticAlgorithm, FitnessEventHandler FitnessEvt, int? seed = null) {
+    public TempGeneration(IGeneticAlgorithm _geneticAlgorithm, FitnessEventHandler FitnessEvt, int? seed = null) 
+    {
       GeneticAlgorithm = _geneticAlgorithm;
       _fitnessEvt = FitnessEvt;
       rnd = new Random(seed.GetValueOrDefault());
+      Chromosomes = new IChromosome[GeneticAlgorithm.PopulationSize];
+      //loading the Chromosome array
+      for( int i =0 ; i < Chromosomes.Length;i++) {
+        Chromosomes[i] = new Chromosome(GeneticAlgorithm.NumberOfGenes, GeneticAlgorithm.LengthOfGene);
+      }
     }
 
     public TempGeneration(IChromosome[] _chromosomes) {
-      Chromosomes = new Chromosome[_chromosomes.Length];
+      Chromosomes = new IChromosome[_chromosomes.Length];
       for (int i = 0; i < _chromosomes.Length;i++) {
         Chromosomes[i] = _chromosomes[i];
       }
@@ -25,8 +31,9 @@ namespace GeneticLibrary {
 
     public FitnessEventHandler FitnessEventHandler 
     {
-        get{
-          return _fitnessEvt;
+      get
+      {
+        return _fitnessEvt;
       }
     }
 
