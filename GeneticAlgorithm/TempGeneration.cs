@@ -5,11 +5,12 @@ namespace GeneticLibrary {
   public class TempGeneration: IGenerationDetails, IGeneration {
     private IChromosome[] Chromosomes;
     private int? _seed;
+    private event FitnessEventHandler _fitnessEvt; 
     private Random rnd;
 
-    public TempGeneration(IGeneticAlgorithm _geneticAlgorithm, FitnessEventHandler _fitnessEvt, int? seed = null) {
+    public TempGeneration(IGeneticAlgorithm _geneticAlgorithm, FitnessEventHandler FitnessEvt, int? seed = null) {
       GeneticAlgorithm = _geneticAlgorithm;
-      FitnessEventHandler = _fitnessEvt;
+      _fitnessEvt = FitnessEvt;
       rnd = new Random(seed.GetValueOrDefault());
     }
 
@@ -22,7 +23,12 @@ namespace GeneticLibrary {
 
     public IGeneticAlgorithm GeneticAlgorithm {get;}
 
-    public FitnessEventHandler FitnessEventHandler {get;}
+    public FitnessEventHandler FitnessEventHandler 
+    {
+        get{
+          return _fitnessEvt;
+      }
+    }
 
     public double AverageFitness 
     {
