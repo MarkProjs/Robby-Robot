@@ -5,7 +5,7 @@ namespace GeneticLibrary {
   public class TempGeneration: IGenerationDetails, IGeneration {
     private IChromosome[] Chromosomes;
     private int? _seed;
-    private event FitnessEventHandler _fitnessEvt; 
+    public event FitnessEventHandler _fitnessEvt; 
     private Random rnd;
 
     public TempGeneration(IGeneticAlgorithm _geneticAlgorithm, FitnessEventHandler FitnessEvt, int? seed = null) 
@@ -13,6 +13,7 @@ namespace GeneticLibrary {
       GeneticAlgorithm = _geneticAlgorithm;
       _fitnessEvt = FitnessEvt;
       rnd = new Random(seed.GetValueOrDefault());
+
       Chromosomes = new IChromosome[GeneticAlgorithm.PopulationSize];
       //loading the Chromosome array
       for( int i =0 ; i < Chromosomes.Length;i++) {
@@ -28,14 +29,6 @@ namespace GeneticLibrary {
     }
 
     public IGeneticAlgorithm GeneticAlgorithm {get;}
-
-    public FitnessEventHandler FitnessEventHandler 
-    {
-      get
-      {
-        return _fitnessEvt;
-      }
-    }
 
     public double AverageFitness 
     {
@@ -88,7 +81,7 @@ namespace GeneticLibrary {
       double evaluationFitness = 0;
       for (int i = 0; i < Chromosomes.Length; i++)
       {
-        double fitnessEvent = FitnessEventHandler.Invoke(Chromosomes[i], this);
+        double fitnessEvent = this._fitnessEvt.Invoke(Chromosomes[i], this);
         (Chromosomes[i] as Chromosome).Fitness =  fitnessEvent;
         evaluationFitness += Chromosomes[i].Fitness;
       }
