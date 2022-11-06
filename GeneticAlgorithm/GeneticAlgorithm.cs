@@ -6,6 +6,11 @@ namespace GeneticLibrary
     {
         private Random rand;
 
+        private IGeneration _generation;
+
+        private long _generationCount = 0;
+        private int? _seed;
+
         public GeneticAlgorithm(int populationSize, int numberOfGenes, int lengthOfGenes, double mutationRate, double eliteRate,
             int numberOfTrials, FitnessEventHandler fitnessFunc, int? seed = null)
         {
@@ -15,9 +20,9 @@ namespace GeneticLibrary
             MutationRate = mutationRate;
             EliteRate = eliteRate;
             NumberOfTrials = numberOfTrials;
-            //GenerationCount = ??;
             FitnessCalculation = fitnessFunc;
-            rand = new Random(seed.GetValueOrDefault());
+            _seed = seed;
+            rand = new Random(_seed.GetValueOrDefault());
         }
 
         public int PopulationSize { get; }
@@ -32,17 +37,40 @@ namespace GeneticLibrary
 
         public int NumberOfTrials { get; }
 
-        public long GenerationCount { get; }
+        public long GenerationCount 
+        { 
+            get {
+                return _generationCount;
+            }
+        }
 
-        public IGeneration CurrentGeneration { get; }
+        public IGeneration CurrentGeneration 
+        { 
+            get 
+            {
+                return _generation;
+            }
+        }
 
         public FitnessEventHandler FitnessCalculation { get; }
 
+        private IGeneration GenerateNextGeneration() 
+        {
+            
+
+        }
+
         public IGeneration GenerateGeneration()
         {
-            rand = new Random();
-            //??????????????? to do this constructor
-            return null;
+           if(_generation == null) 
+           {
+                _generation = new Generation(this, FitnessCalculation, _seed);
+           }
+           else 
+           {
+                _generation = GenerateGeneration();
+           }
+           return _generation;
         }
     }
 }
