@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 
 namespace GeneticLibrary
 {
@@ -65,7 +65,7 @@ namespace GeneticLibrary
                 newPopulation[tempIndex+1] = children[tempIndex+1];
                 tempIndex += 2;
             }
-            IGeneration nextGen = new TempGeneration(newPopulation);
+            IGeneration nextGen = new Generation(newPopulation);
             return nextGen;
         }
 
@@ -73,7 +73,7 @@ namespace GeneticLibrary
         {
            if(_generation == null) 
            {
-                _generation = new TempGeneration(this, FitnessCalculation, _seed);
+                _generation = new Generation(this, FitnessCalculation, _seed);
            }
            else 
            {
@@ -84,4 +84,5 @@ namespace GeneticLibrary
         }
     }
 }
+
 
