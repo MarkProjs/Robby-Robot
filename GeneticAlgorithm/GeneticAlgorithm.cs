@@ -32,7 +32,7 @@ namespace GeneticLibrary
         public int LengthOfGene { get; }
 
         public double MutationRate { get; }
-
+        
         public double EliteRate { get; }
 
         public int NumberOfTrials { get; }
@@ -55,21 +55,31 @@ namespace GeneticLibrary
         public FitnessEventHandler FitnessCalculation { get; }
 
         private IGeneration GenerateNextGeneration() 
-        {
+        {    
             
-
+            IChromosome[] newPopulation = new IChromosome[_generation.NumberOfChromosomes];
+            int tempIndex = 0;
+            while(_generation.NumberOfChromosomes % 2 == 0) {
+                IChromosome[] children = _generation[tempIndex].Reproduce(_generation[tempIndex+1], MutationRate);
+                newPopulation[tempIndex] = children[tempIndex];
+                newPopulation[tempIndex+1] = children[tempIndex+1];
+                tempIndex += 2;
+            }
+            IGeneration nextGen = new TempGeneration(newPopulation);
+            return nextGen;
         }
 
         public IGeneration GenerateGeneration()
         {
            if(_generation == null) 
            {
-                _generation = new Generation(this, FitnessCalculation, _seed);
+                _generation = new TempGeneration(this, FitnessCalculation, _seed);
            }
            else 
            {
-                _generation = GenerateGeneration();
+                _generation = GenerateNextGeneration();
            }
+           _generationCount +=1;
            return _generation;
         }
     }
