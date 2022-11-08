@@ -3,37 +3,34 @@ using GeneticLibrary;
 
 namespace RobbyTheRobot
 {
-  public class RobbyTheRobot : IRobbyTheRobot
+  internal class RobbyTheRobot : IRobbyTheRobot
   {
-    public RobbyTheRobot(
-      int numberOfGenerations,
-      int populationSize,
-      int numberOfTrials,
-      int? seed) {
-
+    private IGeneticAlgorithm _geneticAlg;
+    public event FileWritten _filewritten;
+    public RobbyTheRobot(int numberOfGenerations, int populationSize, int numberOfTrials, int? seed) 
+    {
       NumberOfGenerations = numberOfGenerations;
+    }
+    public int NumberOfActions {};
 
-      }
-    public int NumberOfActions => throw new NotImplementedException();
+    public int NumberOfTestGrids {};
 
-    public int NumberOfTestGrids => throw new NotImplementedException();
-
-    public int GridSize => throw new NotImplementedException();
+    public int GridSize {};
 
     public int NumberOfGenerations { get; }
 
-    public double MutationRate => throw new NotImplementedException();
+    public double MutationRate {};
 
-    public double EliteRate => throw new NotImplementedException();
-
-    public void GeneratePossibleSolutions(string folderPath)
-    {
-      throw new NotImplementedException();
-    }
+    public double EliteRate {};
 
     public ContentsOfGrid[,] GenerateRandomTestGrid()
     {
       throw new NotImplementedException();
+    }
+
+    public void GeneratePossibleSolutions(string folderPath)
+    {
+      _filewritten?.Invoke("File has been written");
     }
   }
 }
