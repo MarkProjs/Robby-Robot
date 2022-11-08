@@ -6,10 +6,11 @@ namespace GeneticLibrary
     {
         private Random rand;
 
-        private IGeneration _generation;
+        private IGeneration _currentGeneration;
+        private IGeneration _lastGeneration;
 
-        private long _generationCount = 0;
-        private int? _seed;
+        private static long  _generationCount = 0;
+        private int? _seed; // What is the seed's value 
 
         public GeneticAlgorithm(int populationSize, int numberOfGenes, int lengthOfGenes, double mutationRate, double eliteRate,
             int numberOfTrials, FitnessEventHandler fitnessFunc, int? seed = null)
@@ -53,7 +54,7 @@ namespace GeneticLibrary
         { 
             get 
             {
-                return _generation;
+                return _currentGeneration;
             }
         }
 
@@ -61,10 +62,10 @@ namespace GeneticLibrary
 
         private IGeneration GenerateNextGeneration() 
         {
-            IChromosome[] newPopulation = new IChromosome[_generation.NumberOfChromosomes];
+            IChromosome[] newPopulation = new IChromosome[_currentGeneration.NumberOfChromosomes];
             int tempIndex = 0;
-            while(_generation.NumberOfChromosomes % 2 == 0) {
-                IChromosome[] children = _generation[tempIndex].Reproduce(_generation[tempIndex+1], MutationRate);
+            while(_currentGeneration.NumberOfChromosomes % 2 == 0) {
+                IChromosome[] children = _currentGeneration[tempIndex].Reproduce(_currentGeneration[tempIndex+1], MutationRate);
                 newPopulation[tempIndex] = children[tempIndex];
                 newPopulation[tempIndex+1] = children[tempIndex+1];
                 tempIndex += 2;
@@ -75,16 +76,18 @@ namespace GeneticLibrary
 
         public IGeneration GenerateGeneration()
         {
-           if(_generation == null) 
+           if(_currentGeneration == null) 
            {
-                _generation = new Generation(this, FitnessCalculation, _seed);
+                _currentGeneration = new Generation(this, FitnessCalculation, _seed); // seed must be generationCount 
+                _generationCount +=1;
            }
-           else 
+           else
            {
-                _generation = GenerateNextGeneration();
+               _lastGeneration = _currentGeneration;
+               _currentGeneration = new Generation(this, FitnessCalculation, _seed);
+               _generationCount +=1;
            }
-           _generationCount +=1;
-           return _generation;
+           return _currentGeneration;
         }
     }
 }

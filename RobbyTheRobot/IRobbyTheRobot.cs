@@ -2,7 +2,7 @@ using System;
 using GeneticLibrary;
 
 namespace RobbyTheRobot
-{   
+{
     /// <summary>
     /// Possible dirction of the grid
     /// </summary>
@@ -13,7 +13,6 @@ namespace RobbyTheRobot
         public ContentsOfGrid E { get; set; }
         public ContentsOfGrid W { get; set; }
         public ContentsOfGrid Current { get; set; }
-
     }
 
     /// <summary>
@@ -39,19 +38,20 @@ namespace RobbyTheRobot
         PickUp,
         Random
     }
+
     /// <summary>
     /// Represents Robby the Robot
     /// </summary>
     public interface IRobbyTheRobot
     {
-        int NumberOfActions {get;}
-        int NumberOfTestGrids {get;}
-        int GridSize {get;}
-        int NumberOfGenerations {get;}
+        int NumberOfActions { get; }
+        int NumberOfTestGrids { get; }
+        int GridSize { get; }
+        int NumberOfGenerations { get; }
 
-        double MutationRate {get;}
+        double MutationRate { get; }
 
-        double EliteRate {get;}
+        double EliteRate { get; }
 
         /// <summary>
         /// Used to generate a single test grid filled with cans in random locations. Half of 
@@ -72,7 +72,6 @@ namespace RobbyTheRobot
         /// An event raised when a file is written to disk
         /// </summary>
         //event TODOMYCUSTOMDELEGATE FileWritten;
-
     }
 
     ///TODO Add custom delegate

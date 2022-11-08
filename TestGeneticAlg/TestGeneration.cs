@@ -1,3 +1,4 @@
+using System;
 using GeneticLibrary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -10,14 +11,18 @@ namespace TestGeneticAlg
         // GeneticAlgorithm ga = new GeneticAlgorithm(30,20,7,0,0,100,);
         
 
-        static Chromosome ch1 = new Chromosome(10, 7,6);
-        static Chromosome ch2 = new Chromosome(10, 7,6);
-        IChromosome[] charr = ch1.Reproduce(ch2, 100);
+         Chromosome ch1 = new Chromosome(20, 7,6);
+         Chromosome ch2 = new Chromosome(20, 7,6);
+        
        
         
         [TestMethod]
-        public void TestConstructorGeneration()
+        public void TestConstructorLength()
         {
+            IChromosome[] childrenArr = ch1.Reproduce(ch2, 100);
+            Assert.AreEqual(childrenArr.Length, 20);
         }
+        
+   
     }
 }

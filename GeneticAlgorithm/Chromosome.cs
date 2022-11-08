@@ -9,10 +9,10 @@ namespace GeneticLibrary
         private double _fitness;
         private static int currentIndex = 0;
         
-        public Chromosome(int numberOfGenes, int lengthOfGene, int? seed = null){
+        public Chromosome(int numberOfGenes, int lengthOfGene, int seed = 0){
             if (numberOfGenes <= 0 || lengthOfGene <= 0) throw new ArgumentOutOfRangeException("Arguments are not valid");
             Genes = new int[numberOfGenes];
-            var rand = new Random(seed.GetValueOrDefault());
+            var rand = new Random();  // (seed.GetValueOrDefault() cause of creating same children all children have same Genes
             for (int i = 0; i < numberOfGenes; i++)
             {
                 int rndInt = rand.Next(lengthOfGene);
@@ -22,13 +22,13 @@ namespace GeneticLibrary
         }
 
 
-        public Chromosome(IChromosome choromosome){
-            if(choromosome == null) throw new ArgumentNullException("choromosome");
-            Fitness = choromosome.Fitness;
-            Genes = new int[choromosome.Length];
-            for (var i = 0; i < choromosome.Length; i++)
+        public Chromosome(IChromosome chromosome){
+            if(chromosome == null) throw new ArgumentNullException("chromosome is empty");
+            Fitness = chromosome.Fitness;
+            Genes = new int[chromosome.Length];
+            for (var i = 0; i < chromosome.Length; i++)
             {
-                Genes[i] = choromosome[i];
+                Genes[i] = chromosome[i];
             } 
         }
         public int CompareTo(IChromosome other) {
@@ -96,8 +96,21 @@ namespace GeneticLibrary
         private IChromosome CrossingOver(IChromosome p1, IChromosome p2)
         {
             IChromosome child = new Chromosome(p1.Genes.Length,7);
-            Array.Copy(p1.Genes,0,child.Genes,0,10);
-            Array.Copy(this.Genes,10,child.Genes,10,10);
+            Random rd = new Random();
+            int slicer = rd.Next(p1.Genes.Length);
+            slicer = 5;
+            // Array.Copy(p1.Genes,0,child.Genes,0,slicer);
+            // Array.Copy(p2.Genes,slicer,child.Genes,slicer,p1.Length-13);
+            for (int i = 0; i < slicer; i++)
+            {
+                child.Genes[i] = p1.Genes[i];
+            }
+
+            for (int i = slicer; i < p1.Length; i++)
+            {
+                child.Genes[i] = p2[i];
+            }
+            
             return child;
         }
 

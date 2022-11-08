@@ -54,7 +54,6 @@ namespace GeneticLibrary {
 
     public IChromosome this[int index] {
       get { return _chromosomes[index]; }
-      set { _chromosomes[index] = value; }
     }
 
     public IChromosome SelectParent() 

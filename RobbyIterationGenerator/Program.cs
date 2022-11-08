@@ -11,19 +11,24 @@ namespace RobbyIterationGenerator
         static void Main(string[] args)
         {
  
-            IChromosome chromosome = new Chromosome(20, 6, 6);
-            IChromosome spouse = new Chromosome(chromosome);
+            IChromosome chromosome = new Chromosome(20, 7, 6);
+            IChromosome chromosome1 = new Chromosome(20, 7, 6);
+            // IChromosome spouse = new Chromosome(chromosome);
 
-            IChromosome[] nextGeneration = chromosome.Reproduce(spouse, 100);
+            IChromosome[] nextGeneration = chromosome.Reproduce(chromosome1, 100);
 
             // Chromosome nextGenChromosome = new Chromosome(nextGeneration[1]);
             for (int i = 0; i < nextGeneration.Length; i++)
             {
                 Console.WriteLine("Parent "+i);
-                for (int j = 0; j < chromosome.Length; j++)
+                for (int j = 0; j < nextGeneration.Length; j++)
                 {
+                    if (nextGeneration[i] == null)
+                    {
+                        break;
+                    }
                     Console.WriteLine("Chromosome "+j +" "+nextGeneration[i].Genes[j]);
-                    Console.WriteLine("Spouse "+j+" "+spouse.Genes[j]);
+                    // Console.WriteLine("Spouse "+j+" "+spouse.Genes[j]);
                     Console.WriteLine("-----------");
                 }
               

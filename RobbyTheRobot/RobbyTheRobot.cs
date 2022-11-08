@@ -3,37 +3,36 @@ using GeneticLibrary;
 
 namespace RobbyTheRobot
 {
-  public class RobbyTheRobot : IRobbyTheRobot
-  {
-    public RobbyTheRobot(
-      int numberOfGenerations,
-      int populationSize,
-      int numberOfTrials,
-      int? seed) {
-
-      NumberOfGenerations = numberOfGenerations;
-
-      }
-    public int NumberOfActions => throw new NotImplementedException();
-
-    public int NumberOfTestGrids => throw new NotImplementedException();
-
-    public int GridSize => throw new NotImplementedException();
-
-    public int NumberOfGenerations { get; }
-
-    public double MutationRate => throw new NotImplementedException();
-
-    public double EliteRate => throw new NotImplementedException();
-
-    public void GeneratePossibleSolutions(string folderPath)
+    internal class RobbyTheRobot : IRobbyTheRobot
     {
-      throw new NotImplementedException();
-    }
+        public RobbyTheRobot(
+            int numberOfGenerations,
+            int populationSize,
+            int numberOfTrials,
+            int? seed)
+        {
+            NumberOfGenerations = numberOfGenerations;
+            NumberOfActions = numberOfTrials;
+            PopulationSize = populationSize;
 
-    public ContentsOfGrid[,] GenerateRandomTestGrid()
-    {
-      throw new NotImplementedException();
+        }
+
+        public int PopulationSize { get; }
+        public int NumberOfActions { get;}
+        public int NumberOfTestGrids { get; set; }
+        public int GridSize { get; }
+        public int NumberOfGenerations { get; }
+        public double MutationRate { get; set; }
+        public double EliteRate { get; set; }
+
+        public void GeneratePossibleSolutions(string folderPath)
+        {
+            GeneticAlgorithm ga = new GeneticAlgorithm(PopulationSize,243,7,0,10,200,);
+        }
+
+        public ContentsOfGrid[,] GenerateRandomTestGrid()
+        {
+            throw new NotImplementedException();
+        }
     }
-  }
 }

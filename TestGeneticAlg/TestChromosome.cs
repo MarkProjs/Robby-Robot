@@ -93,7 +93,7 @@ namespace TestGeneticAlg
             "A chromosome arguments are  was inappropriately allowed.")]
         public void ArgumentOutOfRangeChromosomeConstructor()
         {
-            chromosome = new Chromosome(100, -7, null);
+            chromosome = new Chromosome(100, -7);
         }
 
         [TestMethod]
