@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 
 namespace GeneticLibrary {
-  public class TempGeneration: IGenerationDetails, IGeneration {
+  public class Generation: IGenerationDetails, IGeneration {
     private IChromosome[] Chromosomes;
     private int? _seed;
     public event FitnessEventHandler _fitnessEvt; 
@@ -11,7 +11,7 @@ namespace GeneticLibrary {
     private double _fitnessAvg;
     private double _maxFitness;
 
-    public TempGeneration(IGeneticAlgorithm _geneticAlgorithm, FitnessEventHandler FitnessEvt, int? seed = null) 
+    public Generation(IGeneticAlgorithm _geneticAlgorithm, FitnessEventHandler FitnessEvt, int? seed = null) 
     {
       GeneticAlgorithm = _geneticAlgorithm;
       _fitnessEvt = FitnessEvt;
@@ -24,7 +24,7 @@ namespace GeneticLibrary {
       }
     }
 
-    public TempGeneration(IChromosome[] _chromosomes) {
+    public Generation(IChromosome[] _chromosomes) {
       Chromosomes = new IChromosome[_chromosomes.Length];
       for (int i = 0; i < _chromosomes.Length;i++) {
         Chromosomes[i] = _chromosomes[i];
