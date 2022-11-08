@@ -44,7 +44,13 @@ namespace RobbyVisulizer
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+           for (int i = 0; i < gridSize; ++i)
+{
+        for (int j = 0; j < gridSize; ++j)
+        {
+            _spriteBatch.Draw(tileTexture, new Rectangle(i * tileSize, j * tileSize, tileSize, tileSize), color);
+        }
+}
 
             base.Draw(gameTime);
         }

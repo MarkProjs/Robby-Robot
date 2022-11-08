@@ -8,6 +8,11 @@ namespace GeneticLibrary
 
         private Random rand;
 
+        private IGeneration _generation;
+
+        private long _generationCount = 0;
+        private int? _seed;
+
         public GeneticAlgorithm(int populationSize, int numberOfGenes, int lengthOfGenes, double mutationRate, double eliteRate,
             int numberOfTrials, FitnessEventHandler fitnessFunc, int? seed = null)
         {
@@ -34,35 +39,55 @@ namespace GeneticLibrary
         public int LengthOfGene { get; }
 
         public double MutationRate { get; }
-
+        
         public double EliteRate { get; }
 
         public int NumberOfTrials { get; }
 
-        public long GenerationCount { get; }
+        public long GenerationCount 
+        { 
+            get {
+                return _generationCount;
+            }
+        }
 
-        public IGeneration CurrentGeneration { get; }
+        public IGeneration CurrentGeneration 
+        { 
+            get 
+            {
+                return _generation;
+            }
+        }
 
         public FitnessEventHandler FitnessCalculation { get; }
 
+        private IGeneration GenerateNextGeneration() 
+        {    
+            
+            IChromosome[] newPopulation = new IChromosome[_generation.NumberOfChromosomes];
+            int tempIndex = 0;
+            while(_generation.NumberOfChromosomes % 2 == 0) {
+                IChromosome[] children = _generation[tempIndex].Reproduce(_generation[tempIndex+1], MutationRate);
+                newPopulation[tempIndex] = children[tempIndex];
+                newPopulation[tempIndex+1] = children[tempIndex+1];
+                tempIndex += 2;
+            }
+            IGeneration nextGen = new Generation(newPopulation);
+            return nextGen;
+        }
+
         public IGeneration GenerateGeneration()
         {
-            rand = new Random();
-            Generation previousGeneration;
-            if (GenerationCount == 0)
-            {
-                return CurrentGeneration;
-            }
-            else
-            {
-                for (int i = 0; i < PopulationSize; i++)
-                {
-                    EvalChromosomeFitness();
-                }              
-            }
-
-        
-            return null;
+           if(_generation == null) 
+           {
+                _generation = new Generation(this, FitnessCalculation, _seed);
+           }
+           else 
+           {
+                _generation = GenerateNextGeneration();
+           }
+           _generationCount +=1;
+           return _generation;
         }
         public void EvalChromosomeFitness(){
 
@@ -70,4 +95,5 @@ namespace GeneticLibrary
 
     }
 }
+
 
