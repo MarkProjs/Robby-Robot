@@ -43,15 +43,6 @@ namespace RobbyVisulizer
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-           for (int i = 0; i < gridSize; ++i)
-{
-        for (int j = 0; j < gridSize; ++j)
-        {
-            _spriteBatch.Draw(tileTexture, new Rectangle(i * tileSize, j * tileSize, tileSize, tileSize), color);
-        }
-}
-
             base.Draw(gameTime);
         }
     }

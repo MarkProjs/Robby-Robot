@@ -2,10 +2,8 @@
 
 namespace GeneticLibrary
 {
-    class GeneticAlgorithm : IGeneticAlgorithm
+    public class GeneticAlgorithm : IGeneticAlgorithm
     {
-     
-
         private Random rand;
 
         private IGeneration _generation;
@@ -62,8 +60,7 @@ namespace GeneticLibrary
         public FitnessEventHandler FitnessCalculation { get; }
 
         private IGeneration GenerateNextGeneration() 
-        {    
-            
+        {
             IChromosome[] newPopulation = new IChromosome[_generation.NumberOfChromosomes];
             int tempIndex = 0;
             while(_generation.NumberOfChromosomes % 2 == 0) {
@@ -89,10 +86,6 @@ namespace GeneticLibrary
            _generationCount +=1;
            return _generation;
         }
-        public void EvalChromosomeFitness(){
-
-        }
-
     }
 }
 

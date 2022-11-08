@@ -11,18 +11,23 @@ namespace RobbyIterationGenerator
         static void Main(string[] args)
         {
  
-            // Chromosome chromosome = new Chromosome(20, 6, 6);
-            // Chromosome spouse = new Chromosome(20, 6, 6);
+            IChromosome chromosome = new Chromosome(20, 6, 6);
+            IChromosome spouse = new Chromosome(chromosome);
 
-            // IChromosome[] nextGeneration = chromosome.Reproduce(spouse, 0);
+            IChromosome[] nextGeneration = chromosome.Reproduce(spouse, 100);
 
             // Chromosome nextGenChromosome = new Chromosome(nextGeneration[1]);
-            // for (int i = 0; i < chromosome.Length; i++)
-            // {
-            //     Console.WriteLine("Chromosome "+i +" "+chromosome[i]);
-            //     Console.WriteLine("Spouse "+i+" "+spouse[i]);
-            //     Console.WriteLine("-----------");
-            // }
+            for (int i = 0; i < nextGeneration.Length; i++)
+            {
+                Console.WriteLine("Parent "+i);
+                for (int j = 0; j < chromosome.Length; j++)
+                {
+                    Console.WriteLine("Chromosome "+j +" "+nextGeneration[i].Genes[j]);
+                    Console.WriteLine("Spouse "+j+" "+spouse.Genes[j]);
+                    Console.WriteLine("-----------");
+                }
+              
+            }
             // GeneticLibrary gens = new GeneticLibrary();
             // IGeneticAlgorithm algorithm = new GeneAlgorithm(gens.PopulationSize, gens.NumberOfGenes,gens.LengthOfGene,gens.MutationRate,gens.EliteRate,gens.NumberOfTrials,gens.FitnessEventHandler,0);
             // IGeneration current = new Generation();
