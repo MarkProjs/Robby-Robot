@@ -19,7 +19,7 @@ namespace RobbyTheRobot
     public RobbyTheRobot(int numberOfGenerations, int populationSize, int numberOfTrials, int? seed=null) 
     {
       NumberOfGenerations = numberOfGenerations;
-      _geneticAlg = GeneticLib.CreateGeneticAlgorithm(populationSize, _numGenes, _lengthOfGenes, _mutationRate, _eliteRate, numberOfTrials, fitnessCalculation(), seed);
+      _geneticAlg = GeneticLib.CreateGeneticAlgorithm(populationSize, _numGenes, _lengthOfGenes, _mutationRate, _eliteRate, numberOfTrials, fitnessCalculation, seed);
       if(seed != null) 
       {
         _rnd = new Random((int)seed);
@@ -29,6 +29,10 @@ namespace RobbyTheRobot
         _rnd = new Random();
       }
       
+    }
+    public double fitnessCalculation(IChromosome chromosome, IGeneration generation) 
+    {
+      return 0.1;
     }
     public int NumberOfActions 
     {
