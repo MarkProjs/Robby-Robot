@@ -22,7 +22,7 @@ namespace GeneticLibrary {
       }
     }
 
-    public Generation(Chromosome[] chromosomes) {
+    public Generation(IChromosome[] chromosomes) {
       _chromosomes = new Chromosome[chromosomes.Length];
 
       for (int i = 0; i < chromosomes.Length;i++) {

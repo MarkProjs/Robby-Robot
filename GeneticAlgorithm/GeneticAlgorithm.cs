@@ -7,8 +7,6 @@ namespace GeneticLibrary
         private Random rand;
 
         private IGeneration _currentGeneration;
-        private IGeneration _previousGeneration;
-
         private static long _generationCount = 0;
         private int? _seed; // What is the seed's value 
 
@@ -57,7 +55,7 @@ namespace GeneticLibrary
         private IGeneration GenerateNextGeneration()
         {
             IChromosome[] newPopulation = new IChromosome[_currentGeneration.NumberOfChromosomes];
-            int tempIndex = 0;
+            IGeneration gen = null;
             int elites =(int) (EliteRate * PopulationSize);
             if (elites % 2 == 1) elites+=1;
             for (int i = 0; i < elites; i++)
@@ -76,7 +74,8 @@ namespace GeneticLibrary
                newPopulation[i+1] = tmpChildren[1];
                
             }
-            return CurrentGeneration;
+            gen = new Generation(newPopulation);
+            return gen;
 
         }
 
@@ -89,8 +88,7 @@ namespace GeneticLibrary
             }
             else
             {
-                _previousGeneration = _currentGeneration;
-                _currentGeneration = new Generation(this, FitnessCalculation, _seed);
+                _currentGeneration = GenerateNextGeneration();
                 _generationCount += 1;
             }
 
