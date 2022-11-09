@@ -109,7 +109,8 @@ namespace RobbyTheRobot
 
     public void GeneratePossibleSolutions(string folderPath)
     {
-      _filewritten?.Invoke("File has been written");
+      
+      _filewritten?.Invoke("File written to" + folderPath);
     }
   }
 }
