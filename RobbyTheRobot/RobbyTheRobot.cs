@@ -78,26 +78,32 @@ namespace RobbyTheRobot
 
     public ContentsOfGrid[,] GenerateRandomTestGrid()
     {
-      int _canCounter = 0;
-      ContentsOfGrid[,] grid = new ContentsOfGrid[_gridCol, _gridRow];
-      for(int col = 0; col < grid.GetLength(0);col++) 
+      ContentsOfGrid[,] _tempGrid = new ContentsOfGrid[_gridCol, _gridRow];
+      for(int col = 0; col < _tempGrid.GetLength(0);col++) 
       {
-        for(int row = 0; row< grid.GetLength(1); row++) 
+        for(int row = 0; row< _tempGrid.GetLength(1); row++) 
         {
-          int PlaceCanOrNot = _rnd.Next(0, 2);
-          if( PlaceCanOrNot == 0 && _canCounter != 50) 
-          {
-            grid[col,row] = ContentsOfGrid.Can;
-            _canCounter += 1;
-          }
-          else 
-          {
-            grid[col,row] = ContentsOfGrid.Empty;
-          }
+           _tempGrid[col,row] = ContentsOfGrid.Empty;
         }
       }
+      ContentsOfGrid[,] grid = PlaceCanOnGrid(_tempGrid);
       return grid;
 
+    }
+    private ContentsOfGrid[,] PlaceCanOnGrid(ContentsOfGrid[,] _tempGrid)
+    {
+      int _canCounter = 0;
+      while(_canCounter < 51)
+      {
+        int col = _rnd.Next(_tempGrid.GetLength(0));
+        int row = _rnd.Next(_tempGrid.GetLength(1));
+        if (_tempGrid[col,row] == ContentsOfGrid.Empty)
+        {
+          _tempGrid[col,row] = ContentsOfGrid.Can;
+          _canCounter += 1;
+        }
+      }
+      return _tempGrid;
     }
 
     public void GeneratePossibleSolutions(string folderPath)
