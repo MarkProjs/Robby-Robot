@@ -37,12 +37,7 @@ namespace RobbyTheRobot
 
         public double computeFitness(IChromosome chromosome, IGeneration generation)
         {
-            // Generate rend grid
-            // rnd locate robby
-            // find double fitness var
-            // loop by the number of actions
-                // fitness += cal inside score for allele
-            // return fitness 
+ 
         }
     }
 }
