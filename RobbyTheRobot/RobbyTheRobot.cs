@@ -7,15 +7,26 @@ namespace RobbyTheRobot
   {
     private IGeneticAlgorithm _geneticAlg;
     private int _numberOfActions = 200;
-    private int _numberOfTestGrids;
+    private int _numberOfTestGrids = 100;
     private int _gridCol = 10;
     private int _gridRow = 10;
-    private double _mutationRate;
-    private double _eliteRate;
+    private int _numGenes = 243;
+    private double _mutationRate = 0.05;
+    private double _eliteRate = 0.05;
+    private Random _rnd;
     public event FileWritten _filewritten;
     public RobbyTheRobot(int numberOfGenerations, int populationSize, int numberOfTrials, int? seed=null) 
     {
       NumberOfGenerations = numberOfGenerations;
+      if(seed != null) 
+      {
+        _rnd = new Random((int)seed);
+      } 
+      else 
+      {
+        _rnd = new Random();
+      }
+      
     }
     public int NumberOfActions 
     {
@@ -61,12 +72,22 @@ namespace RobbyTheRobot
 
     public ContentsOfGrid[,] GenerateRandomTestGrid()
     {
+      int _canCounter = 0;
       ContentsOfGrid[,] grid = new ContentsOfGrid[_gridCol, _gridRow];
       for(int col = 0; col < grid.GetLength(0);col++) 
       {
         for(int row = 0; row< grid.GetLength(1); row++) 
         {
-
+          int PlaceCanOrNot = _rnd.Next(0, 2);
+          if( PlaceCanOrNot == 0 && _canCounter != 50) 
+          {
+            grid[col,row] = ContentsOfGrid.Can;
+            _canCounter += 1;
+          }
+          else 
+          {
+             grid[col,row] = ContentsOfGrid.Empty;
+          }
         }
       }
       return grid;
