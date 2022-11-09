@@ -6,13 +6,14 @@ namespace RobbyTheRobot
   internal class RobbyTheRobot : IRobbyTheRobot
   {
     private IGeneticAlgorithm _geneticAlg;
-    private int _numberOfActions;
+    private int _numberOfActions = 200;
     private int _numberOfTestGrids;
-    private int _gridSize;
+    private int _gridCol = 10;
+    private int _gridRow = 10;
     private double _mutationRate;
     private double _eliteRate;
     public event FileWritten _filewritten;
-    public RobbyTheRobot(int numberOfGenerations, int populationSize, int numberOfTrials, int? seed) 
+    public RobbyTheRobot(int numberOfGenerations, int populationSize, int numberOfTrials, int? seed=null) 
     {
       NumberOfGenerations = numberOfGenerations;
     }
@@ -36,7 +37,7 @@ namespace RobbyTheRobot
     {
       get
       {
-        return _gridSize;
+        return _gridRow * _gridCol;
       }
     }
 
@@ -60,7 +61,16 @@ namespace RobbyTheRobot
 
     public ContentsOfGrid[,] GenerateRandomTestGrid()
     {
-      
+      ContentsOfGrid[,] grid = new ContentsOfGrid[_gridCol, _gridRow];
+      for(int col = 0; col < grid.GetLength(0);col++) 
+      {
+        for(int row = 0; row< grid.GetLength(1); row++) 
+        {
+
+        }
+      }
+      return grid;
+
     }
 
     public void GeneratePossibleSolutions(string folderPath)
