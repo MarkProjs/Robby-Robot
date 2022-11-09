@@ -35,23 +35,9 @@ namespace RobbyTheRobot
             throw new NotImplementedException();
         }
 
-        public double computeFitness(IChromosome chromosome, IGeneration generation)
-        {
-<<<<<<< HEAD
-            Random rd = new Random();
-            double fitness = 0.0;
-            for (int i = 0; i < NumberOfActions; i++)
-            {
-                for (int j = 0; j < NumberOfActions; j++)
-                {
-                    fitness += RobbyHelper.ScoreForAllele(chromosome.Genes,GenerateRandomTestGrid(),rd,ref i,ref j);
-
-                }
-            }
-            return fitness;
-=======
- 
->>>>>>> 33d3fb23a709135d3908345cd74d492e0d95d9c3
-        }
+        // public double computeFitness(IChromosome chromosome, IGeneration generation)
+        // {
+        //
+        // }
     }
 }
