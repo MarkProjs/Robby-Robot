@@ -7,9 +7,11 @@ namespace GeneticLibrary
         private Random rand;
 
         private IGeneration _currentGeneration;
+
         private IGeneration _nextGeneration;
         private IGeneration _previousGeneration;
 
+ 
         private static long _generationCount = 0;
         private int? _seed; // What is the seed's value 
 
@@ -59,6 +61,7 @@ namespace GeneticLibrary
         {
             IChromosome[] newPopulation = new Chromosome[_currentGeneration.NumberOfChromosomes];
             int tempIndex = 0;
+
             int elites =(int) (EliteRate * PopulationSize);
             if (elites % 2 == 1) elites+=1;
             for (int i = 0; i < elites; i++)
