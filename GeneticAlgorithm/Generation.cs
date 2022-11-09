@@ -31,7 +31,7 @@ namespace GeneticLibrary {
     }
 
     public IGeneticAlgorithm GeneticAlgorithm {get;}
-      
+       
     public double AverageFitness 
     {
       get { return _fitnessAvg;
