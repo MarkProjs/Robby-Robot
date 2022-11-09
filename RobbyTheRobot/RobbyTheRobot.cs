@@ -27,12 +27,22 @@ namespace RobbyTheRobot
 
         public void GeneratePossibleSolutions(string folderPath)
         {
-            GeneticAlgorithm ga = new GeneticAlgorithm(PopulationSize,243,7,0,10,200,);
+           
         }
 
         public ContentsOfGrid[,] GenerateRandomTestGrid()
         {
             throw new NotImplementedException();
+        }
+
+        public double computeFitness(IChromosome chromosome, IGeneration generation)
+        {
+            // Generate rend grid
+            // rnd locate robby
+            // find double fitness var
+            // loop by the number of actions
+                // fitness += cal inside score for allele
+            // return fitness 
         }
     }
 }

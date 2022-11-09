@@ -22,15 +22,15 @@ namespace GeneticLibrary {
       }
     }
 
-    public Generation(IChromosome[] chromosomes) {
-      _chromosomes = new IChromosome[chromosomes.Length];
+    public Generation(Chromosome[] chromosomes) {
+      _chromosomes = new Chromosome[chromosomes.Length];
+
       for (int i = 0; i < chromosomes.Length;i++) {
-        _chromosomes[i] = chromosomes[i];
+        _chromosomes[i] = new Chromosome(chromosomes[i]);
       }
     }
 
     public IGeneticAlgorithm GeneticAlgorithm {get;}
-
       
     public double AverageFitness 
     {
@@ -58,7 +58,8 @@ namespace GeneticLibrary {
 
     public IChromosome SelectParent() 
     {
-      int pointA = rnd.Next(_chromosomes.Length);
+      // These two are seems to elite rate
+      int pointA = rnd.Next(_chromosomes.Length); 
       int pointB = rnd.Next(pointA, _chromosomes.Length);
 
       IChromosome parent = null;
@@ -77,7 +78,6 @@ namespace GeneticLibrary {
         for (int j = 0; j < GeneticAlgorithm.NumberOfTrials; j++)
         {
           fitnessEvent += this.FitnessEvt.Invoke(_chromosomes[i], this);
-          // evaluationFitness += Chromosomes[j].Fitness; dont need for now 
         }
         fitnessEvent = fitnessEvent / GeneticAlgorithm.NumberOfTrials;
         (_chromosomes[i] as Chromosome).Fitness =  fitnessEvent;

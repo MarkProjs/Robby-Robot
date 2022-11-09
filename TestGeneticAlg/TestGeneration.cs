@@ -10,8 +10,8 @@ namespace TestGeneticAlg
         
         // GeneticAlgorithm ga = new GeneticAlgorithm(30,20,7,0,0,100,);
         
-
          Chromosome ch1 = new Chromosome(20, 7,6);
+         // Chromosome sp = new Chromosome(ch1);
          Chromosome ch2 = new Chromosome(20, 7,6);
         
        

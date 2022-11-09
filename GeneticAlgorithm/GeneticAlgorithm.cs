@@ -7,28 +7,27 @@ namespace GeneticLibrary
         private Random rand;
 
         private IGeneration _currentGeneration;
-        private IGeneration _lastGeneration;
+        private IGeneration _previousGeneration;
 
-        private static long  _generationCount = 0;
+        private static long _generationCount = 0;
         private int? _seed; // What is the seed's value 
 
-        public GeneticAlgorithm(int populationSize, int numberOfGenes, int lengthOfGenes, double mutationRate, double eliteRate,
-            int numberOfTrials, FitnessEventHandler fitnessFunc, int? seed = null)
+        public GeneticAlgorithm(int populationSize, int numberOfGenes, int lengthOfGenes, double mutationRate,
+            double eliteRate,int numberOfTrials, FitnessEventHandler fitnessFunc, int? seed = null)
         {
             // maximum number of trials based on her instruction
-            if(populationSize>=1000){
-                throw new ArgumentException("Population size must be less than or equal to 1000.");
-            }else
+            if (populationSize >= 200)
             {
-                PopulationSize = populationSize;
-                NumberOfGenes = numberOfGenes;
-                LengthOfGene = lengthOfGenes;
-                MutationRate = mutationRate;
-                EliteRate = eliteRate;
-                NumberOfTrials = numberOfTrials;
-                FitnessCalculation = fitnessFunc;
-                rand = new Random(seed.GetValueOrDefault());
+                throw new ArgumentException("Population size must be less than or equal to 1000.");
             }
+            PopulationSize = populationSize;
+            NumberOfGenes = numberOfGenes;
+            LengthOfGene = lengthOfGenes;
+            MutationRate = mutationRate;
+            EliteRate = eliteRate;
+            NumberOfTrials = numberOfTrials;
+            FitnessCalculation = fitnessFunc;
+            rand = new Random(seed.GetValueOrDefault());
         }
 
         public int PopulationSize { get; }
@@ -38,58 +37,64 @@ namespace GeneticLibrary
         public int LengthOfGene { get; }
 
         public double MutationRate { get; }
-        
+
         public double EliteRate { get; }
 
         public int NumberOfTrials { get; }
 
-        public long GenerationCount 
-        { 
-            get {
-                return _generationCount;
-            }
+        public long GenerationCount
+        {
+            get { return _generationCount; }
         }
 
-        public IGeneration CurrentGeneration 
-        { 
-            get 
-            {
-                return _currentGeneration;
-            }
+        public IGeneration CurrentGeneration
+        {
+            get { return _currentGeneration; }
         }
 
         public FitnessEventHandler FitnessCalculation { get; }
 
-        private IGeneration GenerateNextGeneration() 
+        private IGeneration GenerateNextGeneration()
         {
             IChromosome[] newPopulation = new IChromosome[_currentGeneration.NumberOfChromosomes];
             int tempIndex = 0;
-            while(_currentGeneration.NumberOfChromosomes % 2 == 0) {
-                IChromosome[] children = _currentGeneration[tempIndex].Reproduce(_currentGeneration[tempIndex+1], MutationRate);
-                newPopulation[tempIndex] = children[tempIndex];
-                newPopulation[tempIndex+1] = children[tempIndex+1];
-                tempIndex += 2;
+            int elites =(int) (EliteRate * PopulationSize);
+            if (elites % 2 == 1) elites+=1;
+            for (int i = 0; i < elites; i++)
+            {
+                newPopulation[i] = new Chromosome(((IGenerationDetails)_currentGeneration).SelectParent());
             }
-            IGeneration nextGen = new Generation(newPopulation);
-            return nextGen;
+
+            Random  random = new Random();
+            for (int i = elites; i < PopulationSize; i++)
+            {
+                int indexp1 = random.Next(0, elites);
+                int indexp2 = random.Next(0, elites);
+                //chk indx1 nad index2
+               IChromosome[] tmpChildren  =  newPopulation[indexp1].Reproduce(newPopulation[indexp2],MutationRate);
+               newPopulation[i] = tmpChildren[0];
+               newPopulation[i+1] = tmpChildren[1];
+               
+            }
+            return CurrentGeneration;
+
         }
 
         public IGeneration GenerateGeneration()
         {
-           if(_currentGeneration == null) 
-           {
-                _currentGeneration = new Generation(this, FitnessCalculation, _seed); // seed must be generationCount 
-                _generationCount +=1;
-           }
-           else
-           {
-               _lastGeneration = _currentGeneration;
-               _currentGeneration = new Generation(this, FitnessCalculation, _seed);
-               _generationCount +=1;
-           }
-           return _currentGeneration;
+            if (_currentGeneration is null)
+            {
+                _currentGeneration = new Generation(this, FitnessCalculation, _seed);
+                _generationCount += 1;
+            }
+            else
+            {
+                _previousGeneration = _currentGeneration;
+                _currentGeneration = new Generation(this, FitnessCalculation, _seed);
+                _generationCount += 1;
+            }
+
+            return _currentGeneration;
         }
     }
 }
-
-
