@@ -11,6 +11,7 @@ namespace RobbyTheRobot
     private int _gridCol = 10;
     private int _gridRow = 10;
     private int _numGenes = 243;
+    private int _lengthOfGenes = 7;
     private double _mutationRate = 0.05;
     private double _eliteRate = 0.05;
     private Random _rnd;
@@ -18,6 +19,7 @@ namespace RobbyTheRobot
     public RobbyTheRobot(int numberOfGenerations, int populationSize, int numberOfTrials, int? seed=null) 
     {
       NumberOfGenerations = numberOfGenerations;
+      _geneticAlg = GeneticLib.CreateGeneticAlgorithm(populationSize, _numGenes, _lengthOfGenes, _mutationRate, _eliteRate, numberOfTrials, fitnessCalculation(), seed);
       if(seed != null) 
       {
         _rnd = new Random((int)seed);
@@ -86,7 +88,7 @@ namespace RobbyTheRobot
           }
           else 
           {
-             grid[col,row] = ContentsOfGrid.Empty;
+            grid[col,row] = ContentsOfGrid.Empty;
           }
         }
       }
