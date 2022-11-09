@@ -74,6 +74,5 @@ namespace RobbyTheRobot
         //event TODOMYCUSTOMDELEGATE FileWritten;
 
     }
-
     public delegate void FileWritten(string message);
 }

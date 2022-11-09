@@ -86,6 +86,7 @@ namespace RobbyTheRobot
            _tempGrid[col,row] = ContentsOfGrid.Empty;
         }
       }
+      //filling the grid to have 50 cans placed
       ContentsOfGrid[,] grid = PlaceCanOnGrid(_tempGrid);
       return grid;
 
@@ -93,7 +94,7 @@ namespace RobbyTheRobot
     private ContentsOfGrid[,] PlaceCanOnGrid(ContentsOfGrid[,] _tempGrid)
     {
       int _canCounter = 0;
-      while(_canCounter < 51)
+      while(_canCounter < 50)
       {
         int col = _rnd.Next(_tempGrid.GetLength(0));
         int row = _rnd.Next(_tempGrid.GetLength(1));
