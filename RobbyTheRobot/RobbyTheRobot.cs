@@ -5,6 +5,7 @@ namespace RobbyTheRobot
 {
     internal class RobbyTheRobot : IRobbyTheRobot
     {
+        private RobbyHelper _helper;
         public RobbyTheRobot(
             int numberOfGenerations,
             int populationSize,
@@ -14,7 +15,6 @@ namespace RobbyTheRobot
             NumberOfGenerations = numberOfGenerations;
             NumberOfActions = numberOfTrials;
             PopulationSize = populationSize;
-
         }
 
         public int PopulationSize { get; }
@@ -37,12 +37,17 @@ namespace RobbyTheRobot
 
         public double computeFitness(IChromosome chromosome, IGeneration generation)
         {
-            // Generate rend grid
-            // rnd locate robby
-            // find double fitness var
-            // loop by the number of actions
-                // fitness += cal inside score for allele
-            // return fitness 
+            Random rd = new Random();
+            double fitness = 0.0;
+            for (int i = 0; i < NumberOfActions; i++)
+            {
+                for (int j = 0; j < NumberOfActions; j++)
+                {
+                    fitness += RobbyHelper.ScoreForAllele(chromosome.Genes,GenerateRandomTestGrid(),rd,ref i,ref j);
+
+                }
+            }
+            return fitness;
         }
     }
 }
