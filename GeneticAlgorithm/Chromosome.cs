@@ -1,6 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace GeneticLibrary
 {
@@ -62,37 +60,6 @@ namespace GeneticLibrary
             
             children[currentIndex] = child2;
             currentIndex++;
-            
-            
-            
-            // Something here problem because we are changing parents chromosome instead of new generation
-            // for (int i = pointA; i < pointB; i++) 
-            // {
-            //     double mutation = rand.NextDouble()*100;
-            //     if (mutation <= mutationProb) {
-            //         int movement = rand.Next(7);
-            //         this.Genes[i] = movement;
-            //         spouse.Genes[i] = movement;
-            //     } else {
-            //         (this.Genes[i], spouse.Genes[i]) = (spouse.Genes[i], this.Genes[i]);
-            //     }
-            // }
-            // for (int i = 0; i < children.Length; i++)
-            // {
-            //     for (int j = 0; j < children[i].Genes.Length; j++)
-            //     {
-            //         double rndMutation = rand.NextDouble() * 100;
-            //         if (rndMutation < mutationProb)
-            //         {
-            //             children[i].Genes[j] = rand.Next(7);
-            //         }
-            //         else
-            //         {
-            //             
-            //         }
-            //
-            //     }
-            // }
             return children;
         }
 

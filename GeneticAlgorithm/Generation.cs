@@ -16,7 +16,7 @@ namespace GeneticLibrary {
       FitnessEvt = fitnessEvt;
       rnd = new Random(seed.GetValueOrDefault());
       _chromosomes = new IChromosome[GeneticAlgorithm.PopulationSize];
-      //loading the Chromosome array
+      
       for( int i =0 ; i < _chromosomes.Length;i++) {
         _chromosomes[i] = new Chromosome(GeneticAlgorithm.NumberOfGenes, GeneticAlgorithm.LengthOfGene);
       }

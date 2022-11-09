@@ -10,7 +10,7 @@ namespace TestGeneticAlg
         return 0.5;
       }
         [TestMethod]
-        public void TestAverage()
+        public void Ge()
         {
         }
     }
