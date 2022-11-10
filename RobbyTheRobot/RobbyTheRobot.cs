@@ -131,10 +131,10 @@ namespace RobbyTheRobot
             } 
         }
         _filewritten?.Invoke("Files written to" + folderPath);
-        // 
+        // int[] genNum = new int[] { 1, 20, 100, 200, 500, 1000 };
         // for (int i = 0; i < ; i++)
         // {
-        //   
+        //      _geneticAlg.GenerateGeneration(); 
         //     if (i == _geneticAlg.GenerationCount)
         //     {
         //         int[] genes = getBestChromosome(i);
