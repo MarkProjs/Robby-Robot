@@ -17,13 +17,15 @@ namespace RobbyTheRobot
     private Random _rnd;
     public event FileWritten _filewritten;
 
+    private int? _seed;
     public RobbyTheRobot(int numberOfGenerations, int populationSize, int numberOfTrials, int? seed=null) 
     {
+      _seed = seed;
       NumberOfGenerations = numberOfGenerations;
-      _geneticAlg = GeneticLib.CreateGeneticAlgorithm(populationSize, _numGenes, _lengthOfGenes, _mutationRate, _eliteRate, numberOfTrials, fitnessCalculation, seed);
-      if(seed != null) 
+      _geneticAlg = GeneticLib.CreateGeneticAlgorithm(populationSize, _numGenes, _lengthOfGenes, _mutationRate, _eliteRate, numberOfTrials, computeFitness, seed);
+      if(_seed != null) 
       {
-        _rnd = new Random((int)seed);
+        _rnd = new Random((int) _seed);
       } 
       else 
       {
@@ -118,6 +120,22 @@ namespace RobbyTheRobot
         }
       }
       _filewritten?.Invoke("File written to" + folderPath);
+    }
+    
+    //the computeFitness
+    public double computeFitness (IChromosome chromosome, IGeneration generation)
+    {
+      //use the _seed
+      Random rnd = new Random();
+      int x = rnd.Next(0,10);
+      int y = rnd.Next(0,10);
+      double totalFitness = 0.0;
+      for (int i = 0; i < NumberOfActions; i++)
+      {
+
+        totalFitness += RobbyHelper.ScoreForAllele(chromosome.Genes,GenerateRandomTestGrid(),rnd,ref x,ref y);
+      }
+      return totalFitness;
     }
   }
 }
