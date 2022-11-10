@@ -16,6 +16,7 @@ namespace RobbyTheRobot
     private double _eliteRate = 0.05;
     private Random _rnd;
     public event FileWritten _filewritten;
+
     public RobbyTheRobot(int numberOfGenerations, int populationSize, int numberOfTrials, int? seed=null) 
     {
       NumberOfGenerations = numberOfGenerations;
@@ -109,7 +110,13 @@ namespace RobbyTheRobot
 
     public void GeneratePossibleSolutions(string folderPath)
     {
-      
+      while(_geneticAlg.GenerationCount < NumberOfGenerations){
+        _geneticAlg.GenerateGeneration();
+        if (_geneticAlg.GenerationCount == 1) 
+        {
+          string textPath = @"";
+        }
+      }
       _filewritten?.Invoke("File written to" + folderPath);
     }
   }
