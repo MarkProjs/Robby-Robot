@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using GeneticLibrary;
 
 namespace RobbyTheRobot
@@ -112,14 +113,41 @@ namespace RobbyTheRobot
 
     public void GeneratePossibleSolutions(string folderPath)
     {
-      while(_geneticAlg.GenerationCount < NumberOfGenerations){
-        _geneticAlg.GenerateGeneration();
-        if (_geneticAlg.GenerationCount == 1) 
+        while(_geneticAlg.GenerationCount < NumberOfGenerations) 
         {
-          string textPath = @"";
+                
         }
-      }
-      _filewritten?.Invoke("File written to" + folderPath);
+        // int[] gen = new int[] { 1, 20, 100, 200, 500, 1000 };
+        // for (int i = 0; i < ; i++)
+        // {
+        //   _geneticAlg.GenerateGeneration();
+        //     if (i == _geneticAlg.GenerationCount)
+        //     {
+        //         int[] genes = getBestChromosome(i);
+        //         WriteFile(genes, folderPath);
+        //     }else{
+
+        //     }
+
+        // }
+        _filewritten?.Invoke("File written to" + folderPath);
+    }
+
+    private int[] getBestChromosome(int i)
+    {
+        IGeneration tmp = _geneticAlg.GenerateGeneration();
+        return tmp[i].Genes;
+    }
+
+    private static void WriteFile(int[] file, string path)
+    {
+        if (!File.Exists(path))
+        {
+            using (StreamWriter sw = File.AppendText(path))
+            {
+                    sw.WriteLine(file);
+            }
+        }
     }
     
     //the computeFitness
