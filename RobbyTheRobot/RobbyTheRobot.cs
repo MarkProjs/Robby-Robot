@@ -112,15 +112,29 @@ namespace RobbyTheRobot
     }
 
     public void GeneratePossibleSolutions(string folderPath)
-    {
+    {   
+        int[] genNum = new int[] { 1, 20, 100, 200, 500, 1000 };
         while(_geneticAlg.GenerationCount < NumberOfGenerations) 
-        {
-                
+        {   
+            _geneticAlg.GenerateGeneration();
+            if (Array.Exists(genNum, elem => elem==_geneticAlg.GenerationCount)) 
+            {
+                string fileName = "Generation"+ _geneticAlg.GenerationCount +".txt";
+                string path = folderPath+fileName;
+                if(!File.Exists(path))
+                {
+                    using(StreamWriter sw = File.CreateText(path))
+                    {
+                        sw.Write(_geneticAlg.CurrentGeneration.MaxFitness +"," +_numberOfActions+"," +_geneticAlg.CurrentGeneration[0]);
+                    }
+                }
+            } 
         }
-        // int[] gen = new int[] { 1, 20, 100, 200, 500, 1000 };
+        _filewritten?.Invoke("Files written to" + folderPath);
+        // 
         // for (int i = 0; i < ; i++)
         // {
-        //   _geneticAlg.GenerateGeneration();
+        //   
         //     if (i == _geneticAlg.GenerationCount)
         //     {
         //         int[] genes = getBestChromosome(i);
@@ -130,25 +144,25 @@ namespace RobbyTheRobot
         //     }
 
         // }
-        _filewritten?.Invoke("File written to" + folderPath);
+        
     }
 
-    private int[] getBestChromosome(int i)
-    {
-        IGeneration tmp = _geneticAlg.GenerateGeneration();
-        return tmp[i].Genes;
-    }
+    // private int[] getBestChromosome(int i)
+    // {
+    //     IGeneration tmp = _geneticAlg.GenerateGeneration();
+    //     return tmp[i].Genes;
+    // }
 
-    private static void WriteFile(int[] file, string path)
-    {
-        if (!File.Exists(path))
-        {
-            using (StreamWriter sw = File.AppendText(path))
-            {
-                    sw.WriteLine(file);
-            }
-        }
-    }
+    // private static void WriteFile(int[] file, string path)
+    // {
+    //     if (!File.Exists(path))
+    //     {
+    //         using (StreamWriter sw = File.AppendText(path))
+    //         {
+    //                 sw.WriteLine(file);
+    //         }
+    //     }
+    // }
     
     //the computeFitness
     public double computeFitness (IChromosome chromosome, IGeneration generation)

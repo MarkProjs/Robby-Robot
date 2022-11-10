@@ -93,10 +93,10 @@ namespace GeneticLibrary {
         (Chromosomes[i] as Chromosome).Fitness =  fitnessEvent;
         _fitnessAvg+=fitnessEvent;
       }
-      _fitnessAvg = _fitnessAvg / Chromosomes.Length;
+      _fitnessAvg = _fitnessAvg / Chromosomes.Length;//this would be average Whole chromosome
       Array.Sort(Chromosomes);
       Array.Reverse(Chromosomes);
-      _maxFitness = Chromosomes[0].Fitness;//this would be average Whole chromosome
+      _maxFitness = Chromosomes[0].Fitness;
     }
   }
 }
