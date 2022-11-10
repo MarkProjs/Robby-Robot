@@ -112,7 +112,13 @@ namespace RobbyTheRobot
 
     public void GeneratePossibleSolutions(string folderPath)
     {
-      
+      while(_geneticAlg.GenerationCount < NumberOfGenerations){
+        _geneticAlg.GenerateGeneration();
+        if (_geneticAlg.GenerationCount == 1) 
+        {
+          string textPath = @"";
+        }
+      }
       _filewritten?.Invoke("File written to" + folderPath);
     }
     
