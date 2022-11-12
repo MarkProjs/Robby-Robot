@@ -1,5 +1,6 @@
 ﻿using System;
 using GeneticLibrary;
+using RobbyTheRobot;
 
 namespace RobbyIterationGenerator
 {
@@ -7,19 +8,21 @@ namespace RobbyIterationGenerator
     {
         static void Main(string[] args)
         {
-              Chromosome ch1 = new Chromosome(20, 7,6);
-              Chromosome ch2 = new Chromosome(20, 7,6);
-              IChromosome[] childrenArr = ch1.Reproduce(ch2, 0);
-              // Generation generation =  new Generation(childrenArr);
+            IRobbyTheRobot rtr = Robby.CreateRobby(1000, 200, 200);
+            rtr.GeneratePossibleSolutions("yooo");
+            //   Chromosome ch1 = new Chromosome(20, 7,6);
+            //   Chromosome ch2 = new Chromosome(20, 7,6);
+            //   IChromosome[] childrenArr = ch1.Reproduce(ch2, 0);
+            //   // Generation generation =  new Generation(childrenArr);
             
-            for (int i = 0; i < childrenArr[0].Genes.Length; i++)
-            {
-               if(ch1.Genes[i] == childrenArr[0].Genes[i])
-               {
-                   Console.WriteLine(ch1.Genes[i]);
-                   Console.WriteLine(childrenArr[0].Genes[i]);
-               }
-            }
+            // for (int i = 0; i < childrenArr[0].Genes.Length; i++)
+            // {
+            //    if(ch1.Genes[i] == childrenArr[0].Genes[i])
+            //    {
+            //        Console.WriteLine(ch1.Genes[i]);
+            //        Console.WriteLine(childrenArr[0].Genes[i]);
+            //    }
+            // }
             // IChromosome chromosome = new Chromosome(20, 7, 6);
             // IChromosome chromosome1 = new Chromosome(20, 7, 6);
             // // IChromosome spouse = new Chromosome(chromosome);
