@@ -7,6 +7,7 @@ namespace RobbyTheRobot
     internal class RobbyTheRobot : IRobbyTheRobot
     {
         private IGeneticAlgorithm _geneticAlg;
+        private IGeneration _generation;
         private int _numberOfActions = 200;
         private int _numberOfTestGrids = 100;
         private int _gridCol = 10;
@@ -74,24 +75,26 @@ namespace RobbyTheRobot
 
         public void GeneratePossibleSolutions(string folderPath)
         {
-            int[] genNum = new int[] { 1, 20, 100, 200, 500, 1000 };
+            // int[] genNum = new int[] { 1, 20, 100, 200, 500, 1000 };
             while (_geneticAlg.GenerationCount < NumberOfGenerations)
             {
-                _geneticAlg.GenerateGeneration();
-                if (Array.Exists(genNum, elem => elem == _geneticAlg.GenerationCount))
-                {
-                    string fileName = "Generation" + _geneticAlg.GenerationCount + ".txt";
-                    string path = folderPath + fileName;
-                    if (!File.Exists(path))
-                    {
-                        using (StreamWriter sw = File.CreateText(path))
-                        {
-                            sw.Write(_geneticAlg.CurrentGeneration.MaxFitness + "," + _numberOfActions + "," + _geneticAlg.CurrentGeneration[0]);
-                        }
-                    }
-                }
+                _generation = _geneticAlg.GenerateGeneration();
+                // if (Array.Exists(genNum, elem => elem == _geneticAlg.GenerationCount))
+                // {
+                //     (_generation as Generation).EvaluateFitnessOfPopulation();
+
+                //     string fileName = "Generation" + _geneticAlg.GenerationCount + ".txt";
+                //     string path = folderPath + fileName;
+                //     if (!File.Exists(path))
+                //     {
+                //         using (StreamWriter sw = File.CreateText(path))
+                //         {
+                //             sw.Write(_generation.MaxFitness + "," + _numberOfActions + "," + _generation[0]);
+                //         }
+                //     }
+                // }
             }
-            _filewritten?.Invoke("Files written to" + folderPath);
+            // _filewritten?.Invoke("Files written to" + folderPath);
         }
 
         //the computeFitness

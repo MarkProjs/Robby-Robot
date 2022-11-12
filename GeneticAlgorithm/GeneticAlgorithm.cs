@@ -19,7 +19,7 @@ namespace GeneticLibrary
             double eliteRate,int numberOfTrials, FitnessEventHandler fitnessFunc, int? seed = null)
         {
             // maximum number of trials based on her instruction
-            if (populationSize >= 200)
+            if (populationSize > 200)
             {
                 throw new ArgumentException("Population size must be less than or equal to 1000.");
             }
@@ -60,7 +60,6 @@ namespace GeneticLibrary
         private IGeneration GenerateNextGeneration()
         {
             IChromosome[] newPopulation = new Chromosome[_currentGeneration.NumberOfChromosomes];
-            int tempIndex = 0;
 
             int elites =(int) (EliteRate * PopulationSize);
             if (elites % 2 == 1) elites+=1;
