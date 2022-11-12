@@ -3,7 +3,7 @@ using GeneticLibrary;
 
 namespace RobbyTheRobot
 {
-    internal class RobbyTheRobot : IRobbyTheRobot
+    class RobbyTheRobot : IRobbyTheRobot
     {
         private RobbyHelper _helper;
         public RobbyTheRobot(
@@ -27,7 +27,7 @@ namespace RobbyTheRobot
 
         public void GeneratePossibleSolutions(string folderPath)
         {
-           
+            
         }
 
         public ContentsOfGrid[,] GenerateRandomTestGrid()

@@ -5,7 +5,7 @@ namespace GeneticLibrary
     public class Chromosome : IChromosome
     {
         private double _fitness;
-        private static int currentIndex = 0;
+        private static int _currentIndex = 0;
         
         public Chromosome(int numberOfGenes, int lengthOfGene, int? seed = null){
             if (numberOfGenes <= 0 || lengthOfGene <= 0) throw new ArgumentOutOfRangeException("Arguments are not valid");
@@ -45,21 +45,20 @@ namespace GeneticLibrary
             //Creating a new children array
             IChromosome[] children = new IChromosome[spouse.Length];
             // Creating 2 new temporary child objects
-            IChromosome child1 = new Chromosome(spouse.Genes.Length, 7);
-            IChromosome child2 = new Chromosome(spouse.Genes.Length, 7);
+            IChromosome child1, child2;
             //make it crossing over between parent's chromosomes
             child1 = CrossingOver(spouse, this);
             child2 = CrossingOver(this, spouse);
             //Make it mutate based one the random values
-             MutateChild(ref child1,mutationProb);
+            MutateChild(ref child1,mutationProb);
             MutateChild(ref child2,mutationProb);
            
             // Adding the children index
-            children[currentIndex] = child1;
-            currentIndex++;
+            children[_currentIndex] = child1;
+            _currentIndex++;
             
-            children[currentIndex] = child2;
-            currentIndex++;
+            children[_currentIndex] = child2;
+            _currentIndex++;
             return children;
         }
 
@@ -98,18 +97,17 @@ namespace GeneticLibrary
         }
         //implement indexer
         public int this[int index] {
-            get {return Genes[index];}
-            set {Genes[index]=value;}
+            get => Genes[index];
+            set => Genes[index]=value;
         }
         public double Fitness { 
-            get { return _fitness; }
-            set { _fitness = value; }
+            get => _fitness;
+            set => _fitness = value;
         }
 
         public int[] Genes { get; }
 
         // The Length = 243 
-        public long Length { get { return Genes.Length; } }
-
+        public long Length => Genes.Length;
     }
 }
