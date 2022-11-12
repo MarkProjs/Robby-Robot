@@ -1,5 +1,9 @@
 ﻿using System;
+<<<<<<< HEAD
 using GeneticLibrary;
+=======
+using RobbyTheRobot;
+>>>>>>> 9a17bbc3852e2899828025b9843ebd9eb49c26ea
 
 namespace RobbyIterationGenerator
 {

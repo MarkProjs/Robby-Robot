@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GeneticAlgorithm\GeneticAlgorithm.csproj" />
+    <ProjectReference Include="..\RobbyTheRobot\RobbyTheRobot.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

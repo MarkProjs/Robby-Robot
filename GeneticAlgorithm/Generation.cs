@@ -10,9 +10,9 @@ namespace GeneticLibrary {
     private double _fitnessAvg;
     private double _maxFitness;
 
-    public Generation(IGeneticAlgorithm geneticAlgorithm, FitnessEventHandler fitnessEvt, int? seed = null) 
+    public Generation(IGeneticAlgorithm _geneticAlgorithm, FitnessEventHandler FitnessEvt, int? seed = null) 
     {
-      GeneticAlgorithm = geneticAlgorithm;
+      GeneticAlgorithm = _geneticAlgorithm;
       FitnessEvt = fitnessEvt;
       rnd = new Random(seed.GetValueOrDefault());
       _chromosomes = new IChromosome[GeneticAlgorithm.PopulationSize];
@@ -26,7 +26,7 @@ namespace GeneticLibrary {
       _chromosomes = new Chromosome[chromosomes.Length];
 
       for (int i = 0; i < chromosomes.Length;i++) {
-        _chromosomes[i] = new Chromosome(chromosomes[i]);
+        _chromosomes[i] = new Chromosome(chromosomes[i]); // Chromosome(chromosomes[i]);
       }
     }
 
@@ -83,10 +83,10 @@ namespace GeneticLibrary {
         (_chromosomes[i] as Chromosome).Fitness =  fitnessEvent;
         _fitnessAvg+=fitnessEvent;
       }
-      _fitnessAvg = _fitnessAvg / _chromosomes.Length;
-      Array.Sort(_chromosomes);
-      Array.Reverse(_chromosomes);
-      _maxFitness = _chromosomes[0].Fitness;//this would be average Whole chromosome
+      _fitnessAvg = _fitnessAvg / Chromosomes.Length;//this would be average Whole chromosome
+      Array.Sort(Chromosomes);
+      Array.Reverse(Chromosomes);
+      _maxFitness = Chromosomes[0].Fitness;
     }
   }
 }

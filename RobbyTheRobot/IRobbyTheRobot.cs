@@ -73,6 +73,5 @@ namespace RobbyTheRobot
         /// </summary>
         //event TODOMYCUSTOMDELEGATE FileWritten;
     }
-
-    ///TODO Add custom delegate
+    public delegate void FileWritten(string message);
 }
