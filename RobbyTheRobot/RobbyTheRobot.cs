@@ -34,52 +34,13 @@ namespace RobbyTheRobot
             }
 
         }
-        public double fitnessCalculation(IChromosome chromosome, IGeneration generation)
-        {
-            return 0.1;
-        }
-        public int NumberOfActions
-        {
-            get
-            {
-                return _numberOfActions;
-            }
-        }
-
-        public int NumberOfTestGrids
-        {
-            get
-            {
-                return _numberOfTestGrids;
-            }
-        }
-
-        public int GridSize
-        {
-            get
-            {
-                return _gridRow * _gridCol;
-            }
-        }
-
+        public double fitnessCalculation(IChromosome chromosome, IGeneration generation){return 0.1;}
+        public int NumberOfActions{get{return _numberOfActions;}}
+        public int NumberOfTestGrids{get{return _numberOfTestGrids;}}
+        public int GridSize{get{return _gridRow * _gridCol;}}
         public int NumberOfGenerations { get; }
-
-        public double MutationRate
-        {
-            get
-            {
-                return _mutationRate;
-            }
-        }
-
-        public double EliteRate
-        {
-            get
-            {
-                return _eliteRate;
-            }
-        }
-
+        public double MutationRate{get{return _mutationRate;}}
+        public double EliteRate{get{return _eliteRate;}}
         public ContentsOfGrid[,] GenerateRandomTestGrid()
         {
             ContentsOfGrid[,] _tempGrid = new ContentsOfGrid[_gridCol, _gridRow];
@@ -131,38 +92,7 @@ namespace RobbyTheRobot
                 }
             }
             _filewritten?.Invoke("Files written to" + folderPath);
-            // int[] genNum = new int[] { 1, 20, 100, 200, 500, 1000 };
-            // for (int i = 0; i < ; i++)
-            // {
-            //      _geneticAlg.GenerateGeneration(); 
-            //     if (i == _geneticAlg.GenerationCount)
-            //     {
-            //         int[] genes = getBestChromosome(i);
-            //         WriteFile(genes, folderPath);
-            //     }else{
-
-            //     }
-
-            // }
-
         }
-
-        // private int[] getBestChromosome(int i)
-        // {
-        //     IGeneration tmp = _geneticAlg.GenerateGeneration();
-        //     return tmp[i].Genes;
-        // }
-
-        // private static void WriteFile(int[] file, string path)
-        // {
-        //     if (!File.Exists(path))
-        //     {
-        //         using (StreamWriter sw = File.AppendText(path))
-        //         {
-        //                 sw.WriteLine(file);
-        //         }
-        //     }
-        // }
 
         //the computeFitness
         public double computeFitness(IChromosome chromosome, IGeneration generation)
@@ -181,3 +111,36 @@ namespace RobbyTheRobot
         }
     }
 }
+
+            // int[] genNum = new int[] { 1, 20, 100, 200, 500, 1000 };
+            // for (int i = 0; i < ; i++)
+            // {
+            //      _geneticAlg.GenerateGeneration(); 
+            //     if (i == _geneticAlg.GenerationCount)
+            //     {
+            //         int[] genes = getBestChromosome(i);
+            //         WriteFile(genes, folderPath);
+            //     }else{
+
+            //     }
+
+            // }
+
+
+
+        // private int[] getBestChromosome(int i)
+        // {
+        //     IGeneration tmp = _geneticAlg.GenerateGeneration();
+        //     return tmp[i].Genes;
+        // }
+
+        // private static void WriteFile(int[] file, string path)
+        // {
+        //     if (!File.Exists(path))
+        //     {
+        //         using (StreamWriter sw = File.AppendText(path))
+        //         {
+        //                 sw.WriteLine(file);
+        //         }
+        //     }
+        // }
