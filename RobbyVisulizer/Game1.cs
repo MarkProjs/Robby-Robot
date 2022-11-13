@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.IO;
+using System.Runtime.CompilerServices;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,6 +11,7 @@ namespace RobbyVisulizer
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private static readonly string filePath = "";
 
         public Game1()
         {
@@ -44,6 +48,30 @@ namespace RobbyVisulizer
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             base.Draw(gameTime);
+        }
+
+        private static string[] ArrayConverter(string chromosomes)
+        {
+            return null;
+        }
+        private static string FileReader()
+        {
+            string chromosomes =String.Empty;
+            if (File.Exists(filePath))
+            {
+                using (StreamReader file = new StreamReader(filePath))
+                {
+                    int lineCounter = 0;
+                  
+                    while ((chromosomes = file.ReadLine()) != null)
+                    {
+                        lineCounter++;
+                    }
+                    file.Close();
+                    Console.WriteLine($"File has {lineCounter} lines."); // This is for testing purposes 
+                }
+            }
+            return chromosomes;
         }
     }
 }

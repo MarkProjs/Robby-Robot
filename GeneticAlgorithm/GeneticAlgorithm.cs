@@ -95,6 +95,7 @@ namespace GeneticLibrary
             else
             {
                 Console.WriteLine(_generationCount);
+                _previousGeneration = _currentGeneration;
                 _nextGeneration = GenerateNextGeneration();
                 _generationCount += 1;
             }
