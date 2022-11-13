@@ -88,11 +88,13 @@ namespace GeneticLibrary
         {
             if (_currentGeneration is null)
             {
-                _currentGeneration = new Generation(this, FitnessCalculation, _seed);
+                 Console.WriteLine(_generationCount);
+                _nextGeneration = new Generation(this, FitnessCalculation, _seed);
                 _generationCount += 1;
             }
             else
             {
+                 Console.WriteLine(_generationCount);
                 _previousGeneration = _currentGeneration;
                 _nextGeneration = GenerateNextGeneration();
                 _generationCount += 1;

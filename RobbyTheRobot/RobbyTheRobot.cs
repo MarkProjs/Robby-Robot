@@ -79,6 +79,8 @@ namespace RobbyTheRobot
             while (_geneticAlg.GenerationCount < NumberOfGenerations)
             {
                 _generation = _geneticAlg.GenerateGeneration();
+                (_generation as Generation).EvaluateFitnessOfPopulation();
+
                 // if (Array.Exists(genNum, elem => elem == _geneticAlg.GenerationCount))
                 // {
                 //     (_generation as Generation).EvaluateFitnessOfPopulation();
