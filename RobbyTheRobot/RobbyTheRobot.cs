@@ -79,6 +79,8 @@ namespace RobbyTheRobot
             while (_geneticAlg.GenerationCount < NumberOfGenerations)
             {
                 _generation = _geneticAlg.GenerateGeneration();
+                (_generation as Generation).EvaluateFitnessOfPopulation();
+                
                 // if (Array.Exists(genNum, elem => elem == _geneticAlg.GenerationCount))
                 // {
                 //     (_generation as Generation).EvaluateFitnessOfPopulation();
@@ -95,6 +97,17 @@ namespace RobbyTheRobot
                 // }
             }
             // _filewritten?.Invoke("Files written to" + folderPath);
+            int[] test = _generation[0].Genes;
+            for (int i = 0; i < _generation[0].Genes.Length; i++)
+            {
+                Console.Write(test[i]+" - ");
+            }
+
+            Console.WriteLine();
+            Console.WriteLine(_generation.AverageFitness);
+            Console.WriteLine(_generation.MaxFitness);
+            Console.WriteLine(_generation[0].Fitness);
+            
         }
 
         //the computeFitness

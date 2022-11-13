@@ -8,8 +8,11 @@ namespace RobbyIterationGenerator
     {
         static void Main(string[] args)
         {
-            IRobbyTheRobot rtr = Robby.CreateRobby(1000, 200, 200);
+            IRobbyTheRobot rtr = Robby.CreateRobby(500, 200, 200);
             rtr.GeneratePossibleSolutions("yooo");
+            
+            
+            
             //   Chromosome ch1 = new Chromosome(20, 7,6);
             //   Chromosome ch2 = new Chromosome(20, 7,6);
             //   IChromosome[] childrenArr = ch1.Reproduce(ch2, 0);
@@ -25,7 +28,7 @@ namespace RobbyIterationGenerator
             // }
             // IChromosome chromosome = new Chromosome(20, 7, 6);
             // IChromosome chromosome1 = new Chromosome(20, 7, 6);
-            // // IChromosome spouse = new Chromosome(chromosome);
+            // IChromosome spouse = new Chromosome(chromosome);
             //
             // IChromosome[] nextGeneration = chromosome.Reproduce(chromosome1, 100);
             //
