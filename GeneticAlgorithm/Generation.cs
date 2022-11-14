@@ -61,13 +61,15 @@ namespace GeneticLibrary {
       // These two are seems to elite rate
       int pointA = rnd.Next(_chromosomes.Length); 
       int pointB = rnd.Next(pointA, _chromosomes.Length);
-
+      
       IChromosome parent = null;
       for (int i =pointA +1 ; i<pointB ;i++) {
         if (_chromosomes[i-1].CompareTo(_chromosomes[i]) > 0) {
           parent = _chromosomes[i-1];
         }
       }
+      
+      // return  _chromosomes[rnd.Next(20)]; 
       return parent;
     }
 

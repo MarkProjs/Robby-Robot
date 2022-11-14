@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.IO;
 using GeneticLibrary;
 
@@ -17,8 +18,7 @@ namespace RobbyTheRobot
         private double _mutationRate = 0.05;
         private double _eliteRate = 0.05;
         private Random _rnd;
-        public event FileWritten _filewritten;
-
+        private  ContentsOfGrid[,] candata;
         private int? _seed;
         public RobbyTheRobot(int numberOfGenerations, int populationSize, int numberOfTrials, int? seed = null)
         {
@@ -35,8 +35,7 @@ namespace RobbyTheRobot
             }
 
         }
-        public double fitnessCalculation(IChromosome chromosome, IGeneration generation){return 0.1;}
-        public int NumberOfActions{get{return _numberOfActions;}}
+         public int NumberOfActions{get{return _numberOfActions;}}
         public int NumberOfTestGrids{get{return _numberOfTestGrids;}}
         public int GridSize{get{return _gridRow * _gridCol;}}
         public int NumberOfGenerations { get; }
@@ -54,6 +53,7 @@ namespace RobbyTheRobot
             }
             //filling the grid to have 50 cans placed
             ContentsOfGrid[,] grid = PlaceCanOnGrid(_tempGrid);
+            candata = grid;
             return grid;
 
         }
@@ -75,26 +75,19 @@ namespace RobbyTheRobot
 
         public void GeneratePossibleSolutions(string folderPath)
         {
-            // int[] genNum = new int[] { 1, 20, 100, 200, 500, 1000 };
+            int c = 0;
+            int[] genNum = new int[] { 1,3,5,7,9,20,100, 200, 500, 1000 };
             while (_geneticAlg.GenerationCount < NumberOfGenerations)
             {
                 _generation = _geneticAlg.GenerateGeneration();
                 (_generation as Generation).EvaluateFitnessOfPopulation();
-
-                // if (Array.Exists(genNum, elem => elem == _geneticAlg.GenerationCount))
-                // {
-                //     (_generation as Generation).EvaluateFitnessOfPopulation();
-
-                //     string fileName = "Generation" + _geneticAlg.GenerationCount + ".txt";
-                //     string path = folderPath + fileName;
-                //     if (!File.Exists(path))
-                //     {
-                //         using (StreamWriter sw = File.CreateText(path))
-                //         {
-                //             sw.Write(_generation.MaxFitness + "," + _numberOfActions + "," + _generation[0]);
-                //         }
-                //     }
-                // }
+                if (_geneticAlg.GenerationCount == genNum[c])
+                {
+                    WriteGenerationTxt(folderPath);
+                    c++;
+                }
+               
+             
             }
             // _filewritten?.Invoke("Files written to" + folderPath);
             int[] test = _generation[0].Genes;
@@ -125,38 +118,43 @@ namespace RobbyTheRobot
             }
             return totalFitness;
         }
-    }
+
+        private void WriteGenerationTxt(string folderPath)
+        {
+            string currentGenes = "";
+            for (int i = 0; i < _generation[0].Genes.Length; i++)
+            {
+                currentGenes += _generation[0].Genes[i] + "-";
+            }
+
+            string cancontert = "";
+            int firstd = candata.GetLength(0);
+            int secondd = candata.GetLength(1);
+            for (int i = 0; i < firstd; i++)
+            {
+                for (int j = 0; j <secondd ; j++)
+                {
+                    if (candata[i, j] == ContentsOfGrid.Can)
+                    {
+                        cancontert += "c-";
+                    }
+                    else
+                    {
+                        cancontert += "e-";
+                    }
+                }
+            }
+
+      
+            string fileName = "Generation.txt";
+            string path = folderPath + fileName;
+           
+            
+                using(var sw = new StreamWriter(path, true))
+                {
+                    sw.WriteLine(_generation.MaxFitness + ";" + _numberOfActions+";" + _geneticAlg.GenerationCount+ ";" +currentGenes+";"+cancontert);
+                }
+            
+        }
+     }
 }
-
-            // int[] genNum = new int[] { 1, 20, 100, 200, 500, 1000 };
-            // for (int i = 0; i < ; i++)
-            // {
-            //      _geneticAlg.GenerateGeneration(); 
-            //     if (i == _geneticAlg.GenerationCount)
-            //     {
-            //         int[] genes = getBestChromosome(i);
-            //         WriteFile(genes, folderPath);
-            //     }else{
-
-            //     }
-
-            // }
-
-
-
-        // private int[] getBestChromosome(int i)
-        // {
-        //     IGeneration tmp = _geneticAlg.GenerateGeneration();
-        //     return tmp[i].Genes;
-        // }
-
-        // private static void WriteFile(int[] file, string path)
-        // {
-        //     if (!File.Exists(path))
-        //     {
-        //         using (StreamWriter sw = File.AppendText(path))
-        //         {
-        //                 sw.WriteLine(file);
-        //         }
-        //     }
-        // }
