@@ -11,7 +11,7 @@ namespace RobbyVisulizer
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private static readonly string filePath = "";
+        private RobbyVisulizer _canTexture, _robbyTexture, _emptyTexture;
 
         public Game1()
         {
@@ -22,24 +22,30 @@ namespace RobbyVisulizer
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
+            _canTexture = new RobbyVisulizer(this);
+            _emptyTexture = new RobbyVisulizer(this);
+            _robbyTexture = new RobbyVisulizer(this);
+            Components.Add(_canTexture);
+            Components.Add(_emptyTexture);
+            Components.Add(_robbyTexture);
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
+                Keyboard.GetState().IsKeyDown(Keys.Escape)) 
                 Exit();
-
-            // TODO: Add your update logic here
+            
+            
+            // The update logic suppose to be there but I can not access the can's data.
+             
 
             base.Update(gameTime);
         }
@@ -48,30 +54,6 @@ namespace RobbyVisulizer
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             base.Draw(gameTime);
-        }
-
-        private static string[] ArrayConverter(string chromosomes)
-        {
-            return null;
-        }
-        private static string FileReader()
-        {
-            string chromosomes =String.Empty;
-            if (File.Exists(filePath))
-            {
-                using (StreamReader file = new StreamReader(filePath))
-                {
-                    int lineCounter = 0;
-                  
-                    while ((chromosomes = file.ReadLine()) != null)
-                    {
-                        lineCounter++;
-                    }
-                    file.Close();
-                    Console.WriteLine($"File has {lineCounter} lines."); // This is for testing purposes 
-                }
-            }
-            return chromosomes;
         }
     }
 }
