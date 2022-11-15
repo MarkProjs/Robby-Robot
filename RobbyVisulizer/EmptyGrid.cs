@@ -2,11 +2,12 @@
 {
     public class EmptyGrid
     {
-        private float x, y;
+        private float X { get; }
+        private float Y { get; }
         public EmptyGrid(float x, float y)
         {
-            this.x = x;
-            this.y = y;
+            X = x;
+            Y = y;
         }
     }
 }

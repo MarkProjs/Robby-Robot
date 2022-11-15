@@ -12,6 +12,7 @@ namespace RobbyVisulizer
         private SpriteBatch _spriteBatch;
         private EmptyGrid _emptyGrid;
         private CanGrid _canGrid;
+        private RobbyGrid _robbyGrid;
         private Game _game;
         private string score;
         private string generation;
@@ -51,18 +52,18 @@ namespace RobbyVisulizer
             {
                 switch (robyaction[i])
                 {
-                    case "1":
+                    case "0":
                         
+                        break;
+                    case "1":
                         break;
                     case "2":
                         break;
                     case "3":
-                        break;
-                    case "4":
                     break;
-                    case "5":
+                    case "4":
                         break;
-                    case "6":
+                    case "5":
                         break;
                 }
             }            
@@ -76,8 +77,10 @@ namespace RobbyVisulizer
             GraphicsDevice.Clear(Color.CornflowerBlue);
             base.Draw(gameTime);
             _spriteBatch.Begin();
-            _spriteBatch.End();
+            _spriteBatch.Draw(_robyTexture, new Vector2(0,0),Color.Aqua);
             GenerateGrid();
+            _spriteBatch.End();
+           
         }
 
         private void GenerateGrid()
@@ -90,7 +93,7 @@ namespace RobbyVisulizer
                     if (Grid[i] == "e")
                     {
                         _emptyGrid = new EmptyGrid(i * _size, j * _size);
-                        _spriteBatch.Draw(_canTexture, new Vector2(i * _size, _size * j), Color.Blue);
+                        _spriteBatch.Draw(_emtptyTexture, new Vector2(i * _size, _size * j), Color.Blue);
                     }
                     else
                     {

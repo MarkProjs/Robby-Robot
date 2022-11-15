@@ -1,13 +1,14 @@
 ﻿namespace RobbyVisulizer
 {
-    public class CanGrid
+    public class RobbyGrid
     {
         private float X { get; }
         private float Y { get; }
-        public CanGrid(float x, float y)
+        public RobbyGrid(float x, float y)
         {
-         X = x;
-         Y = y;
+            X = x;
+            Y = y;
         }
+        
     }
 }
