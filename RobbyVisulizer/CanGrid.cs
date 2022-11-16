@@ -1,13 +1,12 @@
-﻿namespace RobbyVisulizer
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace RobbyVisulizer
 {
     public class CanGrid
     {
-        private float X { get; }
-        private float Y { get; }
-        public CanGrid(float x, float y)
-        {
-         X = x;
-         Y = y;
-        }
+        
     }
 }
