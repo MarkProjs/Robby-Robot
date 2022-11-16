@@ -14,13 +14,15 @@ namespace RobbyVisulizer
         private SpriteBatch _spriteBatch;
 
         private IRobbyTheRobot _robby;
-        private EmptyGrid _emptyCan;
+        private Grid grid;
 
         private static readonly string filePath = "";
         private string _score;
         private string _generation;
         private string _totalMoves;
         private string[] _robyaction;
+        protected GraphicsDeviceManager graphics;
+
 
         public RobbyVisulizerGame()
         {
@@ -28,38 +30,46 @@ namespace RobbyVisulizer
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             _robby = Robby.CreateRobby(10, 200, 200);
+            ContentsOfGrid[,] grid = _robby.GenerateRandomTestGrid();
+            
+
+            for (int i = 0; i < grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < grid.GetLength(1); j++)
+                {
+                    if (grid[i, j] is ContentsOfGrid.Can)
+                    {
+                        this.grid = new CanGrid(this, i, j);
+                        Components.Add(this.grid);
+                    }
+                    else if (grid[i, j] is ContentsOfGrid.Empty)
+                    {
+                        this.grid = new EmptyGrid(this, i, j);
+                        Components.Add(this.grid);
+                    }
+                }
+            }
         }
 
         protected override void Initialize()
-        {   
+        {
+            _graphics.PreferredBackBufferHeight = 700;
+            _graphics.PreferredBackBufferWidth = 500;
+            _graphics.ApplyChanges();
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-                Keyboard.GetState().IsKeyDown(Keys.Escape)) 
+                Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            
-            
-            // The update logic suppose to be there but I can not access the can's data.
-            // ContentsOfGrid[,] grid = _robby.GenerateRandomTestGrid();
-            
-            _emptyCan = new EmptyGrid(this, 0, 0);
-            EmptyGrid rowCan = new EmptyGrid(this, 1, 0);
-            EmptyGrid rowCan1 = new EmptyGrid(this, 2, 0);
-            EmptyGrid colCan = new EmptyGrid(this, 0,1);
-            Components.Add(_emptyCan);
-            Components.Add(rowCan);
-            Components.Add(rowCan1);
-            Components.Add(colCan);
-            
+
             base.Update(gameTime);
         }
 
@@ -69,14 +79,14 @@ namespace RobbyVisulizer
             base.Draw(gameTime);
         }
 
-        private void Splitter(){
+        private void Splitter()
+        {
             string rootFile = FileReader();
             string[] tmpFile = rootFile.Split(";");
             _score = tmpFile[0];
             _totalMoves = tmpFile[1];
             _generation = tmpFile[2];
             _robyaction = tmpFile[3].Split("-");
-
         }
 
         private static string FileReader()
