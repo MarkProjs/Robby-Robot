@@ -8,7 +8,7 @@ namespace RobbyVisulizer
         private SpriteBatch _spriteBatch;
         private int x;
         private int y;
-        private Texture2D _emptyCan;
+        private Texture2D _emptyGrid;
 
         private RobbyVisulizerGame _game;
 
@@ -25,7 +25,7 @@ namespace RobbyVisulizer
         }
         protected override void LoadContent() {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _emptyCan = _game.Content.Load<Texture2D>("emptyGrid");
+            _emptyGrid = _game.Content.Load<Texture2D>("emptyGrid");
         }
 
         public override void Update(GameTime gameTime) {
@@ -35,7 +35,7 @@ namespace RobbyVisulizer
         public override void Draw(GameTime gameTime)
         {
             _spriteBatch.Begin();
-            _spriteBatch.Draw(_emptyCan, new Rectangle(x * 32, y * 32, 32, 32), Color.White);
+            _spriteBatch.Draw(_emptyGrid, new Rectangle(x * 32, y * 32, 32, 32), Color.White);
             _spriteBatch.End();
             base.Draw(gameTime);
         }   
