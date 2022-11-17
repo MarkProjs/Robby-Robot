@@ -73,7 +73,9 @@ namespace RobbyTheRobot
         public void GeneratePossibleSolutions(string folderPath)
         {
             int c = 0;
+
             int[] genNum = new int[] { 1,2,3,4,5,6,7,8,9,20,100, 200, 500, 1000 };
+
             while (_geneticAlg.GenerationCount < NumberOfGenerations)
             {
                 _generation = _geneticAlg.GenerateGeneration();
@@ -106,20 +108,21 @@ namespace RobbyTheRobot
         }
 
         //the computeFitness
-        public double computeFitness(IChromosome chromosome, IGeneration generation)
+        public double computeFitness(IChromosome chromosome, IGeneration generation) //, int? seed = null
         {
-            //use the _seed
-            Random rnd = new Random();
-            int x = rnd.Next(0, 10);
-            int y = rnd.Next(0, 10);
-            double totalFitness = 0.0;
-            
-        
-            for (int i = 0; i < NumberOfActions; i++)
-            {
-                totalFitness += RobbyHelper.ScoreForAllele(chromosome.Genes, GenerateRandomTestGrid(), rnd, ref x, ref y);
-            }
-            return totalFitness;
+        //use the _seed
+        // Random rnd = new Random(seed.GetValueOrDefault());
+        Random rnd = new Random();
+        int x = rnd.Next(0,10);
+        int y = rnd.Next(0,10);
+        double totalFitness = 0.0;
+        var grid = GenerateRandomTestGrid();
+        for (int i = 0; i < NumberOfActions; i++)
+        {
+            totalFitness += RobbyHelper.ScoreForAllele(chromosome.Genes, grid , rnd, ref x, ref y);
+        }
+        return totalFitness;
+
         }
 
         private void WriteGenerationTxt(string folderPath)
@@ -131,25 +134,8 @@ namespace RobbyTheRobot
             }
 
             string cancontert = "";
-            int firstd = candata.GetLength(0);
-            int secondd = candata.GetLength(1);
-            for (int i = 0; i < firstd; i++)
-            {
-                for (int j = 0; j <secondd ; j++)
-                {
-                    if (candata[i, j] == ContentsOfGrid.Can)
-                    {
-                        cancontert += "c-";
-                    }
-                    else
-                    {
-                        cancontert += "e-";
-                    }
-                }
-            }
 
-      
-            string fileName = "Generation1.txt";
+            string fileName = "Generation.txt";
             string path = folderPath + fileName;
             
                 using(var sw = new StreamWriter(path, true))
@@ -157,6 +143,7 @@ namespace RobbyTheRobot
                     sw.WriteLine(_generation.MaxFitness + ";" +_generation.AverageFitness + ";"+ _numberOfActions+";" + _geneticAlg.GenerationCount+ ";" +currentGenes+";"+cancontert);
                 }
                 // _filewritten?.Invoke("Files written to" + path);
+
         }
      }
 }

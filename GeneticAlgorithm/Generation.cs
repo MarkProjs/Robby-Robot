@@ -10,6 +10,8 @@ namespace GeneticLibrary {
     private double _fitnessAvg;
     private double _maxFitness;
 
+    private double _minFitness;
+
     public Generation(IGeneticAlgorithm _geneticAlgorithm, FitnessEventHandler fitnessEvt, int? seed = null) 
     {
       GeneticAlgorithm = _geneticAlgorithm;
@@ -43,6 +45,14 @@ namespace GeneticLibrary {
       get 
       {
        return _maxFitness;
+      }
+    }
+
+    public double MinFitness 
+    {
+      get 
+      {
+        return _minFitness;
       }
     }
 
@@ -89,6 +99,7 @@ namespace GeneticLibrary {
       Array.Sort(_chromosomes);
       Array.Reverse(_chromosomes);
       _maxFitness = _chromosomes[0].Fitness;
+      _minFitness = _chromosomes[_chromosomes.Length -1].Fitness;
     }
   }
 }
