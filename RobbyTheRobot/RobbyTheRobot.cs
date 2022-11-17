@@ -76,7 +76,7 @@ namespace RobbyTheRobot
         public void GeneratePossibleSolutions(string folderPath)
         {
             int c = 0;
-            int[] genNum = new int[] { 1,3,5,7,9,20,100, 200, 500, 1000 };
+            int[] genNum = new int[] { 1, 20,100, 200, 500, 1000 };
             while (_geneticAlg.GenerationCount < NumberOfGenerations)
             {
                 _generation = _geneticAlg.GenerateGeneration();
@@ -112,7 +112,7 @@ namespace RobbyTheRobot
       int x = rnd.Next(0,10);
       int y = rnd.Next(0,10);
       double totalFitness = 0.0;
-      var grid = GenerateRandomTestGrid()
+      var grid = GenerateRandomTestGrid();
       for (int i = 0; i < NumberOfActions; i++)
       {
 
@@ -129,34 +129,33 @@ namespace RobbyTheRobot
                 currentGenes += _generation[0].Genes[i] + "-";
             }
 
-            string cancontert = "";
-            int firstd = candata.GetLength(0);
-            int secondd = candata.GetLength(1);
-            for (int i = 0; i < firstd; i++)
-            {
-                for (int j = 0; j <secondd ; j++)
-                {
-                    if (candata[i, j] == ContentsOfGrid.Can)
-                    {
-                        cancontert += "c-";
-                    }
-                    else
-                    {
-                        cancontert += "e-";
-                    }
-                }
-            }
+            // string cancontert = "";
+            // int firstd = candata.GetLength(0);
+            // int secondd = candata.GetLength(1);
+            // for (int i = 0; i < firstd; i++)
+            // {
+            //     for (int j = 0; j <secondd ; j++)
+            //     {
+            //         if (candata[i, j] == ContentsOfGrid.Can)
+            //         {
+            //             cancontert += "c-";
+            //         }
+            //         else
+            //         {
+            //             cancontert += "e-";
+            //         }
+            //     }
+            // }
 
       
-            string fileName = "Generation.txt";
+            string fileName = "Generation"+_geneticAlg.GenerationCount+".txt";
             string path = folderPath + fileName;
            
             
                 using(var sw = new StreamWriter(path, true))
                 {
-                    sw.WriteLine(_generation.MaxFitness + ";" + _numberOfActions+";" + _geneticAlg.GenerationCount+ ";" +currentGenes+";"+cancontert);
-                }
-            
+                    sw.WriteLine(_generation.AverageFitness+ ";" + _numberOfActions+";" + _geneticAlg.GenerationCount+ ";" +currentGenes);
+                } 
         }
      }
 }
