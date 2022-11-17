@@ -9,7 +9,7 @@ namespace GeneticLibrary
         private IGeneration _currentGeneration;
 
         private IGeneration _nextGeneration;
-        private IGeneration _previousGeneration;
+  
 
  
         private static long _generationCount = 0;
@@ -80,6 +80,7 @@ namespace GeneticLibrary
             }
 
             _nextGeneration = new Generation(newPopulation);
+            (_nextGeneration as Generation)?.EvaluateFitnessOfPopulation();
             return _nextGeneration;
 
         }
@@ -90,12 +91,12 @@ namespace GeneticLibrary
             {
                 Console.WriteLine(_generationCount);
                 _nextGeneration = new Generation(this, FitnessCalculation, _seed);
+                (_nextGeneration as Generation)?.EvaluateFitnessOfPopulation();
                 _generationCount += 1;
             }
             else
             {
                 Console.WriteLine(_generationCount);
-                _previousGeneration = _currentGeneration;
                 _nextGeneration = GenerateNextGeneration();
                 _generationCount += 1;
             }

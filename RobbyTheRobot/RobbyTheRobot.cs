@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.IO;
+using System.Threading.Tasks;
 using GeneticLibrary;
 
 namespace RobbyTheRobot
@@ -20,6 +21,7 @@ namespace RobbyTheRobot
         private Random _rnd;
         private  ContentsOfGrid[,] candata;
         private int? _seed;
+        private FileWritten _filewritten;
         public RobbyTheRobot(int numberOfGenerations, int populationSize, int numberOfTrials, int? seed = null)
         {
             _seed = seed;
@@ -41,16 +43,11 @@ namespace RobbyTheRobot
         public int NumberOfGenerations { get; }
         public double MutationRate{get{return _mutationRate;}}
         public double EliteRate{get{return _eliteRate;}}
+       
         public ContentsOfGrid[,] GenerateRandomTestGrid()
         {
             ContentsOfGrid[,] _tempGrid = new ContentsOfGrid[_gridCol, _gridRow];
-            for (int col = 0; col < _tempGrid.GetLength(0); col++)
-            {
-                for (int row = 0; row < _tempGrid.GetLength(1); row++)
-                {
-                    _tempGrid[col, row] = ContentsOfGrid.Empty;
-                }
-            }
+         
             //filling the grid to have 50 cans placed
             ContentsOfGrid[,] grid = PlaceCanOnGrid(_tempGrid);
             candata = grid;
@@ -76,20 +73,24 @@ namespace RobbyTheRobot
         public void GeneratePossibleSolutions(string folderPath)
         {
             int c = 0;
-            int[] genNum = new int[] { 1,3,5,7,9,20,100, 200, 500, 1000 };
+            int[] genNum = new int[] { 1,2,3,4,5,6,7,8,9,20,100, 200, 500, 1000 };
             while (_geneticAlg.GenerationCount < NumberOfGenerations)
             {
                 _generation = _geneticAlg.GenerateGeneration();
-                (_generation as Generation).EvaluateFitnessOfPopulation();
-                if (_geneticAlg.GenerationCount == genNum[c])
-                {
+                // if (_geneticAlg.GenerationCount == genNum[c])
+                // {
+                // Console.WriteLine();
+                // Console.WriteLine(_generation.AverageFitness);
+                // Console.WriteLine(_generation.MaxFitness);
+                // Console.WriteLine(_generation[0].Fitness);
+                // Console.WriteLine(_generation[1].Fitness);
                     WriteGenerationTxt(folderPath);
                     c++;
-                }
+                // }
                
              
             }
-            // _filewritten?.Invoke("Files written to" + folderPath);
+            // 
             int[] test = _generation[0].Genes;
             for (int i = 0; i < _generation[0].Genes.Length; i++)
             {
@@ -100,6 +101,7 @@ namespace RobbyTheRobot
             Console.WriteLine(_generation.AverageFitness);
             Console.WriteLine(_generation.MaxFitness);
             Console.WriteLine(_generation[0].Fitness);
+            Console.WriteLine(_generation[1].Fitness);
             
         }
 
@@ -111,9 +113,10 @@ namespace RobbyTheRobot
             int x = rnd.Next(0, 10);
             int y = rnd.Next(0, 10);
             double totalFitness = 0.0;
+            
+        
             for (int i = 0; i < NumberOfActions; i++)
             {
-
                 totalFitness += RobbyHelper.ScoreForAllele(chromosome.Genes, GenerateRandomTestGrid(), rnd, ref x, ref y);
             }
             return totalFitness;
@@ -146,15 +149,14 @@ namespace RobbyTheRobot
             }
 
       
-            string fileName = "Generation.txt";
+            string fileName = "Generation1.txt";
             string path = folderPath + fileName;
-           
             
                 using(var sw = new StreamWriter(path, true))
                 {
-                    sw.WriteLine(_generation.MaxFitness + ";" + _numberOfActions+";" + _geneticAlg.GenerationCount+ ";" +currentGenes+";"+cancontert);
+                    sw.WriteLine(_generation.MaxFitness + ";" +_generation.AverageFitness + ";"+ _numberOfActions+";" + _geneticAlg.GenerationCount+ ";" +currentGenes+";"+cancontert);
                 }
-            
+                // _filewritten?.Invoke("Files written to" + path);
         }
      }
 }

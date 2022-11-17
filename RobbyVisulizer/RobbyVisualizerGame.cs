@@ -31,12 +31,13 @@ namespace RobbyVisulizer
             IsMouseVisible = true;
             _robby = Robby.CreateRobby(10, 200, 200);
             ContentsOfGrid[,] grid = _robby.GenerateRandomTestGrid();
-            
 
+            // this.grid = new RobbyGrid(this, _robyaction[0,0],_robyaction[]);
             for (int i = 0; i < grid.GetLength(0); i++)
             {
                 for (int j = 0; j < grid.GetLength(1); j++)
                 {
+                    
                     if (grid[i, j] is ContentsOfGrid.Can)
                     {
                         this.grid = new CanGrid(this, i, j);
@@ -87,7 +88,92 @@ namespace RobbyVisulizer
             _totalMoves = tmpFile[1];
             _generation = tmpFile[2];
             _robyaction = tmpFile[3].Split("-");
+            
         }
+
+         public static double ScoreForAllele(string move, ContentsOfGrid[,] grid, Random rng, ref int x, ref int y)
+        {
+            switch (move) // After every movement change roby's location along to grid's cell spritebatch
+                {
+                    case "0"://move north
+                        if (move.Equals(ContentsOfGrid.Wall.ToString()))
+                            return -5;
+                        y -= 1;
+                        break;
+                    case "1"://move south
+                        if (move.Equals(ContentsOfGrid.Wall.ToString()))
+                            return -5;
+                        y += 1;
+                        break;
+                    case "2": //move east
+                        if (move.Equals(ContentsOfGrid.Wall.ToString()))
+                            return -5;
+                        x += 1;
+                        break;
+                    case "3": //move west
+                        if (move.Equals(ContentsOfGrid.Wall.ToString()))
+                            return -5;
+                        x -= 1;
+                        break;
+                    case "4": //do nothong
+                        break;
+                    case "5": //pick up can
+                        if (grid[x, y] == ContentsOfGrid.Can) //there is a can
+                        {
+                            grid[x, y] = ContentsOfGrid.Empty;
+                            return +10;
+                        }
+                        else
+                            return -1; //penalty for picking up nothing
+                    case "6": //random move
+                        int num = rng.Next(0, Enum.GetNames(typeof(PossibleMoves)).Length);
+                        move = num.ToString();
+                        break;
+                }
+             
+            return 0;
+        }
+        // private void UpdateRobyPosition(PossibleMoves loc)
+        // {
+        //     switch (loc)
+        //     {
+        //         case PossibleMoves.North://move north
+        //             if (direction.N == ContentsOfGrid.Wall)
+        //                 return -5;
+        //             y -= 1;
+        //             break;
+        //         case PossibleMoves.South://move south
+        //             if (direction.S == ContentsOfGrid.Wall)
+        //                 return -5;
+        //             y += 1;
+        //             break;
+        //         case PossibleMoves.East: //move east
+        //             if (direction.E == ContentsOfGrid.Wall)
+        //                 return -5;
+        //             x += 1;
+        //             break;
+        //         case PossibleMoves.West: //move west
+        //             if (direction.W == ContentsOfGrid.Wall)
+        //                 return -5;
+        //             x -= 1;
+        //             break;
+        //         case PossibleMoves.Nothing: //do nothong
+        //             break;
+        //         case PossibleMoves.PickUp: //pick up can
+        //             if (grid[x, y] == ContentsOfGrid.Can) //there is a can
+        //             {
+        //                 grid[x, y] = ContentsOfGrid.Empty;
+        //                 return +10;
+        //             }
+        //             else
+        //                 return -1; //penalty for picking up nothing
+        //         case PossibleMoves.Random: //random move
+        //             done = false;
+        //             int num = rng.Next(0, Enum.GetNames(typeof(PossibleMoves)).Length);
+        //             move = (PossibleMoves)num;
+        //             break;
+        //     }
+        // }
 
         private static string FileReader()
         {
