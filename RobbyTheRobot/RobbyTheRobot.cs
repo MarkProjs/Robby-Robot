@@ -104,20 +104,22 @@ namespace RobbyTheRobot
         }
 
         //the computeFitness
-        public double computeFitness(IChromosome chromosome, IGeneration generation)
-        {
-            //use the _seed
-            Random rnd = new Random();
-            int x = rnd.Next(0, 10);
-            int y = rnd.Next(0, 10);
-            double totalFitness = 0.0;
-            for (int i = 0; i < NumberOfActions; i++)
-            {
+    public double computeFitness (IChromosome chromosome, IGeneration generation) //, int? seed = null
+    {
+      //use the _seed
+      // Random rnd = new Random(seed.GetValueOrDefault());
+      Random rnd = new Random();
+      int x = rnd.Next(0,10);
+      int y = rnd.Next(0,10);
+      double totalFitness = 0.0;
+      var grid = GenerateRandomTestGrid()
+      for (int i = 0; i < NumberOfActions; i++)
+      {
 
-                totalFitness += RobbyHelper.ScoreForAllele(chromosome.Genes, GenerateRandomTestGrid(), rnd, ref x, ref y);
-            }
-            return totalFitness;
-        }
+        totalFitness += RobbyHelper.ScoreForAllele(chromosome.Genes, grid , rnd, ref x, ref y);
+      }
+      return totalFitness;
+    }
 
         private void WriteGenerationTxt(string folderPath)
         {
