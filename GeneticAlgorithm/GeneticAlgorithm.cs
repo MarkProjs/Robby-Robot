@@ -79,7 +79,7 @@ namespace GeneticLibrary
                newPopulation[i+1] = tmpChildren[1];
             }
 
-            _nextGeneration = new Generation(newPopulation);
+            _nextGeneration = new Generation(newPopulation, this);
             (_nextGeneration as Generation)?.EvaluateFitnessOfPopulation();
             return _nextGeneration;
 

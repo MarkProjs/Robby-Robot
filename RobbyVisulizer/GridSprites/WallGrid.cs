@@ -12,7 +12,7 @@ namespace RobbyVisulizer
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _gridTexture = _game.Content.Load<Texture2D>("emptyGrid");
+            _gridTexture = _game.Content.Load<Texture2D>("roby2");
         }
 
     }

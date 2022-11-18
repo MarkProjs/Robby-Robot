@@ -24,9 +24,10 @@ namespace GeneticLibrary {
       }
     }
 
-    public Generation(IChromosome[] chromosomes) {
+    public Generation(IChromosome[] chromosomes, IGeneticAlgorithm _geneticAlg) {
       _chromosomes = new Chromosome[chromosomes.Length];
-
+      GeneticAlgorithm = _geneticAlg;
+      FitnessEvt = _geneticAlg.FitnessCalculation;
       for (int i = 0; i < chromosomes.Length;i++) {
         _chromosomes[i] = new Chromosome(chromosomes[i]); // Chromosome(chromosomes[i]);
       }

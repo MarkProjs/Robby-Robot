@@ -19,7 +19,6 @@ namespace RobbyTheRobot
         private double _mutationRate = 0.05;
         private double _eliteRate = 0.05;
         private Random _rnd;
-        private  ContentsOfGrid[,] candata;
         private int? _seed;
         private FileWritten _filewritten;
         public RobbyTheRobot(int numberOfGenerations, int populationSize, int numberOfTrials, int? seed = null)
@@ -46,13 +45,12 @@ namespace RobbyTheRobot
        
         public ContentsOfGrid[,] GenerateRandomTestGrid()
         {
-            ContentsOfGrid[,] _tempGrid = new ContentsOfGrid[_gridCol, _gridRow];
+            ContentsOfGrid[,] _tempGrid = new ContentsOfGrid[_gridRow, _gridCol];
          
             //filling the grid to have 50 cans placed
-            ContentsOfGrid[,] grid = PlaceCanOnGrid(_tempGrid);
-            candata = grid;
-            return grid;
-
+            ContentsOfGrid[,] canGrid = PlaceCanOnGrid(_tempGrid);
+            // ContentsOfGrid[,] grid = PlaceWallOnGrid(canGrid);
+            return canGrid;
         }
         private ContentsOfGrid[,] PlaceCanOnGrid(ContentsOfGrid[,] _tempGrid)
         {
@@ -69,6 +67,25 @@ namespace RobbyTheRobot
             }
             return _tempGrid;
         }
+
+        // private ContentsOfGrid[,] PlaceWallOnGrid(ContentsOfGrid[,] _grid) 
+        // {
+        //     for(int row = 0 ; row < _grid.GetLength(0); row++) 
+        //     {
+        //         for(int col = 0 ; col < _grid.GetLength(1);col++)
+        //         {
+        //             if(row == 0 || row == _grid.GetLength(0)-1)
+        //             {
+        //                 _grid[row,col] = ContentsOfGrid.Wall;
+        //             }
+        //             else if(col == 0 || col == _grid.GetLength(1)-1)
+        //             {
+        //                 _grid[row,col] = ContentsOfGrid.Wall;
+        //             }
+        //         }
+        //     }
+        //     return _grid;
+        // }
 
         public void GeneratePossibleSolutions(string folderPath)
         {
@@ -123,7 +140,7 @@ namespace RobbyTheRobot
             string currentGenes = "";
             for (int i = 0; i < _generation[0].Genes.Length; i++)
             {
-                currentGenes += _generation[0].Genes[i] + "-";
+                currentGenes += _generation[0].Genes[i];
             }
 
 

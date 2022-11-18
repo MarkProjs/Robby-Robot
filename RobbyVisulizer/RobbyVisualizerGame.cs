@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -26,9 +27,10 @@ namespace RobbyVisulizer
         private IRobbyTheRobot _robby;
         private Grid grid;
 
-        private static readonly string filePath = "";
+        private Grid robby;
+
         private string _gen;
-        private string[] _robyaction;
+        private string _robyaction;
         private  int[] _robyActionNum;
         private ContentsOfGrid[,] _gridContent;
 
@@ -56,6 +58,11 @@ namespace RobbyVisulizer
             {
                 for (int j = 0; j < _gridContent.GetLength(1); j++)
                 {
+                    // if(i == 0 || i == _gridContent.GetLength(0)-1 || j == 0 || j == _gridContent.GetLength(1)-1)
+                    // {
+                    //     this.grid = new WallGrid(this, i, j);
+                    //     Components.Add(this.grid);
+                    // }
                     
                     if (_gridContent[i, j] is ContentsOfGrid.Can)
                     {
@@ -69,14 +76,14 @@ namespace RobbyVisulizer
                     }
                 }
             }
-            Grid robby = new RobbyGrid(this, this.x, this.y);
+            robby = new RobbyGrid(this, this.x, this.y);
             Components.Add(robby);
 
             Splitter("../Generations/Generation1.txt");
             _robyActionNum = new int[_robyaction.Length];
-            // for(int i = 0; i < _robyaction.Length; i++){
-            //     _robyActionNum[i] = Int32.Parse(_robyaction[i]);
-            // }
+            for(int i = 0; i < _robyaction.Length; i++){
+                _robyActionNum[i] = Convert.ToInt32(_robyaction[i]);
+            }
             base.Initialize();
         }
 
@@ -95,10 +102,41 @@ namespace RobbyVisulizer
                 Exit();
 
             //TO DO: THE LOGIC PART
-
-            // _moveNum++;
-            // _scoreNum = Robby.ScoreForAllele(_robyActionNum, _gridContent, rnd, ref x, ref y);
-            // _genNum = Int32.Parse(_gen);
+            for (int i = 0; i < _robyActionNum.Length;i++) 
+            {
+                switch(_robyActionNum[i])
+                {
+                    case 0:
+                        (robby as RobbyGrid).Up += 1;
+                        _moveNum++;
+                        break;
+                    case 1:
+                        (robby as RobbyGrid).Up -= 1;
+                        _moveNum++;
+                        break;
+                    case 2:
+                        (robby as RobbyGrid).Left += 1;
+                        _moveNum++;
+                        break;
+                    case 3:
+                        (robby as RobbyGrid).Left -= 1;
+                        _moveNum++;
+                        break;
+                    case 4:
+                        _moveNum++;
+                        break;
+                    case 5:
+                        _moveNum++;
+                        break;
+                    case 6:
+                        _moveNum++;
+                        break;
+                }
+            }
+           
+            _scoreNum += Robby.ScoreForAllele(_robyActionNum, _gridContent, rnd, ref this.x, ref this.y);
+            Debug.WriteLine(_scoreNum);
+            _genNum = Convert.ToInt32(_gen);
             // Splitter();
             // _robyActionNum = new int[_robyaction.Length];
             // for(int i = 0; i < _robyaction.Length; i++){
@@ -123,8 +161,7 @@ namespace RobbyVisulizer
             string rootFile = FileReader(path);
             string[] tmpFile = rootFile.Split(";");
             _gen = tmpFile[3];
-            _robyaction = tmpFile[4].Split("-");
-            
+            _robyaction = tmpFile[4];
         }
 
         private static string FileReader(string path)
