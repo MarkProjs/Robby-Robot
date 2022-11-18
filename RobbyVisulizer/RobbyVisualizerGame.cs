@@ -86,6 +86,10 @@ namespace RobbyVisulizer
             _scoreNum += Robby.ScoreForAllele(_robyActionNum, _gridContent, rnd, ref this.x, ref this.y);
             robby.X = this.x;
             robby.Y = this.y;
+            if (_moveNum == 200)
+            {
+                
+            }
             // Components.Add(robby);
             _moveNum++;
             _genNum = int.Parse(_gen);
