@@ -5,8 +5,8 @@ namespace RobbyVisulizer
 {
     public abstract class Grid : DrawableGameComponent
     {
-        public int X { get; }
-        public int Y { get; }
+        private int _x;
+        private int _y;
         protected Texture2D _gridTexture;
         protected SpriteBatch _spriteBatch;
         protected Color _colorTile = Color.White;
@@ -18,6 +18,28 @@ namespace RobbyVisulizer
             _game = game;
             X = topLeft;
             Y = topRight;
+        }
+
+        public int X 
+        {
+            get
+            {
+                return _x;
+            }
+
+            set 
+            {
+                _x = value;
+            }
+        }
+
+        public int Y{
+            get {
+                return _y;
+            }
+            set {
+                _y = value;
+            }
         }
 
         public override void Initialize()

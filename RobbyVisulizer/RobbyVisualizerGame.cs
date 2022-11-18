@@ -27,7 +27,8 @@ namespace RobbyVisulizer
         private IRobbyTheRobot _robby;
         private Grid grid;
 
-        private RobbyGrid robby;
+        private Grid robby;
+        private int _genCount = 1;
 
         private string _gen;
         private string _robyaction;
@@ -58,11 +59,6 @@ namespace RobbyVisulizer
             {
                 for (int j = 0; j < _gridContent.GetLength(1); j++)
                 {
-                    // if(i == 0 || i == _gridContent.GetLength(0)-1 || j == 0 || j == _gridContent.GetLength(1)-1)
-                    // {
-                    //     this.grid = new WallGrid(this, i, j);
-                    //     Components.Add(this.grid);
-                    // }
                     
                     if (_gridContent[i, j] is ContentsOfGrid.Can)
                     {
@@ -77,8 +73,9 @@ namespace RobbyVisulizer
                 }
             }
             
-
-            Splitter("../Generations/Generation1.txt");
+            robby = new RobbyGrid(this, this.x, this.y);
+            Components.Add(robby);
+            Splitter("../Generations/Generation"+_genCount+".txt");
             _robyActionNum = new int[_robyaction.Length];
             for(int i = 0; i < _robyaction.Length; i++){
                 _robyActionNum[i] = int.Parse(_robyaction[i].ToString());
@@ -102,8 +99,7 @@ namespace RobbyVisulizer
 
             //TO DO: THE LOGIC PART
             _scoreNum += Robby.ScoreForAllele(_robyActionNum, _gridContent, rnd, ref this.x, ref this.y);
-            robby = new RobbyGrid(this, this.x, this.y);
-            Components.Add(robby);
+            _moveNum++;
             _genNum = int.Parse(_gen);
             base.Update(gameTime);
         }
