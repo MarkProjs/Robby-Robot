@@ -9,20 +9,28 @@ namespace RobbyVisulizer
 {
     public class RobbyVisulizerGame : Game
     {
+        private Random rnd;
+        private int x;
+        private int y;
         private GraphicsDeviceManager _graphics;
 
         private SpriteBatch _spriteBatch;
+
+        private SpriteFont _scoreFont;
+        private double _scoreNum = 0;
+        private SpriteFont _moveFont;
+        private int _moveNum = 0;
+        private SpriteFont _genFont;
+        private int _genNum = 0;
 
         private IRobbyTheRobot _robby;
         private Grid grid;
 
         private static readonly string filePath = "";
-        private string _score;
-        private string _generation;
-        private string _totalMoves;
+        private string _gen;
         private string[] _robyaction;
+        private  int[] _robyActionNum;
         private ContentsOfGrid[,] _gridContent;
-        protected GraphicsDeviceManager graphics;
 
 
         public RobbyVisulizerGame()
@@ -30,7 +38,11 @@ namespace RobbyVisulizer
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            _robby = Robby.CreateRobby(10, 200, 200);
+            _robby = Robby.CreateRobby(1000, 200, 100);
+            rnd = new Random();
+            x = rnd.Next(0, 10);
+            y = rnd.Next(0, 10);
+
         }
 
         protected override void Initialize()
@@ -39,7 +51,6 @@ namespace RobbyVisulizer
             _graphics.PreferredBackBufferWidth = 500;
             _graphics.ApplyChanges();
             _gridContent = _robby.GenerateRandomTestGrid();
-            
             // this.grid = new RobbyGrid(this, _robyaction[0,0],_robyaction[]);
             for (int i = 0; i < _gridContent.GetLength(0); i++)
             {
@@ -58,12 +69,22 @@ namespace RobbyVisulizer
                     }
                 }
             }
+            Grid robby = new RobbyGrid(this, this.x, this.y);
+            Components.Add(robby);
+            // Splitter();
+            // _robyActionNum = new int[_robyaction.Length];
+            // for(int i = 0; i < _robyaction.Length; i++){
+            //     _robyActionNum[i] = Int32.Parse(_robyaction[i]);
+            // }
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            // _scoreFont = Content.Load<SpriteFont>("Score");
+            // _moveFont = Content.Load<SpriteFont>("Move");
+            // _genFont = Content.Load<SpriteFont>("Generation");
         }
 
         protected override void Update(GameTime gameTime)
@@ -71,7 +92,17 @@ namespace RobbyVisulizer
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            
+
+            //TO DO: THE LOGIC PART
+
+            // _moveNum++;
+            // _scoreNum = Robby.ScoreForAllele(_robyActionNum, _gridContent, rnd, ref x, ref y);
+            // _genNum = Int32.Parse(_gen);
+            // Splitter();
+            // _robyActionNum = new int[_robyaction.Length];
+            // for(int i = 0; i < _robyaction.Length; i++){
+            //     _robyActionNum[i] = Int32.Parse(_robyaction[i]);
+            // }
             base.Update(gameTime);
         }
 
@@ -85,55 +116,53 @@ namespace RobbyVisulizer
         {
             string rootFile = FileReader();
             string[] tmpFile = rootFile.Split(";");
-            _score = tmpFile[0];
-            _totalMoves = tmpFile[1];
-            _generation = tmpFile[2];
-            _robyaction = tmpFile[3].Split("-");
+            _gen = tmpFile[3];
+            _robyaction = tmpFile[4].Split("-");
             
         }
 
-         public static double ScoreForAllele(string move, ContentsOfGrid[,] grid, Random rng, ref int x, ref int y)
-        {
-            switch (move) // After every movement change roby's location along to grid's cell spritebatch
-                {
-                    case "0"://move north
-                        if (move.Equals(ContentsOfGrid.Wall.ToString()))
-                            return -5;
-                        y -= 1;
-                        break;
-                    case "1"://move south
-                        if (move.Equals(ContentsOfGrid.Wall.ToString()))
-                            return -5;
-                        y += 1;
-                        break;
-                    case "2": //move east
-                        if (move.Equals(ContentsOfGrid.Wall.ToString()))
-                            return -5;
-                        x += 1;
-                        break;
-                    case "3": //move west
-                        if (move.Equals(ContentsOfGrid.Wall.ToString()))
-                            return -5;
-                        x -= 1;
-                        break;
-                    case "4": //do nothong
-                        break;
-                    case "5": //pick up can
-                        if (grid[x, y] == ContentsOfGrid.Can) //there is a can
-                        {
-                            grid[x, y] = ContentsOfGrid.Empty;
-                            return +10;
-                        }
-                        else
-                            return -1; //penalty for picking up nothing
-                    case "6": //random move
-                        int num = rng.Next(0, Enum.GetNames(typeof(PossibleMoves)).Length);
-                        move = num.ToString();
-                        break;
-                }
+        //  public static double ScoreForAllele(string move, ContentsOfGrid[,] grid, Random rng, ref int x, ref int y)
+        // {
+        //     switch (move) // After every movement change roby's location along to grid's cell spritebatch
+        //         {
+        //             case "0"://move north
+        //                 if (move.Equals(ContentsOfGrid.Wall.ToString()))
+        //                     return -5;
+        //                 y -= 1;
+        //                 break;
+        //             case "1"://move south
+        //                 if (move.Equals(ContentsOfGrid.Wall.ToString()))
+        //                     return -5;
+        //                 y += 1;
+        //                 break;
+        //             case "2": //move east
+        //                 if (move.Equals(ContentsOfGrid.Wall.ToString()))
+        //                     return -5;
+        //                 x += 1;
+        //                 break;
+        //             case "3": //move west
+        //                 if (move.Equals(ContentsOfGrid.Wall.ToString()))
+        //                     return -5;
+        //                 x -= 1;
+        //                 break;
+        //             case "4": //do nothong
+        //                 break;
+        //             case "5": //pick up can
+        //                 if (grid[x, y] == ContentsOfGrid.Can) //there is a can
+        //                 {
+        //                     grid[x, y] = ContentsOfGrid.Empty;
+        //                     return +10;
+        //                 }
+        //                 else
+        //                     return -1; //penalty for picking up nothing
+        //             case "6": //random move
+        //                 int num = rng.Next(0, Enum.GetNames(typeof(PossibleMoves)).Length);
+        //                 move = num.ToString();
+        //                 break;
+        //         }
              
-            return 0;
-        }
+        //     return 0;
+        // }
         // private void UpdateRobyPosition(PossibleMoves loc)
         // {
         //     switch (loc)
