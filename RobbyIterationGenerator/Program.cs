@@ -7,11 +7,6 @@ namespace RobbyIterationGenerator
     {
         static void Main(string[] args)
         {
-<<<<<<< HEAD
-            IRobbyTheRobot rtr = Robby.CreateRobby(1000, 200, 200);
-            rtr.GeneratePossibleSolutions("../Generations/");
-=======
->>>>>>> 14a41aba6db0c5ac0e53ddca85b25af6825fd7a4
 
             IRobbyTheRobot rtr = null;
            
@@ -36,15 +31,14 @@ namespace RobbyIterationGenerator
             }
 
             rtr.GeneratePossibleSolutions("../Generations/");
-            rtr.
+            (rtr as RobbyTheRobot.RobbyTheRobot)._filewritten += writeMessage;
             
         }
 
-        public void fileWrite(string message)
+        public void writeMessage(string message)
         {
             Console.WriteLine(message);
         }
-
 
     }
 }

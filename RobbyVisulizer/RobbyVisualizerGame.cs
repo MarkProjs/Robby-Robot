@@ -61,7 +61,7 @@ namespace RobbyVisulizer
             for(int i = 0; i < _robyaction.Length; i++){
                 _robyActionNum[i] = int.Parse(_robyaction[i].ToString());
             }
-             x = rnd.Next(0, 10);
+            x = rnd.Next(0, 10);
             y = rnd.Next(0, 10);
             base.Initialize();
         }
@@ -82,7 +82,6 @@ namespace RobbyVisulizer
 
             //TO DO: THE LOGIC PART
             _scoreNum += Robby.ScoreForAllele(_robyActionNum, _gridContent, rnd, ref this.x, ref this.y);
-            
             robby.X = this.x;
             robby.Y = this.y;
             _moveNum++;
@@ -93,19 +92,13 @@ namespace RobbyVisulizer
                 _scoreNum = 0;
                 fileCount++;
                 _gridContent = _robby.GenerateRandomTestGrid();
-                makeGrid(_gridContent);
                 Splitter(filePaths[fileCount]);
                 _robyActionNum = new int[_robyaction.Length];
                 for(int i = 0; i < _robyaction.Length; i++){
                     _robyActionNum[i] = int.Parse(_robyaction[i].ToString());
                 }
-                robby = new RobbyGrid(this, this.x, this.y);
-                Components.Add(robby);
                 _genNum = int.Parse(_gen);
                 _scoreNum += Robby.ScoreForAllele(_robyActionNum, _gridContent, rnd, ref this.x, ref this.y);
-                _moveNum++;
-                robby.X = this.x;
-                robby.Y = this.y;
             }
             else if (fileCount == filePaths.Length)
             {
@@ -123,6 +116,9 @@ namespace RobbyVisulizer
             _spriteBatch.DrawString(_genFont, "Generation: " + _gen, new Vector2(0,520), Color.Black);
             _spriteBatch.DrawString(_moveFont, "Move: " + _moveNum + "/200", new Vector2(0,560), Color.Black);
             _spriteBatch.DrawString(_scoreFont, "Points: " + _scoreNum + "/500", new Vector2(0,600), Color.Black);
+            makeGrid(_gridContent);
+            robby = new RobbyGrid(this, this.x, this.y);
+            Components.Add(robby);
             _spriteBatch.End();
             base.Draw(gameTime);
         }

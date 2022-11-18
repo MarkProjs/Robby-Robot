@@ -131,10 +131,9 @@ namespace RobbyTheRobot
                 using(var sw = new StreamWriter(path, true))
                 {
                     sw.WriteLine(_generation.MaxFitness + ";" +_generation.AverageFitness + ";"+ _numberOfActions+";" + _geneticAlg.GenerationCount+ ";" +currentGenes);
-                    _filewritten?.Invoke("Files written to" + path);
                 }
                 
-
+            _filewritten?.Invoke("Files written to" + path);
         }
      }
 }
