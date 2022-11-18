@@ -62,6 +62,8 @@ namespace RobbyVisulizer
             for(int i = 0; i < _robyaction.Length; i++){
                 _robyActionNum[i] = int.Parse(_robyaction[i].ToString());
             }
+             x = rnd.Next(0, 10);
+            y = rnd.Next(0, 10);
             base.Initialize();
         }
 
@@ -80,8 +82,7 @@ namespace RobbyVisulizer
                 Exit();
 
             //TO DO: THE LOGIC PART
-            x = rnd.Next(0, 10);
-            y = rnd.Next(0, 10);
+           
             _scoreNum += Robby.ScoreForAllele(_robyActionNum, _gridContent, rnd, ref this.x, ref this.y);
             robby.X = this.x;
             robby.Y = this.y;
