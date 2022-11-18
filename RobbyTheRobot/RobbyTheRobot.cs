@@ -36,7 +36,7 @@ namespace RobbyTheRobot
             }
 
         }
-         public int NumberOfActions{get{return _numberOfActions;}}
+        public int NumberOfActions{get{return _numberOfActions;}}
         public int NumberOfTestGrids{get{return _numberOfTestGrids;}}
         public int GridSize{get{return _gridRow * _gridCol;}}
         public int NumberOfGenerations { get; }
