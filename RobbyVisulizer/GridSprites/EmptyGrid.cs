@@ -14,6 +14,5 @@ namespace RobbyVisulizer
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _gridTexture = _game.Content.Load<Texture2D>("emptyGrid");
         }
-
     }
 }
