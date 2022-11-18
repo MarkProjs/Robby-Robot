@@ -74,29 +74,22 @@ namespace RobbyTheRobot
         {
             int c = 0;
 
-            int[] genNum = new int[] { 1,2,3,4,5,6,7,8,9,20,100, 200, 500, 1000 };
+            int[] genNum = new int[] { 1,20,100, 200, 500, 1000 };
 
             while (_geneticAlg.GenerationCount < NumberOfGenerations)
             {
                 _generation = _geneticAlg.GenerateGeneration();
-                // if (_geneticAlg.GenerationCount == genNum[c])
-                // {
-                // Console.WriteLine();
-                // Console.WriteLine(_generation.AverageFitness);
-                // Console.WriteLine(_generation.MaxFitness);
-                // Console.WriteLine(_generation[0].Fitness);
-                // Console.WriteLine(_generation[1].Fitness);
+                if (_geneticAlg.GenerationCount == genNum[c])
+                {
                     WriteGenerationTxt(folderPath);
                     c++;
-                // }
-               
-             
+                }
             }
             // 
             int[] test = _generation[0].Genes;
             for (int i = 0; i < _generation[0].Genes.Length; i++)
             {
-                Console.Write(test[i]+" - ");
+                Console.Write(test[i]);
             }
 
             Console.WriteLine();
@@ -133,14 +126,13 @@ namespace RobbyTheRobot
                 currentGenes += _generation[0].Genes[i] + "-";
             }
 
-            string cancontert = "";
 
-            string fileName = "Generation.txt";
+            string fileName = "Generation"+_geneticAlg.GenerationCount+".txt";
             string path = folderPath + fileName;
             
                 using(var sw = new StreamWriter(path, true))
                 {
-                    sw.WriteLine(_generation.MaxFitness + ";" +_generation.AverageFitness + ";"+ _numberOfActions+";" + _geneticAlg.GenerationCount+ ";" +currentGenes+";"+cancontert);
+                    sw.WriteLine(_generation.MaxFitness + ";" +_generation.AverageFitness + ";"+ _numberOfActions+";" + _geneticAlg.GenerationCount+ ";" +currentGenes);
                 }
                 // _filewritten?.Invoke("Files written to" + path);
 

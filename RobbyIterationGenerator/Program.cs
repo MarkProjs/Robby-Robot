@@ -8,8 +8,8 @@ namespace RobbyIterationGenerator
         static void Main(string[] args)
         {
 
-            IRobbyTheRobot rtr = Robby.CreateRobby(10, 20, 10);
-            rtr.GeneratePossibleSolutions("./Generations/");
+            IRobbyTheRobot rtr = Robby.CreateRobby(1000, 200, 100);
+            rtr.GeneratePossibleSolutions("../Generations/");
 
 
         }

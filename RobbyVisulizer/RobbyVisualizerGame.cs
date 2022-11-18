@@ -82,9 +82,9 @@ namespace RobbyVisulizer
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            // _scoreFont = Content.Load<SpriteFont>("Score");
-            // _moveFont = Content.Load<SpriteFont>("Move");
-            // _genFont = Content.Load<SpriteFont>("Generation");
+            _scoreFont = Content.Load<SpriteFont>("Score");
+            _moveFont = Content.Load<SpriteFont>("Move");
+            _genFont = Content.Load<SpriteFont>("Generation");
         }
 
         protected override void Update(GameTime gameTime)
@@ -109,103 +109,24 @@ namespace RobbyVisulizer
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            _spriteBatch.Begin();
+            _spriteBatch.DrawString(_genFont, "Generation: " + _genNum, new Vector2(0,510), Color.Black);
+            _spriteBatch.DrawString(_moveFont, "Move: " + _moveNum + "/200", new Vector2(0,530), Color.Black);
+            _spriteBatch.DrawString(_scoreFont, "Points: " + _scoreNum + "/500", new Vector2(0,550), Color.Black);
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
 
-        private void Splitter()
+        private void Splitter(String path)
         {
-            string rootFile = FileReader();
+            string rootFile = FileReader(path);
             string[] tmpFile = rootFile.Split(";");
             _gen = tmpFile[3];
             _robyaction = tmpFile[4].Split("-");
             
         }
 
-        //  public static double ScoreForAllele(string move, ContentsOfGrid[,] grid, Random rng, ref int x, ref int y)
-        // {
-        //     switch (move) // After every movement change roby's location along to grid's cell spritebatch
-        //         {
-        //             case "0"://move north
-        //                 if (move.Equals(ContentsOfGrid.Wall.ToString()))
-        //                     return -5;
-        //                 y -= 1;
-        //                 break;
-        //             case "1"://move south
-        //                 if (move.Equals(ContentsOfGrid.Wall.ToString()))
-        //                     return -5;
-        //                 y += 1;
-        //                 break;
-        //             case "2": //move east
-        //                 if (move.Equals(ContentsOfGrid.Wall.ToString()))
-        //                     return -5;
-        //                 x += 1;
-        //                 break;
-        //             case "3": //move west
-        //                 if (move.Equals(ContentsOfGrid.Wall.ToString()))
-        //                     return -5;
-        //                 x -= 1;
-        //                 break;
-        //             case "4": //do nothong
-        //                 break;
-        //             case "5": //pick up can
-        //                 if (grid[x, y] == ContentsOfGrid.Can) //there is a can
-        //                 {
-        //                     grid[x, y] = ContentsOfGrid.Empty;
-        //                     return +10;
-        //                 }
-        //                 else
-        //                     return -1; //penalty for picking up nothing
-        //             case "6": //random move
-        //                 int num = rng.Next(0, Enum.GetNames(typeof(PossibleMoves)).Length);
-        //                 move = num.ToString();
-        //                 break;
-        //         }
-             
-        //     return 0;
-        // }
-        // private void UpdateRobyPosition(PossibleMoves loc)
-        // {
-        //     switch (loc)
-        //     {
-        //         case PossibleMoves.North://move north
-        //             if (direction.N == ContentsOfGrid.Wall)
-        //                 return -5;
-        //             y -= 1;
-        //             break;
-        //         case PossibleMoves.South://move south
-        //             if (direction.S == ContentsOfGrid.Wall)
-        //                 return -5;
-        //             y += 1;
-        //             break;
-        //         case PossibleMoves.East: //move east
-        //             if (direction.E == ContentsOfGrid.Wall)
-        //                 return -5;
-        //             x += 1;
-        //             break;
-        //         case PossibleMoves.West: //move west
-        //             if (direction.W == ContentsOfGrid.Wall)
-        //                 return -5;
-        //             x -= 1;
-        //             break;
-        //         case PossibleMoves.Nothing: //do nothong
-        //             break;
-        //         case PossibleMoves.PickUp: //pick up can
-        //             if (grid[x, y] == ContentsOfGrid.Can) //there is a can
-        //             {
-        //                 grid[x, y] = ContentsOfGrid.Empty;
-        //                 return +10;
-        //             }
-        //             else
-        //                 return -1; //penalty for picking up nothing
-        //         case PossibleMoves.Random: //random move
-        //             done = false;
-        //             int num = rng.Next(0, Enum.GetNames(typeof(PossibleMoves)).Length);
-        //             move = (PossibleMoves)num;
-        //             break;
-        //     }
-        // }
-
-        private static string FileReader()
+        private static string FileReader(String path)
         {
             string chromosomes = String.Empty;
             if (File.Exists(filePath))
