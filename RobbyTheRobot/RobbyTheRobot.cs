@@ -68,24 +68,6 @@ namespace RobbyTheRobot
             return _tempGrid;
         }
 
-        // private ContentsOfGrid[,] PlaceWallOnGrid(ContentsOfGrid[,] _grid) 
-        // {
-        //     for(int row = 0 ; row < _grid.GetLength(0); row++) 
-        //     {
-        //         for(int col = 0 ; col < _grid.GetLength(1);col++)
-        //         {
-        //             if(row == 0 || row == _grid.GetLength(0)-1)
-        //             {
-        //                 _grid[row,col] = ContentsOfGrid.Wall;
-        //             }
-        //             else if(col == 0 || col == _grid.GetLength(1)-1)
-        //             {
-        //                 _grid[row,col] = ContentsOfGrid.Wall;
-        //             }
-        //         }
-        //     }
-        //     return _grid;
-        // }
 
         public void GeneratePossibleSolutions(string folderPath)
         {
