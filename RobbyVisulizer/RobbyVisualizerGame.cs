@@ -25,7 +25,6 @@ namespace RobbyVisulizer
         private int _genNum = 0;
 
         private IRobbyTheRobot _robby;
-        private Grid grid;
 
         private Grid robby;
         private int _genCount = 1;
@@ -55,23 +54,7 @@ namespace RobbyVisulizer
             _graphics.ApplyChanges();
             _gridContent = _robby.GenerateRandomTestGrid();
             // this.grid = new RobbyGrid(this, _robyaction[0,0],_robyaction[]);
-            for (int i = 0; i < _gridContent.GetLength(0); i++)
-            {
-                for (int j = 0; j < _gridContent.GetLength(1); j++)
-                {
-                    
-                    if (_gridContent[i, j] is ContentsOfGrid.Can)
-                    {
-                        this.grid = new CanGrid(this, i, j);
-                        Components.Add(this.grid);
-                    }
-                    else if (_gridContent[i, j] is ContentsOfGrid.Empty)
-                    {
-                        this.grid = new EmptyGrid(this, i, j);
-                        Components.Add(this.grid);
-                    }
-                }
-            }
+            makeGrid(_gridContent);
             
             robby = new RobbyGrid(this, this.x, this.y);
             Components.Add(robby);
@@ -98,6 +81,7 @@ namespace RobbyVisulizer
                 Exit();
 
             //TO DO: THE LOGIC PART
+
             _scoreNum += Robby.ScoreForAllele(_robyActionNum, _gridContent, rnd, ref this.x, ref this.y);
             _moveNum++;
             _genNum = int.Parse(_gen);
@@ -140,6 +124,28 @@ namespace RobbyVisulizer
             }
         
             return chromosomes;
+        }
+
+        private void makeGrid(ContentsOfGrid[,] _gridContent)
+        {
+            for (int i = 0; i < _gridContent.GetLength(0); i++)
+            {
+                for (int j = 0; j < _gridContent.GetLength(1); j++)
+                {
+                    
+                    if (_gridContent[i, j] is ContentsOfGrid.Can)
+                    {
+                        Grid grid = new CanGrid(this, i, j);
+                        Components.Add(grid);
+                    }
+                    else if (_gridContent[i, j] is ContentsOfGrid.Empty)
+                    {
+                        Grid grid = new EmptyGrid(this, i, j);
+                        Components.Add(grid);
+                    }
+                }
+            }
+
         }
     }
 }
