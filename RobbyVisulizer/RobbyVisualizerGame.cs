@@ -42,8 +42,7 @@ namespace RobbyVisulizer
             IsMouseVisible = true;
             _robby = Robby.CreateRobby(1000, 200, 100);
             rnd = new Random();
-            x = rnd.Next(0, 10);
-            y = rnd.Next(0, 10);
+            
 
         }
 
@@ -81,6 +80,8 @@ namespace RobbyVisulizer
                 Exit();
 
             //TO DO: THE LOGIC PART
+            x = rnd.Next(0, 10);
+            y = rnd.Next(0, 10);
             _scoreNum += Robby.ScoreForAllele(_robyActionNum, _gridContent, rnd, ref this.x, ref this.y);
             robby.X = this.x;
             robby.Y = this.y;
@@ -94,7 +95,7 @@ namespace RobbyVisulizer
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
-            _spriteBatch.DrawString(_genFont, "Generation: " + _gen, new Vector2(0,520), Color.Black);
+            _spriteBatch.DrawString(_genFont, "Generation: " + _robyActionNum[4], new Vector2(0,520), Color.Black);
             _spriteBatch.DrawString(_moveFont, "Move: " + _moveNum + "/200", new Vector2(0,560), Color.Black);
             _spriteBatch.DrawString(_scoreFont, "Points: " + _scoreNum + "/500", new Vector2(0,600), Color.Black);
             _spriteBatch.End();
