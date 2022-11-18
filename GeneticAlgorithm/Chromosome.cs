@@ -6,6 +6,7 @@ namespace GeneticLibrary
     {
         private double _fitness;
         private static int _currentIndex = 0;
+        private int? _seed;
         
         public Chromosome(int numberOfGenes, int lengthOfGene, int? seed = null){
             if (numberOfGenes <= 0 || lengthOfGene <= 0) throw new ArgumentOutOfRangeException("Arguments are not valid");
@@ -21,6 +22,7 @@ namespace GeneticLibrary
                 Genes[i] = rndInt;
             }
             _fitness = 0;
+            _seed = seed;
         }
 
         public Chromosome(IChromosome chromosome){
@@ -67,9 +69,8 @@ namespace GeneticLibrary
             IChromosome child = new Chromosome(p1.Genes.Length,7);
             Random rd = new Random();
             int slicer = rd.Next(p1.Genes.Length);
-            slicer = 5;
-            // Array.Copy(p1.Genes,0,child.Genes,0,slicer);
-            // Array.Copy(p2.Genes,slicer,child.Genes,slicer,p1.Length-13);
+     
+           
             for (int i = 0; i < slicer; i++)
             {
                 child.Genes[i] = p1.Genes[i];

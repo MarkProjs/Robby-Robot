@@ -9,6 +9,7 @@ namespace GeneticLibrary {
     private Random rnd;
     private double _fitnessAvg;
     private double _maxFitness;
+    public IGeneticAlgorithm _geneticAlgorithm;
 
     public Generation(IGeneticAlgorithm _geneticAlgorithm, FitnessEventHandler fitnessEvt, int? seed = null) 
     {
@@ -22,11 +23,14 @@ namespace GeneticLibrary {
       }
     }
 
-    public Generation(IChromosome[] chromosomes) {
+    public Generation(IChromosome[] chromosomes, IGeneticAlgorithm geneticAlgorithm)
+    {
       _chromosomes = new Chromosome[chromosomes.Length];
-
+      GeneticAlgorithm = geneticAlgorithm;
+      FitnessEvt = _geneticAlgorithm.FitnessCalculation; //
+      
       for (int i = 0; i < chromosomes.Length;i++) {
-        _chromosomes[i] = new Chromosome(chromosomes[i]); // Chromosome(chromosomes[i]);
+        _chromosomes[i] = new Chromosome(chromosomes[i]);   
       }
     }
 
@@ -58,6 +62,8 @@ namespace GeneticLibrary {
 
     public IChromosome SelectParent() 
     {
+      // int eliterate = (int)(_geneticAlgorithm.PopulationSize * _geneticAlgorithm.EliteRate); //
+
       // These two are seems to elite rate
       int pointA = rnd.Next(_chromosomes.Length); 
       int pointB = rnd.Next(pointA, _chromosomes.Length);
@@ -74,12 +80,13 @@ namespace GeneticLibrary {
     }
 
     public void EvaluateFitnessOfPopulation() {
+      double fitnessEvent = 0;
       for (int i = 0; i < _chromosomes.Length; i++)
       {
-         double fitnessEvent = 0;
+        
         for (int j = 0; j < GeneticAlgorithm.NumberOfTrials; j++)
         {
-          fitnessEvent += this.FitnessEvt.Invoke(_chromosomes[i], this);
+          fitnessEvent += this.FitnessEvt!.Invoke(_chromosomes[j], this); // Potential problem is here
         }
         fitnessEvent = fitnessEvent / GeneticAlgorithm.NumberOfTrials;
         (_chromosomes[i] as Chromosome).Fitness =  fitnessEvent;

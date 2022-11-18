@@ -9,9 +9,7 @@ namespace GeneticLibrary
         private IGeneration _currentGeneration;
 
         private IGeneration _nextGeneration;
-        private IGeneration _previousGeneration;
 
- 
         private static long _generationCount = 0;
         private int? _seed; // What is the seed's value 
 
@@ -21,7 +19,7 @@ namespace GeneticLibrary
             // maximum number of trials based on her instruction
             if (populationSize > 200)
             {
-                throw new ArgumentException("Population size must be less than or equal to 1000.");
+                throw new ArgumentException("Population size must be less than or equal to 200.");
             }
             PopulationSize = populationSize;
             NumberOfGenes = numberOfGenes;
@@ -76,10 +74,18 @@ namespace GeneticLibrary
                 //chk indx1 nad index2
                IChromosome[] tmpChildren  =  newPopulation[indexp1].Reproduce(newPopulation[indexp2],MutationRate);
                newPopulation[i] = tmpChildren[0];
+               foreach (var VARIABLE in tmpChildren[0].Genes)
+               {
+                   Console.Write(VARIABLE);
+               }
                newPopulation[i+1] = tmpChildren[1];
+               foreach (var VARIABLE in tmpChildren[1].Genes)
+               {
+                   Console.Write(VARIABLE);
+               }
             }
 
-            _nextGeneration = new Generation(newPopulation);
+            _nextGeneration = new Generation(newPopulation,this);
             return _nextGeneration;
 
         }
@@ -88,15 +94,16 @@ namespace GeneticLibrary
         {
             if (_currentGeneration is null)
             {
-                Console.WriteLine(_generationCount);
                 _nextGeneration = new Generation(this, FitnessCalculation, _seed);
+                (_nextGeneration as Generation)!.EvaluateFitnessOfPopulation();
                 _generationCount += 1;
             }
             else
             {
-                Console.WriteLine(_generationCount);
-                _previousGeneration = _currentGeneration;
-                _nextGeneration = GenerateNextGeneration();
+                 Console.WriteLine(_generationCount);
+ 
+                 _nextGeneration = GenerateNextGeneration();
+                (_nextGeneration as Generation).EvaluateFitnessOfPopulation();
                 _generationCount += 1;
             }
 
