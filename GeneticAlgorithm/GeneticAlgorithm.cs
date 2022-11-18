@@ -90,7 +90,7 @@ namespace GeneticLibrary
             if (_currentGeneration is null)
             {
                 Console.WriteLine(_generationCount);
-                _nextGeneration = new Generation(this, FitnessCalculation, _seed);
+                _nextGeneration = new Generation(this, FitnessCalculation, 0);
                 (_nextGeneration as Generation)?.EvaluateFitnessOfPopulation();
                 _generationCount += 1;
             }

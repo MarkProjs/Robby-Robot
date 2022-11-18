@@ -10,12 +10,14 @@ namespace RobbyTheRobotTest
 
       // private IRobbyTheRobot _robbyTheRobot = new RobbyTheRobot( 200, 200, 10, 0);
       public static double fitnes(IChromosome chromosome, IGeneration generation){
-          return 120;
+          return 1;
         }
-      public static GeneticAlgorithm _geneticAlgorithm = new GeneticAlgorithm(200, 247, 10, 2,  4, 100, fitnes, 10);
+      public static GeneticAlgorithm _geneticAlgorithm = new GeneticAlgorithm(1, 1, 1, 1,  1, 1, fitnes, 0);
       public static IGeneration _generation = new Generation(_geneticAlgorithm , fitnes, 0);
-      private IRobbyTheRobot _robbyTheRobot = Robby.CreateRobby(200, 200, 10, 0);
-      private Chromosome _chromosome = new Chromosome(1, 2, 3);
+      private IRobbyTheRobot _robbyTheRobot = Robby.CreateRobby(1, 10, 1, 0);
+      private Chromosome _chromosome = new Chromosome(243, 7, 0);
+
+
 
       [TestMethod]
       public void TestNumberOfActions()
@@ -53,12 +55,12 @@ namespace RobbyTheRobotTest
           Assert.AreEqual( _robbyTheRobot.EliteRate, 0.05);
       }
 
-      // computeFitness
       [TestMethod]
       public void TestComputeFitness()
       {   
-          double fitness = (_robbyTheRobot as RobbyTheRobot.RobbyTheRobot).computeFitness ( _chromosome, _generation, 0);
-          Assert.AreEqual( fitness, 2);
+          double fitness = (_robbyTheRobot as RobbyTheRobot.RobbyTheRobot).computeFitness( _chromosome, _generation);
+          Assert.AreEqual( fitness, 0);
       }
+
   }
 }
