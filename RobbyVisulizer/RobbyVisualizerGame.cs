@@ -27,7 +27,7 @@ namespace RobbyVisulizer
         private IRobbyTheRobot _robby;
         private Grid grid;
 
-        private Grid robby;
+        private RobbyGrid robby;
 
         private string _gen;
         private string _robyaction;
@@ -76,13 +76,12 @@ namespace RobbyVisulizer
                     }
                 }
             }
-            robby = new RobbyGrid(this, this.x, this.y);
-            Components.Add(robby);
+            
 
             Splitter("../Generations/Generation1.txt");
             _robyActionNum = new int[_robyaction.Length];
             for(int i = 0; i < _robyaction.Length; i++){
-                _robyActionNum[i] = Convert.ToInt32(_robyaction[i]);
+                _robyActionNum[i] = int.Parse(_robyaction[i].ToString());
             }
             base.Initialize();
         }
@@ -102,45 +101,10 @@ namespace RobbyVisulizer
                 Exit();
 
             //TO DO: THE LOGIC PART
-            // for (int i = 0; i < _robyActionNum.Length;i++) 
-            // {
-            //     switch(_robyActionNum[i])
-            //     {
-            //         case 0:
-            //             (robby as RobbyGrid).Up += 1;
-            //             _moveNum++;
-            //             break;
-            //         case 1:
-            //             (robby as RobbyGrid).Up -= 1;
-            //             _moveNum++;
-            //             break;
-            //         case 2:
-            //             (robby as RobbyGrid).Left += 1;
-            //             _moveNum++;
-            //             break;
-            //         case 3:
-            //             (robby as RobbyGrid).Left -= 1;
-            //             _moveNum++;
-            //             break;
-            //         case 4:
-            //             _moveNum++;
-            //             break;
-            //         case 5:
-            //             _moveNum++;
-            //             break;
-            //         case 6:
-            //             _moveNum++;
-            //             break;
-            //     }
-            // }
-           
             _scoreNum += Robby.ScoreForAllele(_robyActionNum, _gridContent, rnd, ref this.x, ref this.y);
-            _genNum = Convert.ToInt32(_gen);
-            // Splitter();
-            // _robyActionNum = new int[_robyaction.Length];
-            // for(int i = 0; i < _robyaction.Length; i++){
-            //     _robyActionNum[i] = Int32.Parse(_robyaction[i]);
-            // }
+            robby = new RobbyGrid(this, this.x, this.y);
+            Components.Add(robby);
+            _genNum = int.Parse(_gen);
             base.Update(gameTime);
         }
 
