@@ -9,7 +9,7 @@ namespace RobbyIterationGenerator
         static void Main(string[] args)
         {
 
-            IRobbyTheRobot rtr = Robby.CreateRobby(1000, 200, 40);
+            IRobbyTheRobot rtr = Robby.CreateRobby(1000, 22, 20);
             rtr.GeneratePossibleSolutions("../../../");
         }
     }

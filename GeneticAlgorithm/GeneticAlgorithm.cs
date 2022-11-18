@@ -7,12 +7,10 @@ namespace GeneticLibrary
         private Random rand;
         private Random random;
 
-        private IGeneration _currentGeneration;
-
-        // private IGeneration _nextGeneration;
-
+        private Generation _currentGeneration;
         private static long _generationCount = 0;
-        private int? _seed; // What is the seed's value 
+        private int? _seed;
+        private int x = 10;
 
         public GeneticAlgorithm(int populationSize, int numberOfGenes, int lengthOfGenes, double mutationRate,
             double eliteRate,int numberOfTrials, FitnessEventHandler fitnessFunc, int? seed = null)
@@ -69,23 +67,27 @@ namespace GeneticLibrary
                 newPopulation[i] = new Chromosome(_currentGeneration[z--] as Chromosome);
             }
 
-            
             for (int i = elites; i < PopulationSize; i++)
             {
                 int indexp1 = random.Next(0, elites);
                 int indexp2 = random.Next(0, elites);
                 
-                //chk indx1 nad index2
-               Chromosome[] tmpChildren  = ( newPopulation[indexp1].Reproduce(newPopulation[indexp2],MutationRate) as Chromosome[]);
-               newPopulation[i] = tmpChildren[0] ;
+                // Console.WriteLine(++x);
+                Chromosome p1 =   _currentGeneration.SelectParent() as Chromosome;
+                Chromosome p2 =   _currentGeneration.SelectParent() as Chromosome;
+                // _currentGeneration[indexp2];
+                IChromosome[] tmpChildren = p1.Reproduce(p2, MutationRate);
+                //chk indx1 nad index2      
+                // Chromosome[] tmpChildren  = ( newPopulation[indexp1].Reproduce(newPopulation[indexp2],MutationRate) as Chromosome[]);
+               newPopulation[i] = tmpChildren[0] as Chromosome;
             }
 
-            return new Generation(newPopulation,this);
+            _currentGeneration = new Generation(newPopulation, this);
+            return _currentGeneration;
         }
 
         public IGeneration GenerateGeneration()
         {
-            Console.WriteLine(_generationCount);
             if (_currentGeneration is null)
             {
                 _currentGeneration = new Generation(this, FitnessCalculation, _seed);
@@ -94,9 +96,7 @@ namespace GeneticLibrary
             }
             else
             {
-                 Console.WriteLine(_generationCount);
- 
-                 _currentGeneration = GenerateNextGeneration();
+                _currentGeneration = GenerateNextGeneration();
                 (_currentGeneration as Generation).EvaluateFitnessOfPopulation();
                 _generationCount += 1;
             }

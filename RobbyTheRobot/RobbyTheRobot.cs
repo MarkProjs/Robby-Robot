@@ -73,8 +73,10 @@ namespace RobbyTheRobot
             while (_geneticAlg.GenerationCount < NumberOfGenerations)
             {
                 _generation = _geneticAlg.GenerateGeneration();
-                // Console.WriteLine(_geneticAlg.GenerationCount);
-                    WriteGenerationTxt(folderPath);
+                Console.WriteLine(_geneticAlg.GenerationCount);
+                Console.WriteLine(_generation.AverageFitness);
+                Console.WriteLine(_generation.MaxFitness);
+                    // WriteGenerationTxt(folderPath);
             }
         }
 
@@ -82,7 +84,6 @@ namespace RobbyTheRobot
         public double computeFitness(IChromosome chromosome, IGeneration generation)
         {
             //use the _seed
-           
             int x = rnd.Next(0, 10);
             int y = rnd.Next(0, 10);
             double totalFitness = 0.0;
@@ -102,7 +103,7 @@ namespace RobbyTheRobot
             
                 using(var sw = new StreamWriter(path, true))
                 {
-                    sw.WriteLine(_geneticAlg.GenerationCount+";"+_generation.MaxFitness + ";" +_generation.AverageFitness+";"+ _numberOfActions+";" + _geneticAlg.GenerationCount);
+                    sw.WriteLine(_geneticAlg.GenerationCount+" ; "+_generation.MaxFitness + " ; " +_generation.AverageFitness+" ; "+ _numberOfActions);
                 }
             
         }

@@ -7,6 +7,7 @@ namespace GeneticLibrary {
     private int? _seed;
     public event FitnessEventHandler FitnessEvt; 
     private Random rnd;
+    private Random rand;
     private double _fitnessAvg;
     private double _maxFitness;
     IGeneticAlgorithm geneticAlgorithm;
@@ -16,7 +17,7 @@ namespace GeneticLibrary {
       geneticAlgorithm = _geneticAlgorithm;
       FitnessEvt += fitnessEvt;
       rnd = new Random(seed.GetValueOrDefault());
-      _populations = new IChromosome[geneticAlgorithm.PopulationSize];
+      _populations = new Chromosome[geneticAlgorithm.PopulationSize];
       
       for( int i =0 ; i < _populations.Length;i++) {
         _populations[i] = new Chromosome(geneticAlgorithm.NumberOfGenes, geneticAlgorithm.LengthOfGene);
@@ -27,29 +28,35 @@ namespace GeneticLibrary {
     {
       _populations = new Chromosome[chromosomes.Length];
       geneticAlgorithm = geneticAlgorithmpar;
-      FitnessEvt += geneticAlgorithm.FitnessCalculation; 
-      
+      FitnessEvt += geneticAlgorithm.FitnessCalculation;
       for (int i = 0; i < chromosomes.Length;i++) {
-        _populations[i] = new Chromosome(chromosomes[i]);   
+        _populations[i] = chromosomes[i];   
       }
     }
 
-    public IChromosome SelectParent() 
+    public IChromosome SelectParent()
     {
+      rand = new Random();
+      // Console.WriteLine(_populations[0].Fitness);
+      // return _populations[0];
       // int eliterate = (int)(_geneticAlgorithm.PopulationSize * _geneticAlgorithm.EliteRate); //
-
-      // These two are seems to elite rate
-      int pointA = rnd.Next(0, geneticAlgorithm.PopulationSize-3); 
-      int pointB = rnd.Next(pointA, _populations.Length);
-      
-      IChromosome parent = null;
-      for (int i =pointA +1 ; i<pointB ;i++) {
-        if (_populations[i-1].CompareTo(_populations[i]) > 0) {
-          parent = _populations[i-1];
-        }
-      }
-      
-      return parent;
+      int elites = (int)(geneticAlgorithm.EliteRate * geneticAlgorithm.PopulationSize);
+      int index = rand.Next(elites);
+      return  (_populations[index] as Chromosome);
+      // if (elites % 2 == 1) elites+=1;
+      // // These two are seems to elite rate
+      // int pointA = rnd.Next(0, geneticAlgorithm.PopulationSize-3); 
+      // int pointB = rnd.Next(pointA, _populations.Length);
+      //
+      //
+      // Chromosome parent = null;
+      // for (int i =pointA +1 ; i<pointB ;i++) {
+      //   if (_populations[i-1].CompareTo(_populations[i]) > 0) {
+      //     parent = _populations[i-1] as Chromosome;
+      //   }
+      // }
+      //
+      // return parent;
     }
 
     public void EvaluateFitnessOfPopulation() {

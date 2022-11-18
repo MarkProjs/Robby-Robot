@@ -30,7 +30,7 @@ namespace GeneticLibrary
 
         public Chromosome(Chromosome chromosome){
             if(chromosome == null) throw new ArgumentNullException("chromosome is empty");
-            // Fitness = chromosome.Fitness;
+
             Genes = new int[chromosome.Length];
             rand = new Random();
             for (var i = 0; i < chromosome.Length; i++)
@@ -62,8 +62,9 @@ namespace GeneticLibrary
             MutateChild(child2,mutationProb);
            
             // Adding the children index
-            children[_currentIndex] = child1;
- 
+            children[0] = child1;
+            children[1] = child2;
+            
             return children;
         }
 
@@ -83,7 +84,7 @@ namespace GeneticLibrary
             }
         }
 
-        private void MutateChild(IChromosome child, double mutationProb)
+        private void MutateChild(Chromosome child, double mutationProb)
         {
             for (int i = 0; i < child.Genes.Length; i++)
             {
