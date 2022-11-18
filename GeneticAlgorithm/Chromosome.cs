@@ -7,15 +7,18 @@ namespace GeneticLibrary
         private double _fitness;
         private static int _currentIndex = 0;
         private int? _seed;
+        Random rand;
+
         
         public Chromosome(int numberOfGenes, int lengthOfGene, int? seed = null){
             if (numberOfGenes <= 0 || lengthOfGene <= 0) throw new ArgumentOutOfRangeException("Arguments are not valid");
             Genes = new int[numberOfGenes];
-            Random rand;
+            rand = new Random();
 
             if(seed is null){ rand = new Random();}
-            else rand = new Random(seed.GetValueOrDefault());  // seed.GetValueOrDefault() cause of creating same children all children have same Genes
+            else rand = new Random(seed.GetValueOrDefault());  
             
+            // Filling genes with the random values
             for (int i = 0; i < numberOfGenes; i++)
             {
                 int rndInt = rand.Next(lengthOfGene);
@@ -25,10 +28,11 @@ namespace GeneticLibrary
             _seed = seed;
         }
 
-        public Chromosome(IChromosome chromosome){
+        public Chromosome(Chromosome chromosome){
             if(chromosome == null) throw new ArgumentNullException("chromosome is empty");
-            Fitness = chromosome.Fitness;
+            // Fitness = chromosome.Fitness;
             Genes = new int[chromosome.Length];
+            rand = new Random();
             for (var i = 0; i < chromosome.Length; i++)
             {
                 Genes[i] = chromosome[i];
@@ -40,62 +44,57 @@ namespace GeneticLibrary
 
         public IChromosome[] Reproduce(IChromosome spouse, double mutationProb)
         {
-            if (this.Genes.Length != spouse.Genes.Length)
-            {
-                throw new ArgumentException("genes count does not equal");
-            }
+            // if (this.Genes.Length != spouse.Genes.Length)
+            // {
+            //     throw new ArgumentException("genes count does not equal");
+            // }
             //Creating a new children array
-            IChromosome[] children = new IChromosome[spouse.Length];
+            IChromosome[] children = new Chromosome[2];
+            
             // Creating 2 new temporary child objects
-            IChromosome child1, child2;
             //make it crossing over between parent's chromosomes
-            child1 = CrossingOver(spouse, this);
-            child2 = CrossingOver(this, spouse);
+           
+            Chromosome child1 = new Chromosome(this);
+            Chromosome child2 = new Chromosome(spouse as Chromosome);
+            CrossingOver(child1, child2); 
             //Make it mutate based one the random values
-            MutateChild(ref child1,mutationProb);
-            MutateChild(ref child2,mutationProb);
+            MutateChild(child1,mutationProb);
+            MutateChild(child2,mutationProb);
            
             // Adding the children index
             children[_currentIndex] = child1;
-            _currentIndex++;
-            
-            children[_currentIndex] = child2;
-            _currentIndex++;
+ 
             return children;
         }
 
-        private IChromosome CrossingOver(IChromosome p1, IChromosome p2)
+        private void CrossingOver(Chromosome p1, Chromosome p2)
         {
-            IChromosome child = new Chromosome(p1.Genes.Length,7);
-            Random rd = new Random();
-            int slicer = rd.Next(p1.Genes.Length);
-     
-           
-            for (int i = 0; i < slicer; i++)
-            {
-                child.Genes[i] = p1.Genes[i];
-            }
-
-            for (int i = slicer; i < p1.Length; i++)
-            {
-                child.Genes[i] = p2.Genes[i];
-            }
+            Chromosome tmp = new Chromosome(p1);
             
-            return child;
+           
+            int slicer1 = rand.Next(0,p1.Genes.Length-2);
+            int slicer2 = rand.Next(slicer1,p1.Genes.Length);
+
+            for (int i = slicer1; i < slicer2; i++)
+            {
+                tmp.Genes[i] = p1.Genes[i];
+                p1.Genes[i] = p2.Genes[i];
+                p2.Genes[i] = tmp.Genes[i];
+            }
         }
 
-        private void MutateChild(ref IChromosome child, double mutationProb)
+        private void MutateChild(IChromosome child, double mutationProb)
         {
-            Random random = new Random();
             for (int i = 0; i < child.Genes.Length; i++)
             {
-                double mutationRate = random.NextDouble() * 100;
+                double mutationRate = rand.NextDouble() * 100;
                 if (mutationRate < mutationProb)
                 {
-                    child.Genes[i] = random.Next(7);
+                    child.Genes[i] = rand.Next(7);
                 }
             }        
         }
+        
         //implement indexer
         public int this[int index] {
             get => Genes[index];

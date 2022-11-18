@@ -73,10 +73,8 @@ namespace RobbyTheRobot
             while (_geneticAlg.GenerationCount < NumberOfGenerations)
             {
                 _generation = _geneticAlg.GenerateGeneration();
-                Console.WriteLine(_geneticAlg.GenerationCount);
+                // Console.WriteLine(_geneticAlg.GenerationCount);
                     WriteGenerationTxt(folderPath);
-               
-
             }
         }
 

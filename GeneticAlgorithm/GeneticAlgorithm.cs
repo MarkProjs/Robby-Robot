@@ -5,10 +5,11 @@ namespace GeneticLibrary
     public class GeneticAlgorithm : IGeneticAlgorithm
     {
         private Random rand;
+        private Random random;
 
         private IGeneration _currentGeneration;
 
-        private IGeneration _nextGeneration;
+        // private IGeneration _nextGeneration;
 
         private static long _generationCount = 0;
         private int? _seed; // What is the seed's value 
@@ -28,6 +29,7 @@ namespace GeneticLibrary
             EliteRate = eliteRate;
             NumberOfTrials = numberOfTrials;
             FitnessCalculation = fitnessFunc;
+            random = new Random();
             rand = new Random(seed.GetValueOrDefault());
         }
 
@@ -55,59 +57,51 @@ namespace GeneticLibrary
 
         public FitnessEventHandler FitnessCalculation { get; }
 
-        private IGeneration GenerateNextGeneration()
+        private Generation GenerateNextGeneration()
         {
-            IChromosome[] newPopulation = new Chromosome[_currentGeneration.NumberOfChromosomes];
+            Chromosome[] newPopulation = new Chromosome[_currentGeneration.NumberOfChromosomes];
 
             int elites =(int) (EliteRate * PopulationSize);
             if (elites % 2 == 1) elites+=1;
-            for (int i = 0; i < elites; i++)
+
+            for (int i = 0, z = PopulationSize - 1; i < elites; i++)
             {
-                newPopulation[i] = new Chromosome(((IGenerationDetails)_currentGeneration).SelectParent());
+                newPopulation[i] = new Chromosome(_currentGeneration[z--] as Chromosome);
             }
 
-            Random  random = new Random();
+            
             for (int i = elites; i < PopulationSize; i++)
             {
                 int indexp1 = random.Next(0, elites);
                 int indexp2 = random.Next(0, elites);
+                
                 //chk indx1 nad index2
-               IChromosome[] tmpChildren  =  newPopulation[indexp1].Reproduce(newPopulation[indexp2],MutationRate);
-               newPopulation[i] = tmpChildren[0];
-               foreach (var VARIABLE in tmpChildren[0].Genes)
-               {
-                   Console.Write(VARIABLE);
-               }
-               newPopulation[i+1] = tmpChildren[1];
-               foreach (var VARIABLE in tmpChildren[1].Genes)
-               {
-                   Console.Write(VARIABLE);
-               }
+               Chromosome[] tmpChildren  = ( newPopulation[indexp1].Reproduce(newPopulation[indexp2],MutationRate) as Chromosome[]);
+               newPopulation[i] = tmpChildren[0] ;
             }
 
-            _nextGeneration = new Generation(newPopulation,this);
-            return _nextGeneration;
-
+            return new Generation(newPopulation,this);
         }
 
         public IGeneration GenerateGeneration()
         {
+            Console.WriteLine(_generationCount);
             if (_currentGeneration is null)
             {
-                _nextGeneration = new Generation(this, FitnessCalculation, _seed);
-                (_nextGeneration as Generation)!.EvaluateFitnessOfPopulation();
+                _currentGeneration = new Generation(this, FitnessCalculation, _seed);
+                (_currentGeneration as Generation)!.EvaluateFitnessOfPopulation();
                 _generationCount += 1;
             }
             else
             {
                  Console.WriteLine(_generationCount);
  
-                 _nextGeneration = GenerateNextGeneration();
-                (_nextGeneration as Generation).EvaluateFitnessOfPopulation();
+                 _currentGeneration = GenerateNextGeneration();
+                (_currentGeneration as Generation).EvaluateFitnessOfPopulation();
                 _generationCount += 1;
             }
 
-            return _nextGeneration;
+            return _currentGeneration;
         }
     }
 }
