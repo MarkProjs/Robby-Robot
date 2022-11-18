@@ -37,6 +37,20 @@
 /processorParam:TextureFormat=Color
 /build:emptyGrid.png
 
+#begin Generation.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Generation.spritefont
+
+#begin Move.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Move.spritefont
+
 #begin roby.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -60,4 +74,11 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:roby2.png
+
+#begin Score.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Score.spritefont
 

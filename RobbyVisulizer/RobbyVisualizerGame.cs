@@ -21,6 +21,7 @@ namespace RobbyVisulizer
         private string _generation;
         private string _totalMoves;
         private string[] _robyaction;
+        private ContentsOfGrid[,] _gridContent;
         protected GraphicsDeviceManager graphics;
 
 
@@ -30,26 +31,6 @@ namespace RobbyVisulizer
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             _robby = Robby.CreateRobby(10, 200, 200);
-            ContentsOfGrid[,] grid = _robby.GenerateRandomTestGrid();
-
-            // this.grid = new RobbyGrid(this, _robyaction[0,0],_robyaction[]);
-            for (int i = 0; i < grid.GetLength(0); i++)
-            {
-                for (int j = 0; j < grid.GetLength(1); j++)
-                {
-                    
-                    if (grid[i, j] is ContentsOfGrid.Can)
-                    {
-                        this.grid = new CanGrid(this, i, j);
-                        Components.Add(this.grid);
-                    }
-                    else if (grid[i, j] is ContentsOfGrid.Empty)
-                    {
-                        this.grid = new EmptyGrid(this, i, j);
-                        Components.Add(this.grid);
-                    }
-                }
-            }
         }
 
         protected override void Initialize()
@@ -57,6 +38,26 @@ namespace RobbyVisulizer
             _graphics.PreferredBackBufferHeight = 700;
             _graphics.PreferredBackBufferWidth = 500;
             _graphics.ApplyChanges();
+            _gridContent = _robby.GenerateRandomTestGrid();
+            
+            // this.grid = new RobbyGrid(this, _robyaction[0,0],_robyaction[]);
+            for (int i = 0; i < _gridContent.GetLength(0); i++)
+            {
+                for (int j = 0; j < _gridContent.GetLength(1); j++)
+                {
+                    
+                    if (_gridContent[i, j] is ContentsOfGrid.Can)
+                    {
+                        this.grid = new CanGrid(this, i, j);
+                        Components.Add(this.grid);
+                    }
+                    else if (_gridContent[i, j] is ContentsOfGrid.Empty)
+                    {
+                        this.grid = new EmptyGrid(this, i, j);
+                        Components.Add(this.grid);
+                    }
+                }
+            }
             base.Initialize();
         }
 
@@ -70,7 +71,7 @@ namespace RobbyVisulizer
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            
             base.Update(gameTime);
         }
 
