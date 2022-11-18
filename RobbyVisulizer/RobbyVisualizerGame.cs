@@ -110,9 +110,9 @@ namespace RobbyVisulizer
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
-            _spriteBatch.DrawString(_genFont, "Generation: " + _genNum, new Vector2(0,510), Color.Black);
-            _spriteBatch.DrawString(_moveFont, "Move: " + _moveNum + "/200", new Vector2(0,530), Color.Black);
-            _spriteBatch.DrawString(_scoreFont, "Points: " + _scoreNum + "/500", new Vector2(0,550), Color.Black);
+            _spriteBatch.DrawString(_genFont, "Generation: " + _genNum, new Vector2(0,520), Color.Black);
+            _spriteBatch.DrawString(_moveFont, "Move: " + _moveNum + "/200", new Vector2(0,560), Color.Black);
+            _spriteBatch.DrawString(_scoreFont, "Points: " + _scoreNum + "/500", new Vector2(0,600), Color.Black);
             _spriteBatch.End();
             base.Draw(gameTime);
         }
