@@ -8,15 +8,38 @@ namespace RobbyIterationGenerator
         static void Main(string[] args)
         {
 
-            IRobbyTheRobot rtr = Robby.CreateRobby(1000, 200, 100);
-            ContentsOfGrid[,] grid = rtr.GenerateRandomTestGrid();
+            IRobbyTheRobot rtr = null;
+           
 
-            for (int i = 0; i < grid.GetLength(0); i++)
-                for (int j = 0; j < grid.GetLength(1); j++)
-                    Console.WriteLine("["+i +", "+ j+"]"+grid[i,j]);
-            // rtr.GeneratePossibleSolutions("../Generations/");
+            Console.WriteLine("Welcome to the Robby Simulation!");
+            Console.WriteLine("How many generations do you want to have for Robby?");
+            string numberOfGenerations = Console.ReadLine();
+            Console.WriteLine("How many population size?");
+            string populationSize = Console.ReadLine();
+            Console.WriteLine("How many number of trials?");
+            string numberOfTrials = Console.ReadLine();
+            Console.WriteLine("Do you need the seed? Insert null if not needed or a number if needed");
+            string seed = Console.ReadLine();
+            
+            if (seed == "null")
+            {
+                rtr = Robby.CreateRobby(int.Parse(numberOfGenerations), int.Parse(populationSize), int.Parse(numberOfTrials));
+            }
+            else
+            {
+                rtr = Robby.CreateRobby(int.Parse(numberOfGenerations), int.Parse(populationSize), int.Parse(numberOfTrials), int.Parse(seed));
+            }
 
-
+            rtr.GeneratePossibleSolutions("../Generations/");
+            rtr.
+            
         }
+
+        public void fileWrite(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+
     }
 }

@@ -20,7 +20,7 @@ namespace RobbyTheRobot
         private double _eliteRate = 0.05;
         private Random _rnd;
         private int? _seed;
-        private FileWritten _filewritten;
+        public event FileWritten _filewritten;
         public RobbyTheRobot(int numberOfGenerations, int populationSize, int numberOfTrials, int? seed = null)
         {
             _seed = seed;
@@ -49,7 +49,6 @@ namespace RobbyTheRobot
          
             //filling the grid to have 50 cans placed
             ContentsOfGrid[,] canGrid = PlaceCanOnGrid(_tempGrid);
-            // ContentsOfGrid[,] grid = PlaceWallOnGrid(canGrid);
             return canGrid;
         }
         private ContentsOfGrid[,] PlaceCanOnGrid(ContentsOfGrid[,] _tempGrid)
@@ -132,8 +131,9 @@ namespace RobbyTheRobot
                 using(var sw = new StreamWriter(path, true))
                 {
                     sw.WriteLine(_generation.MaxFitness + ";" +_generation.AverageFitness + ";"+ _numberOfActions+";" + _geneticAlg.GenerationCount+ ";" +currentGenes);
+                    _filewritten?.Invoke("Files written to" + path);
                 }
-                // _filewritten?.Invoke("Files written to" + path);
+                
 
         }
      }

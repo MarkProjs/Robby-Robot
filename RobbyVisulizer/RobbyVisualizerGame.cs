@@ -26,6 +26,7 @@ namespace RobbyVisulizer
 
         private IRobbyTheRobot _robby;
 
+        private Grid grid;
         private Grid robby;
         private string _gen;
         private string _robyaction;
@@ -80,8 +81,8 @@ namespace RobbyVisulizer
                 Exit();
 
             //TO DO: THE LOGIC PART
-           
             _scoreNum += Robby.ScoreForAllele(_robyActionNum, _gridContent, rnd, ref this.x, ref this.y);
+            
             robby.X = this.x;
             robby.Y = this.y;
             _moveNum++;
@@ -102,6 +103,7 @@ namespace RobbyVisulizer
                 Components.Add(robby);
                 _genNum = int.Parse(_gen);
                 _scoreNum += Robby.ScoreForAllele(_robyActionNum, _gridContent, rnd, ref this.x, ref this.y);
+                _moveNum++;
                 robby.X = this.x;
                 robby.Y = this.y;
             }
