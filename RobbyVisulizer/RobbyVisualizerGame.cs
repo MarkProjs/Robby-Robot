@@ -71,8 +71,9 @@ namespace RobbyVisulizer
             }
             Grid robby = new RobbyGrid(this, this.x, this.y);
             Components.Add(robby);
-            // Splitter();
-            // _robyActionNum = new int[_robyaction.Length];
+
+            Splitter("../Generations/Generation1.txt");
+            _robyActionNum = new int[_robyaction.Length];
             // for(int i = 0; i < _robyaction.Length; i++){
             //     _robyActionNum[i] = Int32.Parse(_robyaction[i]);
             // }
@@ -117,7 +118,7 @@ namespace RobbyVisulizer
             base.Draw(gameTime);
         }
 
-        private void Splitter(String path)
+        private void Splitter(string path)
         {
             string rootFile = FileReader(path);
             string[] tmpFile = rootFile.Split(";");
@@ -126,25 +127,22 @@ namespace RobbyVisulizer
             
         }
 
-        private static string FileReader(String path)
-        {
-            string chromosomes = String.Empty;
-            if (File.Exists(filePath))
+        private static string FileReader(string path)
+        {   
+            string chromosomes = "";
+            try
             {
-                using (StreamReader file = new StreamReader(filePath))
+                using(var sr = new StreamReader(path))
                 {
-                    int lineCounter = 0;
-
-                    while ((chromosomes = file.ReadLine()) != null)
-                    {
-                        lineCounter++;
-                    }
-
-                    file.Close();
-                    Console.WriteLine($"File has {lineCounter} lines."); // This is for testing purposes 
+                    chromosomes = sr.ReadLine();
                 }
             }
-
+            catch (IOException e)
+            {
+                Console.WriteLine("The file could not be read:");
+                Console.WriteLine(e.Message);
+            }
+        
             return chromosomes;
         }
     }
