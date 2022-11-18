@@ -80,6 +80,7 @@ namespace GeneticLibrary
             }
 
             _nextGeneration = new Generation(newPopulation);
+            (_nextGeneration as Generation)?.EvaluateFitnessOfPopulation();
             return _nextGeneration;
 
         }
@@ -90,6 +91,7 @@ namespace GeneticLibrary
             {
                 Console.WriteLine(_generationCount);
                 _nextGeneration = new Generation(this, FitnessCalculation, _seed);
+                (_nextGeneration as Generation)?.EvaluateFitnessOfPopulation();
                 _generationCount += 1;
             }
             else

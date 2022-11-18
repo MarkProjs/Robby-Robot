@@ -35,7 +35,7 @@ namespace RobbyTheRobot
             }
 
         }
-         public int NumberOfActions{get{return _numberOfActions;}}
+        public int NumberOfActions{get{return _numberOfActions;}}
         public int NumberOfTestGrids{get{return _numberOfTestGrids;}}
         public int GridSize{get{return _gridRow * _gridCol;}}
         public int NumberOfGenerations { get; }
@@ -76,7 +76,7 @@ namespace RobbyTheRobot
         public void GeneratePossibleSolutions(string folderPath)
         {
             int c = 0;
-            int[] genNum = new int[] { 1, 20,100, 200, 500, 1000 };
+            int[] genNum = new int[] { 1,2,3,4,5,6,7,8,9,10, 20,100, 200, 500, 1000 };
             while (_geneticAlg.GenerationCount < NumberOfGenerations)
             {
                 _generation = _geneticAlg.GenerateGeneration();
