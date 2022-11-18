@@ -102,40 +102,39 @@ namespace RobbyVisulizer
                 Exit();
 
             //TO DO: THE LOGIC PART
-            for (int i = 0; i < _robyActionNum.Length;i++) 
-            {
-                switch(_robyActionNum[i])
-                {
-                    case 0:
-                        (robby as RobbyGrid).Up += 1;
-                        _moveNum++;
-                        break;
-                    case 1:
-                        (robby as RobbyGrid).Up -= 1;
-                        _moveNum++;
-                        break;
-                    case 2:
-                        (robby as RobbyGrid).Left += 1;
-                        _moveNum++;
-                        break;
-                    case 3:
-                        (robby as RobbyGrid).Left -= 1;
-                        _moveNum++;
-                        break;
-                    case 4:
-                        _moveNum++;
-                        break;
-                    case 5:
-                        _moveNum++;
-                        break;
-                    case 6:
-                        _moveNum++;
-                        break;
-                }
-            }
+            // for (int i = 0; i < _robyActionNum.Length;i++) 
+            // {
+            //     switch(_robyActionNum[i])
+            //     {
+            //         case 0:
+            //             (robby as RobbyGrid).Up += 1;
+            //             _moveNum++;
+            //             break;
+            //         case 1:
+            //             (robby as RobbyGrid).Up -= 1;
+            //             _moveNum++;
+            //             break;
+            //         case 2:
+            //             (robby as RobbyGrid).Left += 1;
+            //             _moveNum++;
+            //             break;
+            //         case 3:
+            //             (robby as RobbyGrid).Left -= 1;
+            //             _moveNum++;
+            //             break;
+            //         case 4:
+            //             _moveNum++;
+            //             break;
+            //         case 5:
+            //             _moveNum++;
+            //             break;
+            //         case 6:
+            //             _moveNum++;
+            //             break;
+            //     }
+            // }
            
             _scoreNum += Robby.ScoreForAllele(_robyActionNum, _gridContent, rnd, ref this.x, ref this.y);
-            Debug.WriteLine(_scoreNum);
             _genNum = Convert.ToInt32(_gen);
             // Splitter();
             // _robyActionNum = new int[_robyaction.Length];
@@ -149,7 +148,7 @@ namespace RobbyVisulizer
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
-            _spriteBatch.DrawString(_genFont, "Generation: " + _genNum, new Vector2(0,520), Color.Black);
+            _spriteBatch.DrawString(_genFont, "Generation: " + _gen, new Vector2(0,520), Color.Black);
             _spriteBatch.DrawString(_moveFont, "Move: " + _moveNum + "/200", new Vector2(0,560), Color.Black);
             _spriteBatch.DrawString(_scoreFont, "Points: " + _scoreNum + "/500", new Vector2(0,600), Color.Black);
             _spriteBatch.End();
