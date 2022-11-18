@@ -2,7 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RobbyTheRobot;
 using GeneticLibrary;
 
-namespace RobbyTheRobot
+namespace RobbyTheRobotTest
 {
     [TestClass]
     public class TestRobbyRobot
@@ -57,8 +57,8 @@ namespace RobbyTheRobot
       [TestMethod]
       public void TestComputeFitness()
       {   
-          double fitness = _robbyTheRobot.computeFitness ( _chromosome, _generation);
-          Assert.AreEqual( _robbyTheRobot.EliteRate, 0.05);
+          double fitness = (_robbyTheRobot as RobbyTheRobot.RobbyTheRobot).computeFitness ( _chromosome, _generation, 0);
+          Assert.AreEqual( fitness, 2);
       }
   }
 }

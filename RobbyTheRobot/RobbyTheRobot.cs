@@ -104,7 +104,7 @@ namespace RobbyTheRobot
         }
 
         //the computeFitness
-    public double computeFitness (IChromosome chromosome, IGeneration generation) //, int? seed = null
+    public double computeFitness (IChromosome chromosome, IGeneration generation, int seed) //, int? seed = null
     {
       //use the _seed
       // Random rnd = new Random(seed.GetValueOrDefault());
