@@ -18,13 +18,22 @@ namespace RobbyTheRobot
         private double _mutationRate = 0.05;
         private double _eliteRate = 0.05;
         Random rnd = new Random();
-        private  ContentsOfGrid[,] candata;
+        private ContentsOfGrid[,] candata;
         private int? _seed;
+
+        /// <summary>
+        /// Robot constructor accepts parameters
+        /// </summary>
+        /// <param name="numberOfGenerations"></param>
+        /// <param name="populationSize"></param>
+        /// <param name="numberOfTrials"></param>
+        /// <param name="seed"></param>
         public RobbyTheRobot(int numberOfGenerations, int populationSize, int numberOfTrials, int? seed = null)
         {
             _seed = seed;
             NumberOfGenerations = numberOfGenerations;
-            _geneticAlg = GeneticLib.CreateGeneticAlgorithm(populationSize, _numGenes, _lengthOfGenes, _mutationRate, _eliteRate, numberOfTrials, computeFitness, seed);
+            _geneticAlg = GeneticLib.CreateGeneticAlgorithm(populationSize, _numGenes, _lengthOfGenes, _mutationRate,
+                _eliteRate, numberOfTrials, computeFitness, seed);
             if (_seed != null)
             {
                 rnd = new Random((int)_seed);
@@ -33,23 +42,26 @@ namespace RobbyTheRobot
             {
                 rnd = new Random();
             }
-
         }
-         public int NumberOfActions{get{return _numberOfActions;}}
-        public int NumberOfTestGrids{get{return _numberOfTestGrids;}}
-        public int GridSize{get{return _gridRow * _gridCol;}}
-        public int NumberOfGenerations { get; }
-        public double MutationRate{get{return _mutationRate;}}
-        public double EliteRate{get{return _eliteRate;}}
+
+        /// <summary>
+        /// Creates a new grid for the robby
+        /// </summary>
+        /// <returns></returns>
         public ContentsOfGrid[,] GenerateRandomTestGrid()
         {
             ContentsOfGrid[,] _tempGrid = new ContentsOfGrid[_gridCol, _gridRow];
-           
+
             //filling the grid to have 50 cans placed
             ContentsOfGrid[,] grid = PlaceCanOnGrid(_tempGrid);
             return grid;
-
         }
+
+        /// <summary>
+        /// Places the Cans locations on the grid
+        /// </summary>
+        /// <param name="_tempGrid"></param>
+        /// <returns></returns>
         private ContentsOfGrid[,] PlaceCanOnGrid(ContentsOfGrid[,] _tempGrid)
         {
             int _canCounter = 0;
@@ -63,9 +75,14 @@ namespace RobbyTheRobot
                     _canCounter += 1;
                 }
             }
+
             return _tempGrid;
         }
 
+        /// <summary>
+        /// Generates the possible solutions
+        /// </summary>
+        /// <param name="folderPath"></param>
         public void GeneratePossibleSolutions(string folderPath)
         {
             int c = 0;
@@ -74,12 +91,18 @@ namespace RobbyTheRobot
             {
                 _generation = _geneticAlg.GenerateGeneration();
                 Console.WriteLine(_geneticAlg.GenerationCount);
-                Console.WriteLine(_generation.AverageFitness);
-                Console.WriteLine(_generation.MaxFitness);
-                    // WriteGenerationTxt(folderPath);
+                Console.WriteLine(Math.Round(_generation.AverageFitness * 100) / 100);
+                Console.WriteLine(Math.Round(_generation.MaxFitness * 100) / 100);
+                // WriteGenerationTxt(folderPath);
             }
         }
 
+        /// <summary>
+        /// Calculates the fitness of the chromosome
+        /// </summary>
+        /// <param name="chromosome"></param>
+        /// <param name="generation"></param>
+        /// <returns></returns>
         //the computeFitness
         public double computeFitness(IChromosome chromosome, IGeneration generation)
         {
@@ -92,20 +115,51 @@ namespace RobbyTheRobot
             {
                 totalFitness += RobbyHelper.ScoreForAllele(chromosome.Genes, grids, rnd, ref x, ref y);
             }
+
             return totalFitness;
         }
 
+        /// <summary>
+        /// Writes the results of the txt file.
+        /// </summary>
+        /// <param name="folderPath"></param>
         private void WriteGenerationTxt(string folderPath)
         {
             string fileName = "Generation.txt";
             string path = folderPath + fileName;
-           
-            
-                using(var sw = new StreamWriter(path, true))
-                {
-                    sw.WriteLine(_geneticAlg.GenerationCount+" ; "+_generation.MaxFitness + " ; " +_generation.AverageFitness+" ; "+ _numberOfActions);
-                }
-            
+
+            using (var sw = new StreamWriter(path, true))
+            {
+                sw.WriteLine(_geneticAlg.GenerationCount + " ; " + _generation.MaxFitness + " ; " +
+                             _generation.AverageFitness + " ; " + _numberOfActions);
+            }
         }
-     }
+
+        public int NumberOfActions
+        {
+            get { return _numberOfActions; }
+        }
+
+        public int NumberOfTestGrids
+        {
+            get { return _numberOfTestGrids; }
+        }
+
+        public int GridSize
+        {
+            get { return _gridRow * _gridCol; }
+        }
+
+        public int NumberOfGenerations { get; }
+
+        public double MutationRate
+        {
+            get { return _mutationRate; }
+        }
+
+        public double EliteRate
+        {
+            get { return _eliteRate; }
+        }
+    }
 }
