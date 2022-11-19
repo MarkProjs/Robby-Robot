@@ -11,10 +11,12 @@ namespace TestGeneticAlg
         static Chromosome ch1 = new Chromosome(20, 7,6);
         static Chromosome ch2 = new Chromosome(20, 7,6);
         static IChromosome[] childrenArr = ch1.Reproduce(ch2, 0);
+        static  GeneticAlgorithm _geneticAlgorithm = new GeneticAlgorithm(100,243,7,0,0,100,fitnes,0);
         public static double fitnes(IChromosome chromosome, IGeneration generation){
-          return 120;
+            return 120;
         }
-        private IGeneticAlgorithm _geneticAlgorithm = new GeneticAlgorithm(100,243,7,0,0,100,fitnes,0);
+        private static IGeneration _generation = new Generation(_geneticAlgorithm, fitnes, 0);
+       
        
         [TestMethod]
         public void TestConstructorDeepCopy()
@@ -30,18 +32,18 @@ namespace TestGeneticAlg
         [TestMethod]
         public void TestCurrentGeneration()
         {
-            Assert.AreEqual(_geneticAlgorithm.CurrentGeneration.NumberOfChromosomes, 2);
+            Assert.AreEqual(_generation.NumberOfChromosomes, 100);
         } 
         [TestMethod]
         public void TestGenerationCount()
         {
-            Assert.AreEqual(_geneticAlgorithm.GenerationCount, 2);
+            Assert.AreEqual(_geneticAlgorithm.GenerationCount, 0);
         } 
         
         [TestMethod]
         public void TestLength()
         {
-            Assert.AreEqual(childrenArr.Length, 20);
+            Assert.AreEqual(childrenArr.Length, 2);
         } 
         
         [TestMethod]
@@ -53,13 +55,13 @@ namespace TestGeneticAlg
         [TestMethod]
         public void TestNumberOfGenes()
         {
-            Assert.AreEqual(_geneticAlgorithm.NumberOfGenes, 7);
+            Assert.AreEqual(_geneticAlgorithm.NumberOfGenes, 243);
         } 
         
         [TestMethod]
         public void TestLengthOfGene()
         {
-            Assert.AreEqual(_geneticAlgorithm.LengthOfGene, 243);
+            Assert.AreEqual(_geneticAlgorithm.LengthOfGene, 7);
         } 
         
         [TestMethod]
@@ -83,13 +85,13 @@ namespace TestGeneticAlg
         [TestMethod]
         public void TestFitnessCalculation()
         {
-            Assert.AreEqual(_geneticAlgorithm.FitnessCalculation, 20);
+            Assert.AreEqual(_geneticAlgorithm.FitnessCalculation.Invoke(ch1, _generation), 120);
         } 
         
         [TestMethod]
         public void TestGenerateNextGeneration()
         {
-            Assert.AreEqual(_geneticAlgorithm.GenerateGeneration().NumberOfChromosomes, 2);
+            Assert.AreEqual(_geneticAlgorithm.GenerateGeneration().NumberOfChromosomes, 100);
         }
         
      

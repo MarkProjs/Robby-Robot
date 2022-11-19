@@ -2,105 +2,173 @@ using System;
 
 namespace GeneticLibrary
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Chromosome : IChromosome
     {
         private double _fitness;
         private static int _currentIndex = 0;
-        
-        public Chromosome(int numberOfGenes, int lengthOfGene, int? seed = null){
-            if (numberOfGenes <= 0 || lengthOfGene <= 0) throw new ArgumentOutOfRangeException("Arguments are not valid");
+        private int? _seed;
+        Random rand;
+
+        /// <summary>
+        /// This class is main constructor, and creates a chromosome to given parameter 
+        /// </summary>
+        /// <param name="numberOfGenes"></param>
+        /// <param name="lengthOfGene"></param>
+        /// <param name="seed"></param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public Chromosome(int numberOfGenes, int lengthOfGene, int? seed = null)
+        {
+            if (numberOfGenes <= 0 || lengthOfGene <= 0)
+                throw new ArgumentOutOfRangeException("Arguments are not valid");
             Genes = new int[numberOfGenes];
-            Random rand;
+            rand = new Random();
 
             if(seed is null){ rand = new Random();}
-            else rand = new Random(seed.GetValueOrDefault());  // seed.GetValueOrDefault() cause of creating same children all children have same Genes
-            
+            else rand = new Random(seed.GetValueOrDefault());  
+
+            // Filling genes with the random values
             for (int i = 0; i < numberOfGenes; i++)
             {
                 int rndInt = rand.Next(lengthOfGene);
                 Genes[i] = rndInt;
             }
+
             _fitness = 0;
+            _seed = seed;
         }
 
-        public Chromosome(IChromosome chromosome){
-            if(chromosome == null) throw new ArgumentNullException("chromosome is empty");
-            Fitness = chromosome.Fitness;
+        /// <summary>
+        /// This is second constructor and accepts another chromosome and makes a deep copy. 
+        /// </summary>
+        /// <param name="chromosome"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public Chromosome(Chromosome chromosome)
+        {
+            if (chromosome == null) throw new ArgumentNullException("chromosome is empty");
+
             Genes = new int[chromosome.Length];
+            rand = new Random();
             for (var i = 0; i < chromosome.Length; i++)
             {
                 Genes[i] = chromosome[i];
-            } 
-        }
-        public int CompareTo(IChromosome other) {
-            return Fitness.CompareTo((other as Chromosome).Fitness);
+            }
         }
 
+        /// <summary>
+        /// This method compares two chromosomes
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns>int number based on the compare results</returns>
+        public int CompareTo(IChromosome other)
+        {
+            int res;
+            Chromosome compare = new Chromosome((other as Chromosome));
+
+            if (this.Fitness > other.Fitness)
+            {
+                res = 1;
+            }
+            else if (this.Fitness < other.Fitness)
+            {
+                res = -1;
+            }
+            else
+            {
+                res = 0;
+            }
+
+            return res;
+            // return Fitness.CompareTo((other as Chromosome).Fitness);
+        }
+
+        /// <summary>
+        /// This method generates new generation chromosomes 
+        /// </summary>
+        /// <param name="spouse"></param>
+        /// <param name="mutationProb"></param>
+        /// <returns> chromosome</returns>
+        /// <exception cref="ArgumentException"></exception>
         public IChromosome[] Reproduce(IChromosome spouse, double mutationProb)
         {
             if (this.Genes.Length != spouse.Genes.Length)
             {
                 throw new ArgumentException("genes count does not equal");
             }
-            //Creating a new children array
-            IChromosome[] children = new IChromosome[spouse.Length];
-            // Creating 2 new temporary child objects
-            IChromosome child1, child2;
-            //make it crossing over between parent's chromosomes
-            child1 = CrossingOver(spouse, this);
-            child2 = CrossingOver(this, spouse);
-            //Make it mutate based one the random values
-            MutateChild(ref child1,mutationProb);
-            MutateChild(ref child2,mutationProb);
-           
-            // Adding the children index
-            children[_currentIndex] = child1;
-            _currentIndex++;
+
+            // Creating a new children array
+            IChromosome[] children = new Chromosome[2];
+
+            Chromosome child1 = new Chromosome(this);
+            Chromosome child2 = new Chromosome(spouse as Chromosome);
             
-            children[_currentIndex] = child2;
-            _currentIndex++;
+            // Makes it a single crossing-over and swap random genes 
+            CrossingOver(child1, child2);
+            
+            //Make it mutate based one the random values
+            MutateChild(child1, mutationProb);
+            MutateChild(child2, mutationProb);
+
+            // Adding the children index
+            children[0] = child1;
+            children[1] = child2;
+
             return children;
         }
 
-        private IChromosome CrossingOver(IChromosome p1, IChromosome p2)
+        /// <summary>
+        /// Swap sequence of genes between parents chromosome 
+        /// </summary>
+        /// <param name="p1">parent 1</param>
+        /// <param name="p2">parent 1</param>
+        private void CrossingOver(Chromosome p1, Chromosome p2)
         {
-            IChromosome child = new Chromosome(p1.Genes.Length,7);
-            Random rd = new Random();
-            int slicer = rd.Next(p1.Genes.Length);
-            slicer = 5;
-            // Array.Copy(p1.Genes,0,child.Genes,0,slicer);
-            // Array.Copy(p2.Genes,slicer,child.Genes,slicer,p1.Length-13);
-            for (int i = 0; i < slicer; i++)
-            {
-                child.Genes[i] = p1.Genes[i];
-            }
+            Chromosome tmp = new Chromosome(p1);
 
-            for (int i = slicer; i < p1.Length; i++)
+
+            int slicer1 = rand.Next(0, p1.Genes.Length - 2);
+            int slicer2 = rand.Next(slicer1, p1.Genes.Length);
+
+            for (int i = slicer1; i < slicer2; i++)
             {
-                child.Genes[i] = p2.Genes[i];
+                tmp.Genes[i] = p1.Genes[i];
+                p1.Genes[i] = p2.Genes[i];
+                p2.Genes[i] = tmp.Genes[i];
             }
-            
-            return child;
         }
 
-        private void MutateChild(ref IChromosome child, double mutationProb)
+        /// <summary>
+        /// Makes a mutation in the chromosome based on the mutation rate
+        /// </summary>
+        /// <param name="child"></param>
+        /// <param name="mutationProb"></param>
+        private void MutateChild(Chromosome child, double mutationProb)
         {
-            Random random = new Random();
             for (int i = 0; i < child.Genes.Length; i++)
             {
-                double mutationRate = random.NextDouble() * 100;
+                double mutationRate = Math.Round(rand.NextDouble() * 100) / 100;
                 if (mutationRate < mutationProb)
                 {
-                    child.Genes[i] = random.Next(7);
+                    child.Genes[i] = rand.Next(7);
                 }
-            }        
+            }
         }
-        //implement indexer
-        public int this[int index] {
+
+
+        /// <summary>
+        /// Indexer
+        /// </summary>
+        /// <param name="index"></param>
+        public int this[int index]
+        {
             get => Genes[index];
-            set => Genes[index]=value;
+            set => Genes[index] = value;
         }
-        public double Fitness { 
+
+        public double Fitness
+        {
             get => _fitness;
             set => _fitness = value;
         }
