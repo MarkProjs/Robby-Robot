@@ -76,6 +76,7 @@ namespace RobbyVisulizer
 
         protected override void Update(GameTime gameTime)
         {
+           
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -104,6 +105,7 @@ namespace RobbyVisulizer
             {
                 Exit();
             }
+            
             base.Update(gameTime);
             
             // Components.Add(robby);
