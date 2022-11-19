@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using RobbyTheRobot;
 
 namespace RobbyIterationGenerator
@@ -31,7 +32,14 @@ namespace RobbyIterationGenerator
             }
 
             rtr.Filewritten += WriteMessage;
-            rtr.GeneratePossibleSolutions("../Generations/");
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            for (long i = 0; i < 1000000000; i++)
+            {
+                rtr.GeneratePossibleSolutions("../Generations/");
+            }
+            watch.Stop();
+            Console.WriteLine(watch.ElapsedMilliseconds);
             
             
         }
