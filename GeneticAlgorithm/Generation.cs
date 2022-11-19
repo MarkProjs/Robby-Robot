@@ -60,7 +60,7 @@ namespace GeneticLibrary
         {
             rand = new Random();
             // Console.WriteLine(_populations[0].Fitness);
-            // return _populations[0];
+          
             int elites = (int)(geneticAlgorithm.EliteRate * geneticAlgorithm.PopulationSize);
             int index = rand.Next(elites);
             return (_populations[index] as Chromosome);
