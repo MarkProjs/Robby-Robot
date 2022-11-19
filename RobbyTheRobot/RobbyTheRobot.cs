@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.IO;
+using System.Threading.Tasks;
 using GeneticLibrary;
 
 namespace RobbyTheRobot
@@ -19,7 +20,8 @@ namespace RobbyTheRobot
         private double _eliteRate = 0.05;
         Random rnd = new Random();
         private ContentsOfGrid[,] candata;
-        private int? _seed;
+        private int? _seed;   
+        public event FileWritten Filewritten;
 
         /// <summary>
         /// Robot constructor accepts parameters
@@ -104,7 +106,7 @@ namespace RobbyTheRobot
         /// <param name="generation"></param>
         /// <returns></returns>
         //the computeFitness
-        public double computeFitness(IChromosome chromosome, IGeneration generation)
+        public double computeFitness(IChromosome chromosome, IGeneration generation) //, int? seed = null
         {
             //use the _seed
             int x = rnd.Next(0, 10);
@@ -125,14 +127,23 @@ namespace RobbyTheRobot
         /// <param name="folderPath"></param>
         private void WriteGenerationTxt(string folderPath)
         {
-            string fileName = "Generation.txt";
-            string path = folderPath + fileName;
-
-            using (var sw = new StreamWriter(path, true))
+                     
+            string currentGenes = "";
+            for (int i = 0; i < _generation[0].Genes.Length; i++)
             {
-                sw.WriteLine(_geneticAlg.GenerationCount + " ; " + _generation.MaxFitness + " ; " +
-                             _generation.AverageFitness + " ; " + _numberOfActions);
+                currentGenes += _generation[0].Genes[i];
             }
+
+
+            string fileName = "Generation"+_geneticAlg.GenerationCount+".txt";
+            string path = folderPath + fileName;
+            
+                using(var sw = new StreamWriter(path, true))
+                {
+                    sw.WriteLine(_generation.MaxFitness + ";" +_generation.AverageFitness + ";"+ _numberOfActions+";" + _geneticAlg.GenerationCount+ ";" +currentGenes);
+                }
+                
+            Filewritten?.Invoke("Files written to" + path);
         }
 
         public int NumberOfActions
