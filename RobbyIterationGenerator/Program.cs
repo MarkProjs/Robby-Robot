@@ -30,12 +30,13 @@ namespace RobbyIterationGenerator
                 rtr = Robby.CreateRobby(int.Parse(numberOfGenerations), int.Parse(populationSize), int.Parse(numberOfTrials), int.Parse(seed));
             }
 
+            rtr.Filewritten += WriteMessage;
             rtr.GeneratePossibleSolutions("../Generations/");
-            (rtr as RobbyTheRobot.RobbyTheRobot)._filewritten += writeMessage;
+            
             
         }
 
-        public void writeMessage(string message)
+        public static void WriteMessage(string message)
         {
             Console.WriteLine(message);
         }

@@ -20,7 +20,7 @@ namespace RobbyTheRobot
         private double _eliteRate = 0.05;
         private Random _rnd;
         private int? _seed;
-        public event FileWritten _filewritten;
+        public event FileWritten Filewritten;
         public RobbyTheRobot(int numberOfGenerations, int populationSize, int numberOfTrials, int? seed = null)
         {
             _seed = seed;
@@ -133,7 +133,7 @@ namespace RobbyTheRobot
                     sw.WriteLine(_generation.MaxFitness + ";" +_generation.AverageFitness + ";"+ _numberOfActions+";" + _geneticAlg.GenerationCount+ ";" +currentGenes);
                 }
                 
-            _filewritten?.Invoke("Files written to" + path);
+            Filewritten?.Invoke("Files written to" + path);
         }
      }
 }
