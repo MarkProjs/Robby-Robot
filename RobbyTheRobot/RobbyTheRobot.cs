@@ -88,14 +88,14 @@ namespace RobbyTheRobot
         public void GeneratePossibleSolutions(string folderPath)
         {
             int c = 0;
-            int[] genNum = new int[] { 1, 3, 5, 7, 9, 20 };
+            int[] genNum = new int[] { 1, 20, 100, 200, 500, 1000 };
             while (_geneticAlg.GenerationCount < NumberOfGenerations)
             {
                 _generation = _geneticAlg.GenerateGeneration();
-                Console.WriteLine(_geneticAlg.GenerationCount);
-                Console.WriteLine(Math.Round(_generation.AverageFitness * 100) / 100);
-                Console.WriteLine(Math.Round(_generation.MaxFitness * 100) / 100);
-                // WriteGenerationTxt(folderPath);
+                // Console.WriteLine(_geneticAlg.GenerationCount);
+                // Console.WriteLine(Math.Round(_generation.AverageFitness * 100) / 100);
+                // Console.WriteLine(Math.Round(_generation.MaxFitness * 100) / 100);
+                WriteGenerationTxt(folderPath);
             }
         }
 
